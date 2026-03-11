@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-purple: #5C2D91;
+  --color-brand-magenta: #D63384;
+  --color-brand-lavender: #E8D7FF;
+  --color-brand-pink: #FF4DA6;
+  --color-brand-dark: #0a0510;
+  --color-brand-light: #FFFFFF;
+
+  --font-sans: 'Poppins', 'Montserrat', sans-serif;
+  --font-condensed: 'Oswald', sans-serif;
+
+  --background-image-brand-gradient: linear-gradient(135deg, #5C2D91, #D63384, #FF4DA6);
+  --background-image-dark-bg: radial-gradient(circle at top right, #3a155c, #0a0510 60%);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-dark text-brand-light font-sans antialiased overflow-x-hidden;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply bg-white/10 border-brand-magenta/30 shadow-brand-purple/20;
+  }
+}
