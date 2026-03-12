@@ -12,28 +12,30 @@ Write-Host "`n[1/6] Pulling from DEV repo..." -ForegroundColor Yellow
 git remote set-url origin $url1
 git pull origin main
 
-# Step 2: Pull from DEPLOY repo
+# Step 2: Try to pull from DEPLOY repo (may fail if empty)
 Write-Host "`n[2/6] Pulling from DEPLOY repo..." -ForegroundColor Yellow
 git remote set-url origin $url2
-# Using --rebase to keep history clean if there are minor changes in dep
-git pull origin main --rebase
+git pull origin main --rebase --quiet 2>$null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Note: Could not pull from DEPLOY repo (likely empty or first sync)." -ForegroundColor Gray
+}
 
 # Step 3: Run the build command and check for errors
 Write-Host "`n[3/6] Running build..." -ForegroundColor Yellow
 npm run build
 if ($LASTEXITCODE -ne 0) {
     Write-Host "`n[!] Build failed. Fix type errors before pushing." -ForegroundColor Red
-    # Restore DEV repo URL before exiting
     git remote set-url origin $url1
     exit 1
 }
 
 # Step 4: Determine the latest commit number
 Write-Host "`n[4/6] Determining sync version..." -ForegroundColor Yellow
-$lastCommitMsg = git log -1 --pretty=%B
+# Search the entire history for the prefix, not just the last commit
+$lastSyncCommit = git log --grep="$commitPrefix" -1 --pretty=%B
 $commitNumber = 1
 
-if ($lastCommitMsg -match "$commitPrefix\s+(\d+)") {
+if ($lastSyncCommit -match "$commitPrefix\s+(\d+)") {
     $commitNumber = [int]$matches[1] + 1
 }
 $commitMessage = "$commitPrefix $commitNumber"
@@ -41,14 +43,9 @@ $commitMessage = "$commitPrefix $commitNumber"
 # Step 5: Commit and push to DEPLOY repo
 Write-Host "`n[5/6] Committing and pushing to DEPLOY repo..." -ForegroundColor Yellow
 git add .
-# Check if there are changes to commit
-$status = git status --porcelain
-if ($status) {
-    git commit -m "$commitMessage"
-    git push origin main
-} else {
-    Write-Host "No changes detected to sync." -ForegroundColor Gray
-}
+# We use --allow-empty because the files are likely already committed from the Dev pull
+git commit --allow-empty -m "$commitMessage"
+git push origin main -u
 
 # Step 6: Restore DEV repo URL
 Write-Host "`n[6/6] Restoring DEV repo URL..." -ForegroundColor Yellow
