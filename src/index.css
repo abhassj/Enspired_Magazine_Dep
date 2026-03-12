@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-brand-purple: #5C2D91;
@@ -8,6 +9,10 @@
   --color-brand-pink: #FF4DA6;
   --color-brand-dark: #0a0510;
   --color-brand-light: #FFFFFF;
+  --color-brand-lightBg: #fdf8ff;
+  --color-brand-lightText: #1a0a2e;
+  --color-brand-lightMuted: #6b5880;
+  --color-brand-lightCard: #f5eeff;
 
   --font-sans: 'Poppins', 'Montserrat', sans-serif;
   --font-condensed: 'Oswald', sans-serif;
@@ -16,14 +21,46 @@
   --background-image-dark-bg: radial-gradient(circle at top right, #3a155c, #0a0510 60%);
 }
 
+:root {
+  --bg-hero: #ffffff;
+  --hero-overlay-left: linear-gradient(to right, rgba(253, 248, 255, 0.85) 25%, rgba(253, 248, 255, 0.45) 45%, transparent 65%);
+  --hero-spline-cover: #ffffff;
+  --footer-gradient: linear-gradient(135deg, #f5eeff, #ede0ff);
+}
+
+.dark {
+  --bg-hero: #000000;
+  --hero-overlay-left: linear-gradient(to right, rgba(0, 0, 0, 0.85) 25%, rgba(0, 0, 0, 0.4) 45%, transparent 65%);
+  --hero-spline-cover: #000000;
+  --footer-gradient: linear-gradient(135deg, #0d0414, #2d0e3d);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-brand-dark text-brand-light font-sans antialiased overflow-x-hidden;
+    @apply bg-white text-brand-lightText dark:bg-brand-dark dark:text-brand-light font-sans antialiased overflow-x-hidden;
     min-height: 100vh;
+  }
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 
@@ -34,5 +71,24 @@
 
   .glass-card:hover {
     @apply bg-white/10 border-brand-magenta/30 shadow-brand-purple/20;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .marquee-left {
+    animation: marquee-left 35s linear infinite;
+  }
+
+  .marquee-right {
+    animation: marquee-right 35s linear infinite;
+  }
+
+  .marquee-wrap:hover .marquee-left,
+  .marquee-wrap:hover .marquee-right {
+    animation-play-state: paused;
   }
 }

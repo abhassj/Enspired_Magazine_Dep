@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -13,7 +14,11 @@ export default {
           lavender: '#E8D7FF',
           pink: '#FF4DA6',
           dark: '#0a0510',
-          light: '#FFFFFF'
+          light: '#FFFFFF',
+          lightBg: '#fdf8ff',
+          lightText: '#1a0a2e',
+          lightMuted: '#6b5880',
+          lightCard: '#f5eeff'
         }
       },
       fontFamily: {

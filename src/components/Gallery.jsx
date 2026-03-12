@@ -118,12 +118,12 @@ export function Gallery() {
   }, []);
 
   return (
-    <section id="gallery" className="py-24 bg-brand-dark relative z-10 overflow-hidden">
+    <section id="gallery" className="py-24 bg-white dark:bg-brand-dark relative z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
         <FadeInOnScroll direction="up" className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">Gallery</h2>
-          <p className="text-white/50 max-w-2xl mx-auto text-lg">
+          <h2 className="text-4xl md:text-6xl font-bold text-brand-lightText dark:text-white mb-4">Gallery</h2>
+          <p className="text-brand-lightMuted dark:text-white/50 max-w-2xl mx-auto text-lg">
             A glimpse into the world of Enspired — events, launches, and unforgettable moments.
           </p>
         </FadeInOnScroll>
@@ -132,7 +132,7 @@ export function Gallery() {
           {galleryData.map((img) => (
             <div
               key={img.id}
-              className={`group cursor-pointer relative overflow-hidden rounded-2xl ${img.span} bg-white/5`}
+              className={`group cursor-pointer relative overflow-hidden rounded-2xl ${img.span} bg-brand-lightCard dark:bg-white/5`}
               onClick={() => openModal(img.src)}
             >
               <img

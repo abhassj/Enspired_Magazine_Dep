@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
-import { motion, useAnimation, useMotionValue, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const issues = [
   {
@@ -106,18 +106,18 @@ const Issues = () => {
   const xPosition = -(current * cardWidth);
 
   return (
-    <section id="issues" className="py-24 bg-brand-dark relative z-20 overflow-hidden">
+    <section id="issues" className="py-24 bg-white dark:bg-brand-dark relative z-20 overflow-hidden">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-purple/5 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         
         <FadeInOnScroll direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
           <div className="flex flex-col md:flex-row md:items-baseline space-y-2 md:space-y-0 md:space-x-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">Recent Issues</h2>
-            <span className="hidden md:inline-block text-white/20 text-4xl font-light">/</span>
-            <p className="text-brand-light/60 text-lg md:text-xl font-light">Explore our latest magazine editions</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-brand-lightText dark:text-white tracking-tight">Recent Issues</h2>
+            <span className="hidden md:inline-block text-brand-lightMuted/40 dark:text-white/20 text-4xl font-light">/</span>
+            <p className="text-brand-lightMuted dark:text-brand-light/60 text-lg md:text-xl font-light">Explore our latest magazine editions</p>
           </div>
-          <button className="hidden md:flex items-center space-x-2 text-brand-magenta hover:text-white transition-colors group mt-6 md:mt-0">
+          <button className="hidden md:flex items-center space-x-2 text-brand-magenta hover:text-brand-lightText dark:hover:text-white transition-colors group mt-6 md:mt-0">
             <span className="text-sm font-semibold uppercase tracking-wider">View All Archive</span>
             <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
           </button>
@@ -157,18 +157,18 @@ const Issues = () => {
               <div 
                 key={issue.id} 
                 ref={index === 0 ? firstCardRef : null}
-                className="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-[#0d0714] border border-white/10 hover:border-brand-magenta/40 rounded-2xl overflow-hidden group/card transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(235,77,156,0.1)] relative"
+                className="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-white dark:bg-[#0d0714] border border-gray-100 dark:border-white/10 hover:border-brand-magenta/40 rounded-2xl overflow-hidden group/card transition-shadow duration-500 shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.1)] relative"
               >
                 {/* Header Image Area */}
-                <div className="relative h-64 overflow-hidden bg-black">
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d0714] to-transparent z-10 opacity-90 h-full w-full bottom-0 pointer-events-none"></div>
+                <div className="relative h-64 overflow-hidden bg-black dark:bg-black">
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-lightCard dark:from-[#0d0714] to-transparent z-10 opacity-90 h-full w-full bottom-0 pointer-events-none"></div>
                   <img 
                     src={issue.image} 
                     alt={issue.title} 
                     className="w-full h-full object-cover transform group-hover/card:scale-105 transition-transform duration-700 opacity-80 pointer-events-none" 
                   />
                   <div className="absolute top-5 right-5 z-20 pointer-events-none">
-                    <span className="bg-white/10 backdrop-blur-md text-white/90 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest border border-white/20">
+                    <span className="bg-white/80 dark:bg-white/10 backdrop-blur-md text-brand-lightText dark:text-white/90 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest border border-gray-200 dark:border-white/20">
                       {issue.year}
                     </span>
                   </div>
@@ -179,18 +179,18 @@ const Issues = () => {
                   <span className="text-brand-magenta text-xs font-bold uppercase tracking-[0.2em] mb-3 inline-block">
                     {issue.category}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-snug group-hover/card:text-brand-magenta transition-colors duration-300">
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-snug group-hover/card:text-brand-magenta transition-colors duration-300">
                     {issue.title}
                   </h3>
-                  <p className="text-white/60 text-sm leading-relaxed mb-8 line-clamp-3">
+                  <p className="text-brand-lightMuted dark:text-white/60 text-sm leading-relaxed mb-8 line-clamp-3">
                     {issue.description}
                   </p>
                   
                   <div className="mt-auto flex items-center justify-between">
-                    <span className="text-white/40 text-sm font-mono tracking-wider">
+                    <span className="text-brand-lightMuted/70 dark:text-white/40 text-sm font-mono tracking-wider">
                       ISSUE #{String(issue.id).padStart(2, '0')}
                     </span>
-                    <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/70 group-hover/card:bg-brand-magenta group-hover/card:border-brand-magenta group-hover/card:text-white transition-all duration-300 pointer-events-auto">
+                    <button className="w-10 h-10 rounded-full border border-gray-200 dark:border-white/20 bg-white/80 dark:bg-transparent flex items-center justify-center text-brand-lightText/70 dark:text-white/70 group-hover/card:bg-brand-magenta group-hover/card:border-brand-magenta group-hover/card:text-white transition-all duration-300 pointer-events-auto">
                       <ArrowRight size={18} className="transform group-hover/card:-rotate-45 transition-transform duration-300" />
                     </button>
                   </div>
@@ -205,14 +205,14 @@ const Issues = () => {
               <button 
                 onClick={prev} 
                 disabled={current === 0}
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${current === 0 ? 'border-white/5 text-white/20 cursor-not-allowed bg-transparent' : 'border-white/15 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/5 cursor-pointer'}`}
+                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${current === 0 ? 'border-gray-100 dark:border-white/5 text-brand-lightMuted/40 dark:text-white/20 cursor-not-allowed bg-transparent' : 'border-gray-200 dark:border-white/15 text-brand-lightText/80 dark:text-white/80 hover:text-brand-lightText dark:hover:text-white hover:border-gray-300 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 cursor-pointer'}`}
               >
                 <ChevronLeft size={20} />
               </button>
               <button 
                 onClick={next} 
                 disabled={current >= issues.length - (window.innerWidth >= 768 ? 3 : 1)}
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${current >= issues.length - (window.innerWidth >= 768 ? 3 : 1) ? 'border-white/5 text-white/20 cursor-not-allowed bg-transparent' : 'border-white/15 text-white/80 hover:text-white hover:border-white/40 hover:bg-white/5 cursor-pointer'}`}
+                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${current >= issues.length - (window.innerWidth >= 768 ? 3 : 1) ? 'border-gray-100 dark:border-white/5 text-brand-lightMuted/40 dark:text-white/20 cursor-not-allowed bg-transparent' : 'border-gray-200 dark:border-white/15 text-brand-lightText/80 dark:text-white/80 hover:text-brand-lightText dark:hover:text-white hover:border-gray-300 dark:hover:border-white/40 hover:bg-gray-100 dark:hover:bg-white/5 cursor-pointer'}`}
               >
                 <ChevronRight size={20} />
               </button>
@@ -237,7 +237,7 @@ const Issues = () => {
                     key={index}
                     onClick={() => setCurrent(Math.min(index, issues.length - (isDesktop ? 3 : 1)))}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      isActive ? 'w-8 bg-brand-magenta' : 'w-2 bg-white/20 hover:bg-white/40'
+                      isActive ? 'w-8 bg-brand-magenta' : 'w-2 bg-gray-300 dark:bg-white/20 hover:bg-gray-500/60 dark:hover:bg-white/40'
                     }`}
                   />
                  );
@@ -249,7 +249,7 @@ const Issues = () => {
                 <div
                   key={index}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    index === current ? 'w-6 bg-brand-magenta' : 'w-1.5 bg-white/20'
+                    index === current ? 'w-6 bg-brand-magenta' : 'w-1.5 bg-gray-300 dark:bg-white/20'
                   }`}
                 />
               ))}
