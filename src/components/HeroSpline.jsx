@@ -1,9 +1,28 @@
 import Spline from '@splinetool/react-spline';
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 
 export default function HeroSpline() {
   const containerRef = useRef(null);
   const MAX_TILT_DEG = 3.25;
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+
+    const syncReadyState = () => {
+      const { width, height } = node.getBoundingClientRect();
+      setIsReady(width > 0 && height > 0);
+    };
+
+    syncReadyState();
+
+    if (typeof ResizeObserver === 'undefined') return;
+    const resizeObserver = new ResizeObserver(syncReadyState);
+    resizeObserver.observe(node);
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   // Preserve page scrolling when the cursor is over the 3D canvas.
   useEffect(() => {
@@ -44,7 +63,7 @@ export default function HeroSpline() {
     return () => { clearInterval(interval); clearTimeout(timeout); };
   }, []);
 
-  const onLoad = useCallback((splineApp) => {
+  const onLoad = useCallback(() => {
     if (containerRef.current) {
       const links = containerRef.current.querySelectorAll('a');
       links.forEach((link) => link.remove());
@@ -88,10 +107,14 @@ export default function HeroSpline() {
           willChange: 'transform',
         }}
       >
-        <Spline
-          scene="https://prod.spline.design/Tsz9wVB1naktNT-Q/scene.splinecode"
-          onLoad={onLoad}
-        />
+        {isReady ? (
+          <Spline
+            scene="https://prod.spline.design/Tsz9wVB1naktNT-Q/scene.splinecode"
+            onLoad={onLoad}
+          />
+        ) : (
+          <div className="w-full h-full" aria-hidden="true" />
+        )}
       </div>
     </div>
   );

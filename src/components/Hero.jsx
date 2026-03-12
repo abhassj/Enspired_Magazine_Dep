@@ -1,11 +1,34 @@
-import React, { Suspense, lazy } from 'react';
-import { motion } from 'framer-motion';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
 const HeroSpline = lazy(() => import('./HeroSpline'));
 
+const getIsDesktopViewport = () => (
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(min-width: 768px)').matches
+);
+
 const Hero = () => {
   const { isDark } = useTheme();
+  const [showSpline, setShowSpline] = useState(getIsDesktopViewport);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    const syncSplineVisibility = (event) => {
+      setShowSpline(event.matches);
+    };
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', syncSplineVisibility);
+      return () => mediaQuery.removeEventListener('change', syncSplineVisibility);
+    }
+
+    mediaQuery.addListener(syncSplineVisibility);
+    return () => mediaQuery.removeListener(syncSplineVisibility);
+  }, []);
 
   return (
     <section className="relative min-h-screen w-full flex items-center overflow-hidden" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}>
@@ -13,24 +36,26 @@ const Hero = () => {
       {/* Pure background */}
       <div className="absolute inset-0 z-0" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}></div>
 
-      {/* Spline 3D - Hidden on mobile, shown on md+ */}
-      <div 
-        className="absolute inset-0 z-[1] pointer-events-auto hidden md:block"
-        style={{
-          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 85px), calc(100% - 250px) calc(100% - 85px), calc(100% - 250px) 100%, 0 100%)',
-          WebkitClipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 85px), calc(100% - 250px) calc(100% - 85px), calc(100% - 250px) 100%, 0 100%)'
-        }}
-      >
-        <Suspense fallback={
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-16 h-16 border-4 border-brand-purple border-t-brand-magenta rounded-full animate-spin"></div>
-          </div>
-        }>
-          <div className="w-full h-full relative">
-            <HeroSpline />
-          </div>
-        </Suspense>
-      </div>
+      {/* Spline 3D: mount only on desktop to avoid zero-size WebGL framebuffers on mobile */}
+      {showSpline && (
+        <div
+          className="absolute inset-0 z-[1] pointer-events-auto"
+          style={{
+            clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 85px), calc(100% - 250px) calc(100% - 85px), calc(100% - 250px) 100%, 0 100%)',
+            WebkitClipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 85px), calc(100% - 250px) calc(100% - 85px), calc(100% - 250px) 100%, 0 100%)'
+          }}
+        >
+          <Suspense fallback={
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="w-16 h-16 border-4 border-brand-purple border-t-brand-magenta rounded-full animate-spin"></div>
+            </div>
+          }>
+            <div className="w-full h-full relative">
+              <HeroSpline />
+            </div>
+          </Suspense>
+        </div>
+      )}
 
       {/* Mobile background decoration — subtle gradient to replace the 3D sphere */}
       <div className="absolute inset-0 z-[1] md:hidden pointer-events-none overflow-hidden">
@@ -44,12 +69,7 @@ const Hero = () => {
         <div className="absolute inset-0 hidden md:block" style={{ background: 'var(--hero-overlay-left)' }}></div>
         
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full min-h-screen flex items-center pt-24 md:pt-0 relative">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="flex flex-col space-y-6 max-w-xl pointer-events-auto pt-4 md:pt-10 lg:pt-12"
-          >
+          <div className="flex flex-col space-y-6 max-w-xl pointer-events-auto pt-4 md:pt-10 lg:pt-12">
             <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[4.5rem] font-sans font-bold text-brand-lightText dark:text-white leading-[1.05] tracking-tight mb-4 md:mb-6 mt-4 md:mt-8">
               Empowering <span className="text-brand-magenta">women</span> to <br className="hidden md:block"/> 
               dream, lead, <br className="hidden lg:block"/> and inspire.
@@ -67,7 +87,7 @@ const Hero = () => {
                 Read Latest Issue
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
