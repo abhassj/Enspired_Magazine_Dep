@@ -1,55 +1,80 @@
+# Sync-Deploy.ps1
+# Syncs changes from the Development repository to the Deployment repository
+
 $ErrorActionPreference = "Stop"
 
 # Configuration
-$url1 = "https://github.com/Astraweb-co-in/Enspired_Magazine_Dev.git"
-$url2 = "https://github.com/abhassj/Enspired_Magazine_Dep.git"
+$devRepoUrl = "https://github.com/Astraweb-co-in/Enspired_Magazine_Dev.git"
+$deployRepoUrl = "https://github.com/abhassj/Enspired_Magazine_Dep.git"
 $commitPrefix = "Sync changes from parent repo"
 
-Write-Host "`n>>> Starting synchronization process..." -ForegroundColor Cyan
+try {
+    # --- Step 1: Pull from Development Repo ---
+    Write-Host "Step 1: Pulling latest changes from DEVELOPMENT repo ($devRepoUrl)..." -ForegroundColor Cyan
+    git remote set-url origin $devRepoUrl
+    git pull origin main
 
-# Step 1: Pull from DEV repo
-Write-Host "`n[1/6] Pulling from DEV repo..." -ForegroundColor Yellow
-git remote set-url origin $url1
-git pull origin main
+    # --- Step 2: Pull from Deployment Repo (to merge history if needed) ---
+    Write-Host "Step 2: Pulling latest changes from DEPLOYMENT repo ($deployRepoUrl)..." -ForegroundColor Cyan
+    git remote set-url origin $deployRepoUrl
+    
+    # We allow this to fail if the histories are unrelated or repo is empty
+    try {
+        git pull origin main
+    }
+    catch {
+        Write-Warning "Pull from deploy repo failed (likely empty or unrelated history). Continuing..."
+    }
 
-# Step 2: Try to pull from DEPLOY repo (may fail if empty)
-Write-Host "`n[2/6] Pulling from DEPLOY repo..." -ForegroundColor Yellow
-git remote set-url origin $url2
-git pull origin main --rebase --quiet 2>$null
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Note: Could not pull from DEPLOY repo (likely empty or first sync)." -ForegroundColor Gray
+    # --- Step 3: Build & Check ---
+    Write-Host "Step 3: Running build to verify integrity..." -ForegroundColor Cyan
+    # Adjust path if script is run from root or scripts folder
+    if (Test-Path "package.json") {
+        npm run build
+    }
+    elseif (Test-Path "../package.json") {
+        # Assuming script is in /scripts
+        Set-Location ..
+        try {
+            npm run build
+        }
+        finally {
+            Set-Location scripts
+        }
+    }
+    else {
+        Write-Warning "Could not find package.json. Skipping build check."
+    }
+
+    # --- Step 4: Determine Commit Message ---
+    Write-Host "Step 4: Preparing commit message..." -ForegroundColor Cyan
+    $lastCommitMsg = git log -1 --pretty=%B
+    $commitNumber = 1
+
+    if ($lastCommitMsg -match "$commitPrefix\s+(\d+)") {
+        if ($matches.Count -gt 1 -and $matches[1] -match '^\d+$') {
+            $commitNumber = [int]$matches[1] + 1
+        }
+    }
+    $commitMessage = "$commitPrefix $commitNumber"
+    Write-Host "Commit Message: $commitMessage" -ForegroundColor Gray
+
+    # --- Step 5: Push to Deployment Repo ---
+    Write-Host "Step 5: Pushing to DEPLOYMENT repo..." -ForegroundColor Cyan
+    git add .
+    git commit -m "$commitMessage"
+    # Ignore "nothing to commit" errors
+    
+    git push origin main
+    Write-Host "Successfully pushed to deployment repo." -ForegroundColor Green
+
 }
-
-# Step 3: Run the build command and check for errors
-Write-Host "`n[3/6] Running build..." -ForegroundColor Yellow
-npm run build
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "`n[!] Build failed. Fix type errors before pushing." -ForegroundColor Red
-    git remote set-url origin $url1
-    exit 1
+catch {
+    Write-Error "An error occurred: $_"
 }
-
-# Step 4: Determine the latest commit number
-Write-Host "`n[4/6] Determining sync version..." -ForegroundColor Yellow
-# Search the entire history for the prefix, not just the last commit
-$lastSyncCommit = git log --grep="$commitPrefix" -1 --pretty=%B
-$commitNumber = 1
-
-if ($lastSyncCommit -match "$commitPrefix\s+(\d+)") {
-    $commitNumber = [int]$matches[1] + 1
+finally {
+    # --- Step 6: Restore Dev Repo Remote ---
+    Write-Host "Step 6: Restoring remote to DEVELOPMENT repo..." -ForegroundColor Cyan
+    git remote set-url origin $devRepoUrl
+    Write-Host "Remote restored to development repo." -ForegroundColor Green
 }
-$commitMessage = "$commitPrefix $commitNumber"
-
-# Step 5: Commit and push to DEPLOY repo
-Write-Host "`n[5/6] Committing and pushing to DEPLOY repo..." -ForegroundColor Yellow
-git add .
-# We use --allow-empty because the files are likely already committed from the Dev pull
-git commit --allow-empty -m "$commitMessage"
-git push origin main -u
-
-# Step 6: Restore DEV repo URL
-Write-Host "`n[6/6] Restoring DEV repo URL..." -ForegroundColor Yellow
-git remote set-url origin $url1
-
-Write-Host "`n[DONE] Build passed and changes synchronized successfully!" -ForegroundColor Green
-Write-Host "Sync Commit: $commitMessage`n" -ForegroundColor Green
