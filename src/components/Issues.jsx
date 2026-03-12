@@ -159,7 +159,7 @@ const Issues = () => {
               <div 
                 key={issue.id} 
                 ref={index === 0 ? firstCardRef : null}
-                className="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-white dark:bg-[#0d0714] border border-gray-100 dark:border-white/10 hover:border-brand-magenta/40 rounded-2xl overflow-hidden group/card transition-shadow duration-500 shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.1)] relative"
+                className="shrink-0 w-[80vw] sm:w-[85vw] md:w-[400px] flex flex-col bg-white dark:bg-[#0d0714] border border-gray-100 dark:border-white/10 hover:border-brand-magenta/40 rounded-2xl overflow-hidden group/card transition-shadow duration-500 shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.1)] relative"
               >
                 {/* Header Image Area */}
                 <div className="relative h-64 overflow-hidden bg-black dark:bg-black">

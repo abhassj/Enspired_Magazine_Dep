@@ -49,7 +49,7 @@ const testimonials = [
 ];
 
 const cardClasses =
-  'w-[320px] md:w-[360px] shrink-0 rounded-2xl p-6 md:p-7 bg-white shadow-xl border border-gray-100 dark:bg-white/5 dark:border-white/10 dark:backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_35px_rgba(214,51,132,0.18)]';
+  'w-[280px] sm:w-[320px] md:w-[360px] shrink-0 rounded-2xl p-6 md:p-7 bg-white shadow-xl border border-gray-100 dark:bg-white/5 dark:border-white/10 dark:backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_35px_rgba(214,51,132,0.18)]';
 
 const TestimonialCard = ({ item }) => (
   <article className={cardClasses}>

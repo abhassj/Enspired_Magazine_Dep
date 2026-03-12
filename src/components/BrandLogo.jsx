@@ -37,7 +37,6 @@ const BrandLogo = ({
         decoding={loading === 'eager' ? 'sync' : 'async'}
         fetchPriority={loading === 'eager' ? 'high' : 'auto'}
         draggable="false"
-        style={{ willChange: 'opacity, transform' }}
       />
     </span>
   );

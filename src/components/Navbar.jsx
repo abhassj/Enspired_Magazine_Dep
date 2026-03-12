@@ -25,15 +25,15 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md pt-1 pb-1.5 shadow-lg' : 'bg-transparent pt-1.5 pb-2'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center -translate-y-0.5">
-        {/* Logo */}
+      <div className="max-w-7xl mx-auto px-4 md:px-12 flex justify-between items-center -translate-y-0.5">
+        {/* Logo — smaller on mobile */}
         <Link
           to="/"
           className="brand-logo-wrap"
           aria-label="GR Enspired Magazine home"
         >
           <BrandLogo
-            className="h-20 md:h-24 lg:h-28"
+            className="h-14 md:h-24 lg:h-28"
             imageClassName="h-full w-auto"
             loading="eager"
           />
@@ -69,11 +69,11 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-2">
           <button
             onClick={toggleTheme}
             aria-label="Toggle color mode"
-            className="w-10 h-10 rounded-full border border-gray-200 dark:border-white/20 bg-white/80 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-brand-lightText dark:text-white"
+            className="w-9 h-9 rounded-full border border-gray-200 dark:border-white/20 bg-white/80 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-brand-lightText dark:text-white"
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -83,12 +83,12 @@ const Navbar = () => {
                 exit={{ opacity: 0, rotate: 180, scale: 0.7 }}
                 transition={{ duration: 0.3 }}
               >
-                {isDark ? <Moon size={17} /> : <Sun size={17} />}
+                {isDark ? <Moon size={15} /> : <Sun size={15} />}
               </motion.div>
             </AnimatePresence>
           </button>
           <button className="text-gray-800 dark:text-white drop-shadow-md" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
@@ -100,7 +100,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-white dark:bg-brand-dark/95 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 p-6 md:hidden flex flex-col space-y-6 text-center"
+            className="absolute top-full left-0 w-full bg-white dark:bg-brand-dark/95 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 p-6 md:hidden flex flex-col space-y-5 text-center"
           >
             <Link
               to="/"
@@ -109,7 +109,7 @@ const Navbar = () => {
               aria-label="GR Enspired Magazine home"
             >
               <BrandLogo
-                className="h-20"
+                className="h-16"
                 imageClassName="h-full w-auto"
                 loading="eager"
               />
@@ -124,7 +124,7 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <button className="bg-brand-magenta text-white px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm mt-4 max-w-xs mx-auto w-full shadow-lg">
+            <button className="bg-brand-magenta text-white px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm mt-2 max-w-xs mx-auto w-full shadow-lg">
               Subscribe
             </button>
           </motion.div>

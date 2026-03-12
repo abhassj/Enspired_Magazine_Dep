@@ -16,7 +16,7 @@ const getInitialTheme = () => {
     return true;
   }
 
-  return true;
+  return false;
 };
 
 export const ThemeProvider = ({ children }) => {

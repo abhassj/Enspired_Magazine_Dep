@@ -113,6 +113,26 @@ const ImageModal = ({ src, onClose }) => {
   );
 };
 
+/* ─── Mobile Gallery Slider Card ─── */
+const MobileSliderCard = ({ img, onClick }) => (
+  <div
+    className="shrink-0 w-[75vw] h-[220px] rounded-2xl overflow-hidden relative cursor-pointer group"
+    onClick={onClick}
+  >
+    <img
+      src={img.src}
+      alt={img.alt}
+      className="w-full h-full object-cover"
+      loading="lazy"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4">
+      <p className="text-white text-sm font-bold tracking-wide">
+        {img.title}
+      </p>
+    </div>
+  </div>
+);
+
 export function Gallery() {
   const [modalImage, setModalImage] = useState(null);
 
@@ -139,21 +159,25 @@ export function Gallery() {
     };
   }, [modalImage]);
 
+  // Duplicate the gallery data for infinite loop effect on mobile
+  const mobileSliderData = [...galleryData, ...galleryData];
+
   return (
-    <section id="gallery" className="py-24 bg-white dark:bg-brand-dark relative overflow-hidden">
+    <section id="gallery" className="py-16 md:py-24 bg-white dark:bg-brand-dark relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
-        <FadeInOnScroll direction="up" className="text-center mb-16">
-          <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4rem)] mb-4">
+        <FadeInOnScroll direction="up" className="text-center mb-10 md:mb-16">
+          <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2rem,8vw,4rem)] mb-4">
             <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Our</span>
             <span className="block text-brand-lightMuted/40 dark:text-white/30">Gallery</span>
           </h2>
-          <p className="text-brand-pink dark:text-brand-pink max-w-2xl mx-auto text-lg mt-6">
+          <p className="text-brand-pink dark:text-brand-pink max-w-2xl mx-auto text-base md:text-lg mt-4 md:mt-6">
             A glimpse into the world of Enspired — events, launches, and unforgettable moments.
           </p>
         </FadeInOnScroll>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px]">
+        {/* ═══ Desktop Grid (md and above) ═══ */}
+        <div className="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px]">
           {galleryData.map((img) => (
             <div
               key={img.id}
@@ -173,6 +197,19 @@ export function Gallery() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* ═══ Mobile Auto-Sliding Marquee (below md) ═══ */}
+        <div className="md:hidden overflow-hidden -mx-6">
+          <div className="gallery-slider-track flex gap-4 px-6">
+            {mobileSliderData.map((img, idx) => (
+              <MobileSliderCard
+                key={`mobile-${img.id}-${idx}`}
+                img={img}
+                onClick={() => openModal(img.src)}
+              />
+            ))}
+          </div>
         </div>
       </div>
 

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync-deploy": "powershell -ExecutionPolicy Bypass -File ./sync-deploy.ps1"
   },
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",

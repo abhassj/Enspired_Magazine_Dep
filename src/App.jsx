@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -10,6 +10,7 @@ import Testimonials from './components/Testimonials'
 import ContactPage from './pages/ContactPage'
 import { ScrollProgress } from './components/ui/ScrollAnimations'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
+import Preloader from './components/Preloader'
 
 /* Scroll to top on route change */
 function ScrollToTop() {
@@ -36,16 +37,34 @@ function HomePage() {
 
 function AppContent() {
   const { isDark } = useTheme()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Check if document is already loaded
+    if (document.readyState === 'complete') {
+      setIsLoading(false)
+    } else {
+      const handleLoad = () => {
+        // Add a slight delay for aesthetic smoothness
+        setTimeout(() => setIsLoading(false), 1000)
+      }
+      window.addEventListener('load', handleLoad)
+      return () => window.removeEventListener('load', handleLoad)
+    }
+  }, [])
 
   return (
-    <div className={`${isDark ? 'dark' : ''} min-h-screen bg-white text-brand-lightText dark:bg-brand-dark dark:text-brand-light font-sans selection:bg-brand-magenta selection:text-white`}>
-      <ScrollProgress />
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Routes>
-    </div>
+    <>
+      <Preloader isLoading={isLoading} />
+      <div className={`${isDark ? 'dark' : ''} min-h-screen bg-white text-brand-lightText dark:bg-brand-dark dark:text-brand-light font-sans selection:bg-brand-magenta selection:text-white`}>
+        <ScrollProgress />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </div>
+    </>
   )
 }
 

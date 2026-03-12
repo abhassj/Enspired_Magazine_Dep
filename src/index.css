@@ -69,21 +69,7 @@
     @apply relative inline-flex items-center;
   }
 
-  .brand-logo-wrap::after {
-    content: '';
-    position: absolute;
-    inset: -0.2rem -0.5rem;
-    border-radius: 9999px;
-    background: radial-gradient(circle, rgba(214, 51, 132, 0.22) 0%, rgba(214, 51, 132, 0) 72%);
-    filter: blur(12px);
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    pointer-events: none;
-  }
 
-  .brand-logo-wrap:hover::after {
-    opacity: 1;
-  }
 
   .brand-logo {
     display: block;
@@ -99,7 +85,6 @@
 
   .brand-logo-wrap:hover .brand-logo {
     transform: translateY(-1px) scale(1.02);
-    filter: drop-shadow(0 4px 15px rgba(214, 51, 132, 0.3));
   }
 
   .glass-card {
@@ -114,6 +99,7 @@
     display: flex;
     width: max-content;
     will-change: transform;
+    transform: translateZ(0);
   }
 
   .marquee-left {
@@ -122,5 +108,31 @@
 
   .marquee-right {
     animation: marquee-right 35s linear infinite;
+  }
+
+  .gallery-slider-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    transform: translateZ(0);
+    animation: gallery-slider 25s linear infinite;
+  }
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
+}
+
+#gallery, #issues, #contact, #mission {
+  content-visibility: auto;
+}
+
+@keyframes gallery-slider {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
