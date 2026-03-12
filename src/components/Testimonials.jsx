@@ -89,7 +89,7 @@ const Testimonials = () => {
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-brand-lightText dark:text-white mb-4">
             Client Testimonials
           </h2>
-          <p className="max-w-2xl mx-auto text-brand-lightMuted dark:text-white/60 text-lg">
+          <p className="max-w-2xl mx-auto text-brand-pink dark:text-brand-pink text-lg">
             Stories from readers, contributors, and business leaders shaping the Enspired community.
           </p>
         </FadeInOnScroll>

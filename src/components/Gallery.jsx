@@ -123,7 +123,7 @@ export function Gallery() {
         
         <FadeInOnScroll direction="up" className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold text-brand-lightText dark:text-white mb-4">Gallery</h2>
-          <p className="text-brand-lightMuted dark:text-white/50 max-w-2xl mx-auto text-lg">
+          <p className="text-brand-pink dark:text-brand-pink max-w-2xl mx-auto text-lg">
             A glimpse into the world of Enspired — events, launches, and unforgettable moments.
           </p>
         </FadeInOnScroll>

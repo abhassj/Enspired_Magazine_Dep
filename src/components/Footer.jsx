@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-start gap-12 text-brand-lightText dark:text-white">
             
             <div className="max-w-sm">
-              <h2 className="text-4xl font-bold tracking-tight text-brand-lightText dark:text-white mb-4">enspired.</h2>
+              <h2 className="text-4xl font-bold tracking-tight text-brand-lightText dark:text-white mb-4">GR enspired.</h2>
               <p className="text-brand-lightMuted dark:text-white/80 font-light mb-6 leading-relaxed">
                 Empowering voices, showcasing visions, and inspiring the modern world.
               </p>
@@ -55,7 +55,7 @@ const Footer = () => {
         </FadeInOnScroll>
         
         <div className="border-t border-brand-lightText/10 dark:border-white/10 mt-20 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-brand-lightMuted dark:text-white/40 font-medium tracking-widest uppercase">
-          <p>&copy; {new Date().getFullYear()} Enspired Magazine. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} GR Enspired Magazine. All rights reserved.</p>
           <div className="flex space-x-8 mt-6 md:mt-0">
             <a href="#" className="hover:text-brand-lightText dark:hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-brand-lightText dark:hover:text-white transition-colors">Terms of Service</a>

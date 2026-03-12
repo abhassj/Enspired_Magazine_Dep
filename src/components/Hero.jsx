@@ -14,7 +14,13 @@ const Hero = () => {
       <div className="absolute inset-0 z-0" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}></div>
 
       {/* Spline 3D - Full-screen interactive background */}
-      <div className="absolute inset-0 z-[1] pointer-events-auto">
+      <div 
+        className="absolute inset-0 z-[1] pointer-events-auto"
+        style={{
+          clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 85px), calc(100% - 250px) calc(100% - 85px), calc(100% - 250px) 100%, 0 100%)',
+          WebkitClipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 85px), calc(100% - 250px) calc(100% - 85px), calc(100% - 250px) 100%, 0 100%)'
+        }}
+      >
         <Suspense fallback={
           <div className="w-full h-full flex items-center justify-center">
             <div className="w-16 h-16 border-4 border-brand-purple border-t-brand-magenta rounded-full animate-spin"></div>
@@ -22,14 +28,6 @@ const Hero = () => {
         }>
           <div className="w-full h-full relative">
             <HeroSpline />
-            {/* Absolute block to physically cover the Spline logo */}
-            <div
-              className="absolute bottom-0 right-0 w-44 h-16 z-[100] pointer-events-none border-t border-l"
-              style={{
-                background: isDark ? '#000000' : 'var(--hero-spline-cover)',
-                borderColor: isDark ? '#000000' : '#ede0ff',
-              }}
-            ></div>
           </div>
         </Suspense>
       </div>
@@ -44,15 +42,15 @@ const Hero = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="flex flex-col space-y-6 max-w-xl pointer-events-auto"
+            className="flex flex-col space-y-6 max-w-xl pointer-events-auto pt-4 md:pt-10 lg:pt-12"
           >
-            <h1 className="text-5xl md:text-[5.5rem] font-sans font-medium text-gray-900 dark:text-white leading-[1.05] tracking-tight">
-              A new era of <br className="hidden md:block"/> 
-              editorial excellence
+            <h1 className="text-4xl md:text-[4rem] lg:text-[4.5rem] font-sans font-bold text-brand-lightText dark:text-white leading-[1.05] tracking-tight mb-6 mt-8">
+              Empowering <span className="text-brand-magenta">women</span> to <br className="hidden md:block"/> 
+              dream, lead, <br className="hidden lg:block"/> and inspire.
             </h1>
             
-            <p className="text-base md:text-lg text-[#eb4d9c] max-w-md font-sans font-medium leading-relaxed">
-              The world's most advanced digital magazine platform empowering voices, showcasing visions, and inspiring the modern world.
+            <p className="text-base md:text-[1.1rem] text-brand-lightMuted dark:text-white/80 max-w-xl font-sans font-light leading-relaxed mb-4 border-l-4 border-brand-magenta pl-5 md:pl-6 text-justify sm:text-left">
+              A global magazine celebrating the voices, journeys, and achievements of women in business and everyday life — sharing stories, knowledge, and opportunities that turn ambition into success.
             </p>
             
             <div className="pt-4">

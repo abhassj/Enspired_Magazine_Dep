@@ -26,7 +26,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
         {/* Logo */}
         <a href="#" className="text-xl md:text-2xl font-sans tracking-tight text-gray-800 dark:text-white drop-shadow-md transition-colors">
-          enspired.
+          GR enspired.
         </a>
 
         {/* Desktop Nav */}

@@ -112,10 +112,9 @@ const Issues = () => {
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         
         <FadeInOnScroll direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
-          <div className="flex flex-col md:flex-row md:items-baseline space-y-2 md:space-y-0 md:space-x-4">
+          <div className="flex flex-col space-y-2">
             <h2 className="text-4xl md:text-5xl font-bold text-brand-lightText dark:text-white tracking-tight">Recent Issues</h2>
-            <span className="hidden md:inline-block text-brand-lightMuted/40 dark:text-white/20 text-4xl font-light">/</span>
-            <p className="text-brand-lightMuted dark:text-brand-light/60 text-lg md:text-xl font-light">Explore our latest magazine editions</p>
+            <p className="text-brand-pink text-lg md:text-xl font-light">Explore our latest magazine editions</p>
           </div>
           <button className="hidden md:flex items-center space-x-2 text-brand-magenta hover:text-brand-lightText dark:hover:text-white transition-colors group mt-6 md:mt-0">
             <span className="text-sm font-semibold uppercase tracking-wider">View All Archive</span>
