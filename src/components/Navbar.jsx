@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import BrandLogo from './BrandLogo';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,8 +26,16 @@ const Navbar = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
         {/* Logo */}
-        <a href="#" className="text-xl md:text-2xl font-sans tracking-tight text-gray-800 dark:text-white drop-shadow-md transition-colors">
-          GR enspired.
+        <a
+          href="#"
+          className="brand-logo-wrap"
+          aria-label="GR Enspired Magazine home"
+        >
+          <BrandLogo
+            className="h-16 md:h-[4.5rem] lg:h-20"
+            imageClassName="h-full w-auto contrast-125"
+            loading="eager"
+          />
         </a>
 
         {/* Desktop Nav */}
@@ -92,6 +101,18 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 w-full bg-white dark:bg-brand-dark/95 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 p-6 md:hidden flex flex-col space-y-6 text-center"
           >
+            <a
+              href="#"
+              onClick={() => setMobileMenuOpen(false)}
+              className="brand-logo-wrap mx-auto"
+              aria-label="GR Enspired Magazine home"
+            >
+              <BrandLogo
+                className="h-16"
+                imageClassName="h-full w-auto contrast-125"
+                loading="eager"
+              />
+            </a>
             {navLinks.map((link) => (
               <a 
                 key={link.name} 

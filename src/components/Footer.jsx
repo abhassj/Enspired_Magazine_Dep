@@ -1,6 +1,7 @@
 import React from 'react';
 import { Instagram, Twitter, Linkedin, Mail } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
+import BrandLogo from './BrandLogo';
 
 const Footer = () => {
   return (
@@ -15,7 +16,17 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-start gap-12 text-brand-lightText dark:text-white">
             
             <div className="max-w-sm">
-              <h2 className="text-4xl font-bold tracking-tight text-brand-lightText dark:text-white mb-4">GR enspired.</h2>
+              <a
+                href="#"
+                className="brand-logo-wrap mb-5"
+                aria-label="GR Enspired Magazine home"
+              >
+                <BrandLogo
+                  className="h-20 md:h-24"
+                  imageClassName="h-full w-auto contrast-125"
+                  loading="lazy"
+                />
+              </a>
               <p className="text-brand-lightMuted dark:text-white/80 font-light mb-6 leading-relaxed">
                 Empowering voices, showcasing visions, and inspiring the modern world.
               </p>

@@ -23,6 +23,14 @@ export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(getInitialTheme);
 
   useEffect(() => {
+    const lightLogo = new Image();
+    lightLogo.src = '/logo.svg';
+
+    const darkLogo = new Image();
+    darkLogo.src = '/logo%20dark.svg';
+  }, []);
+
+  useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
   }, [isDark]);
 
