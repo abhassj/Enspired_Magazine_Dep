@@ -144,8 +144,11 @@ export function Gallery() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
         <FadeInOnScroll direction="up" className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-brand-lightText dark:text-white mb-4">Gallery</h2>
-          <p className="text-brand-pink dark:text-brand-pink max-w-2xl mx-auto text-lg">
+          <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4rem)] mb-4">
+            <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Our</span>
+            <span className="block text-brand-lightMuted/40 dark:text-white/30">Gallery</span>
+          </h2>
+          <p className="text-brand-pink dark:text-brand-pink max-w-2xl mx-auto text-lg mt-6">
             A glimpse into the world of Enspired — events, launches, and unforgettable moments.
           </p>
         </FadeInOnScroll>

@@ -22,8 +22,8 @@ const Footer = () => {
                 aria-label="GR Enspired Magazine home"
               >
                 <BrandLogo
-                  className="h-20 md:h-24"
-                  imageClassName="h-full w-auto contrast-125"
+                  className="h-24 md:h-28"
+                  imageClassName="h-full w-auto"
                   loading="lazy"
                 />
               </a>

@@ -113,8 +113,11 @@ const Issues = () => {
         
         <FadeInOnScroll direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
           <div className="flex flex-col space-y-2">
-            <h2 className="text-4xl md:text-5xl font-bold text-brand-lightText dark:text-white tracking-tight">Recent Issues</h2>
-            <p className="text-brand-pink text-lg md:text-xl font-light">Explore our latest magazine editions</p>
+            <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,3.5rem)]">
+              <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Recent</span>
+              <span className="block text-brand-lightMuted/40 dark:text-white/30">Issues</span>
+            </h2>
+            <p className="text-brand-pink text-lg md:text-xl font-light mt-4">Explore our latest magazine editions</p>
           </div>
           <button className="hidden md:flex items-center space-x-2 text-brand-magenta hover:text-brand-lightText dark:hover:text-white transition-colors group mt-6 md:mt-0">
             <span className="text-sm font-semibold uppercase tracking-wider">View All Archive</span>

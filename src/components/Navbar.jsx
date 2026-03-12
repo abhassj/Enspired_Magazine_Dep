@@ -24,8 +24,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md py-2 shadow-lg' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md pt-1 pb-1.5 shadow-lg' : 'bg-transparent pt-1.5 pb-2'}`}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center -translate-y-0.5">
         {/* Logo */}
         <Link
           to="/"
@@ -33,8 +33,8 @@ const Navbar = () => {
           aria-label="GR Enspired Magazine home"
         >
           <BrandLogo
-            className="h-16 md:h-[4.5rem] lg:h-20"
-            imageClassName="h-full w-auto contrast-125"
+            className="h-20 md:h-24 lg:h-28"
+            imageClassName="h-full w-auto"
             loading="eager"
           />
         </Link>
@@ -109,8 +109,8 @@ const Navbar = () => {
               aria-label="GR Enspired Magazine home"
             >
               <BrandLogo
-                className="h-16"
-                imageClassName="h-full w-auto contrast-125"
+                className="h-20"
+                imageClassName="h-full w-auto"
                 loading="eager"
               />
             </Link>

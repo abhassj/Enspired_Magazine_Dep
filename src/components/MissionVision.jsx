@@ -26,8 +26,9 @@ const MissionVision = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex items-center space-x-4 mb-6">
-                <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-bold text-brand-lightText dark:text-white tracking-tight leading-[1.05]">
-                  Our Mission
+                <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4rem)]">
+                  <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Our</span>
+                  <span className="block text-brand-lightMuted/40 dark:text-white/30">Mission</span>
                 </h2>
               </div>
 
@@ -64,8 +65,9 @@ const MissionVision = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex flex-col mb-6">
-                <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-bold text-brand-lightText dark:text-white tracking-tight leading-[1.05]">
-                  Our Vision
+                <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4rem)]">
+                  <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Our</span>
+                  <span className="block text-brand-lightMuted/40 dark:text-white/30">Vision</span>
                 </h2>
               </div>
               

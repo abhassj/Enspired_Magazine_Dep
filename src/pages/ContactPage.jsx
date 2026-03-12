@@ -173,7 +173,7 @@ const ContactPage = () => {
         <div className="relative max-w-7xl mx-auto px-6 md:px-12">
 
           {/* ── ROW: Title text + CEO image side by side ── */}
-          <div className="pt-36 md:pt-44 lg:pt-48 flex flex-col lg:flex-row items-start lg:items-end gap-8 lg:gap-0">
+          <div className="pt-28 md:pt-32 lg:pt-36 flex flex-col lg:flex-row items-start lg:items-end gap-8 lg:gap-0">
 
             {/* LEFT: Giant title + tagline */}
             <motion.div style={{ y: heroParallax }} className="flex-1 lg:pr-8 relative z-20">
@@ -190,24 +190,29 @@ const ContactPage = () => {
                 </span>
               </motion.div>
 
-              {/* GIANT title */}
-              <h1 className="font-condensed font-extrabold uppercase leading-[0.82] tracking-[-0.02em]
-                             text-[clamp(5rem,13vw,11rem)]
-                             text-brand-lightText dark:text-white">
-                {heroInView && (
-                  <>
-                    <span className="block">
-                      {'CONTACT'.split('').map((c, i) => (
-                        <AnimatedLetter key={`c-${i}`} char={c} index={i} />
-                      ))}
-                    </span>
-                    <span className="block bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink bg-clip-text text-transparent">
-                      {'US'.split('').map((c, i) => (
-                        <AnimatedLetter key={`u-${i}`} char={c} index={i + 7} />
-                      ))}
-                    </span>
-                  </>
-                )}
+              {/* GIANT title with enhanced effects */}
+              <h1 className="font-condensed font-extrabold uppercase leading-[0.9] tracking-wide
+                             text-[clamp(10rem,10vw,10rem)]
+                             relative py-2">
+                {/* Subtle background glow behind the text */}
+                <div className="absolute -inset-4 md:-inset-6 bg-gradient-to-r from-brand-purple/[0.08] via-brand-magenta/[0.12] to-brand-pink/[0.08] dark:from-brand-purple/[0.06] dark:via-brand-magenta/[0.1] dark:to-brand-pink/[0.06] blur-2xl -z-10 opacity-80" />
+                
+                <span className="block relative z-10 text-brand-lightText dark:text-white drop-shadow-[0_2px_8px_rgba(26,10,46,0.15)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+                  {heroInView && (
+                    <>
+                      <span className="block mb-2">
+                        {'CONTACT'.split('').map((c, i) => (
+                          <AnimatedLetter key={`c-${i}`} char={c} index={i} />
+                        ))}
+                      </span>
+                      <span className="block bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(214,51,132,0.2)] pb-4">
+                        {'US'.split('').map((c, i) => (
+                          <AnimatedLetter key={`u-${i}`} char={c} index={i + 7} />
+                        ))}
+                      </span>
+                    </>
+                  )}
+                </span>
               </h1>
 
               {/* Tagline */}

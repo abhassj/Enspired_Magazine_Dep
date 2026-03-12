@@ -86,10 +86,11 @@ const Testimonials = () => {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <FadeInOnScroll direction="up" className="mb-14 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-brand-lightText dark:text-white mb-4">
-            Client Testimonials
+          <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4rem)] mb-4">
+            <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Client</span>
+            <span className="block text-brand-lightMuted/40 dark:text-white/30">Testimonials</span>
           </h2>
-          <p className="max-w-2xl mx-auto text-brand-pink dark:text-brand-pink text-lg">
+          <p className="max-w-2xl mx-auto text-brand-pink dark:text-brand-pink text-lg mt-6">
             Stories from readers, contributors, and business leaders shaping the Enspired community.
           </p>
         </FadeInOnScroll>
