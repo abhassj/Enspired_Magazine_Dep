@@ -15,6 +15,8 @@ const CONTACT_CHANNELS = [
     href: 'tel:+27112345678',
     cta: 'Call Us',
     gradient: 'from-violet-500 to-purple-600',
+    iconFrame: 'from-violet-500 via-fuchsia-500 to-purple-700',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(109,40,217,0.75)]',
   },
   {
     icon: Mail,
@@ -23,6 +25,8 @@ const CONTACT_CHANNELS = [
     href: 'mailto:enspiredmag@gmail.com',
     cta: 'Send Mail',
     gradient: 'from-pink-500 to-rose-600',
+    iconFrame: 'from-pink-500 via-rose-500 to-fuchsia-600',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(225,29,119,0.7)]',
   },
   {
     icon: Instagram,
@@ -31,6 +35,8 @@ const CONTACT_CHANNELS = [
     href: 'https://instagram.com/enspired_magazine',
     cta: 'Follow Us',
     gradient: 'from-amber-500 to-orange-600',
+    iconFrame: 'from-orange-400 via-pink-500 to-fuchsia-600',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(249,115,22,0.75)]',
   },
   {
     icon: Linkedin,
@@ -39,6 +45,8 @@ const CONTACT_CHANNELS = [
     href: 'https://linkedin.com/company/enspired-magazine',
     cta: 'Connect',
     gradient: 'from-cyan-500 to-blue-600',
+    iconFrame: 'from-cyan-400 via-sky-500 to-blue-700',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(14,165,233,0.7)]',
   },
 ];
 
@@ -59,7 +67,7 @@ const AnimatedLetter = ({ char, index }) => (
 );
 
 /* ─── contact card ─── */
-const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, index }) => {
+const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame, iconGlow, index }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
@@ -95,10 +103,22 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, index }) =
         </div>
 
         <div className="relative z-10 flex flex-col h-full">
-          {/* Icon circle */}
-          <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-6 md:mb-8
-                          shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-500`}>
-            <Icon size={22} className="text-white md:size-24" />
+          {/* Layered icon badge for premium visual presence */}
+          <div className="relative mb-6 md:mb-8">
+            <div
+              className={`absolute -inset-3 rounded-[22px] bg-gradient-to-br ${gradient} opacity-20 blur-xl
+                          group-hover:opacity-35 transition-opacity duration-500`}
+            />
+            <div
+              className={`relative w-[58px] h-[58px] md:w-[66px] md:h-[66px] rounded-[20px] p-[1.5px]
+                          bg-gradient-to-br ${iconFrame} ${iconGlow}
+                          group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-500`}
+            >
+              <div className="relative h-full w-full rounded-[18px] bg-white dark:bg-[#140d1f] flex items-center justify-center border border-white/70 dark:border-white/10 overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.55),transparent_45%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_45%)]" />
+                <Icon size={27} className="relative z-10 text-brand-lightText dark:text-white" strokeWidth={2.3} />
+              </div>
+            </div>
           </div>
 
           {/* Title */}
