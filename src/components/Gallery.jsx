@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
@@ -73,15 +74,23 @@ const galleryData = [
 const ImageModal = ({ src, onClose }) => {
   if (!src) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/90 backdrop-blur-md flex justify-center items-center z-[100]"
+        className="fixed inset-0 bg-black/92 backdrop-blur-md flex justify-center items-center z-[200] p-4 md:p-8"
         onClick={onClose}
       >
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 18 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full max-w-6xl flex items-center justify-center"
+          onClick={(e) => e.stopPropagation()}
+        >
         <motion.img
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -89,17 +98,18 @@ const ImageModal = ({ src, onClose }) => {
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           src={src}
           alt="Enlarged view"
-          className="max-w-[90vw] max-h-[90vh] rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] object-contain"
-          onClick={(e) => e.stopPropagation()}
+          className="max-w-[92vw] max-h-[88vh] rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] object-contain"
         />
         <button
-          className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+          className="absolute top-4 right-4 md:top-6 md:right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-colors"
           onClick={onClose}
         >
           <X size={24} />
         </button>
+        </motion.div>
       </motion.div>
     </AnimatePresence>
+    , document.body
   );
 };
 
@@ -117,8 +127,20 @@ export function Gallery() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    if (!modalImage) return undefined;
+
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+    body.style.overflow = 'hidden';
+
+    return () => {
+      body.style.overflow = previousOverflow;
+    };
+  }, [modalImage]);
+
   return (
-    <section id="gallery" className="py-24 bg-white dark:bg-brand-dark relative z-10 overflow-hidden">
+    <section id="gallery" className="py-24 bg-white dark:bg-brand-dark relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
         <FadeInOnScroll direction="up" className="text-center mb-16">
