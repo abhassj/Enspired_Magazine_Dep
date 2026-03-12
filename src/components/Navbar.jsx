@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { Link } from 'react-router-dom';
 import BrandLogo from './BrandLogo';
 
 const Navbar = () => {
@@ -18,16 +19,16 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'HOME', href: '#' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'HOME', href: '/' },
+    { name: 'CONTACT', href: '/contact' },
   ];
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md py-2 shadow-lg' : 'bg-transparent py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
         {/* Logo */}
-        <a
-          href="#"
+        <Link
+          to="/"
           className="brand-logo-wrap"
           aria-label="GR Enspired Magazine home"
         >
@@ -36,14 +37,14 @@ const Navbar = () => {
             imageClassName="h-full w-auto contrast-125"
             loading="eager"
           />
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8 text-[10px] md:text-xs font-bold tracking-[0.15em] text-gray-800 dark:text-white transition-colors">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="hover:text-black/70 dark:hover:text-brand-light/70 transition-colors drop-shadow-md uppercase">
+            <Link key={link.name} to={link.href} className="hover:text-black/70 dark:hover:text-brand-light/70 transition-colors drop-shadow-md uppercase">
               {link.name}
-            </a>
+            </Link>
           ))}
           <button
             onClick={toggleTheme}
@@ -101,8 +102,8 @@ const Navbar = () => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 w-full bg-white dark:bg-brand-dark/95 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 p-6 md:hidden flex flex-col space-y-6 text-center"
           >
-            <a
-              href="#"
+            <Link
+              to="/"
               onClick={() => setMobileMenuOpen(false)}
               className="brand-logo-wrap mx-auto"
               aria-label="GR Enspired Magazine home"
@@ -112,16 +113,16 @@ const Navbar = () => {
                 imageClassName="h-full w-auto contrast-125"
                 loading="eager"
               />
-            </a>
+            </Link>
             {navLinks.map((link) => (
-              <a 
+              <Link 
                 key={link.name} 
-                href={link.href} 
+                to={link.href} 
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-bold tracking-[0.15em] text-gray-800 dark:text-white uppercase"
                >
                 {link.name}
-              </a>
+              </Link>
             ))}
             <button className="bg-brand-magenta text-white px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm mt-4 max-w-xs mx-auto w-full shadow-lg">
               Subscribe
