@@ -70,13 +70,13 @@ const Hero = () => {
         
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full min-h-screen flex items-center pt-24 md:pt-0 relative">
           <div className="flex flex-col space-y-6 max-w-xl pointer-events-auto pt-4 md:pt-10 lg:pt-12">
-            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[4.5rem] font-sans font-bold text-brand-lightText dark:text-white leading-[1.05] tracking-tight mb-4 md:mb-6 mt-4 md:mt-8">
-              Empowering <span className="text-brand-magenta">women</span> to <br className="hidden md:block"/> 
+            <h1 className="text-[2.6rem] md:text-[4.2rem] lg:text-[5rem] font-condensed font-bold uppercase text-brand-lightText dark:text-white leading-[1.05] tracking-wide mb-4 md:mb-6 mt-4 md:mt-8">
+              Empowering <span className="text-magic-gradient">Individuals</span> to <br className="hidden md:block"/> 
               dream, lead, <br className="hidden lg:block"/> and inspire.
             </h1>
             
             <p className="text-sm md:text-[1.1rem] text-brand-lightMuted dark:text-white/80 max-w-xl font-sans font-light leading-relaxed mb-4 border-l-4 border-brand-magenta pl-4 md:pl-6 text-justify sm:text-left">
-              A global magazine celebrating the voices, journeys, and achievements of women in business and everyday life — sharing stories, knowledge, and opportunities that turn ambition into success.
+              A global magazine celebrating the voices, journeys, and achievements of Individuals in business and everyday life — sharing stories, knowledge, and opportunities that turn ambition into success.
             </p>
             
             <div className="pt-2 md:pt-4">

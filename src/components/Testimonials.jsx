@@ -53,20 +53,20 @@ const cardClasses =
 
 const TestimonialCard = ({ item }) => (
   <article className={cardClasses}>
-    <div className="text-brand-magenta text-4xl leading-none mb-3">&ldquo;</div>
+    <div className="text-magic-gradient inline-block text-4xl leading-none mb-3">&ldquo;</div>
     <p className="text-brand-lightText dark:text-white/90 leading-relaxed text-sm md:text-base min-h-[112px]">{item.quote}</p>
 
-    <div className="h-px w-full bg-brand-magenta/40 my-5"></div>
+    <div className="h-px w-full bg-brand-blue/40 my-5"></div>
 
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-brand-magenta/15 border border-brand-magenta/30"></div>
+        <div className="w-10 h-10 rounded-full bg-brand-blue/15 border border-brand-blue/30"></div>
         <div>
           <p className="text-sm font-semibold text-brand-lightText dark:text-white">{item.name}</p>
           <p className="text-xs text-brand-lightMuted dark:text-white/60">{item.role}</p>
         </div>
       </div>
-      <div className="flex items-center gap-1 text-brand-magenta">
+      <div className="flex items-center gap-1 text-brand-blue">
         {Array.from({ length: 5 }).map((_, idx) => (
           <Star key={idx} size={12} fill="currentColor" strokeWidth={1.5} />
         ))}
@@ -90,7 +90,7 @@ const Testimonials = () => {
             <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Client</span>
             <span className="block text-brand-lightMuted/40 dark:text-white/30">Testimonials</span>
           </h2>
-          <p className="max-w-2xl mx-auto text-brand-pink dark:text-brand-pink text-lg mt-6">
+          <p className="max-w-2xl mx-auto text-magic-gradient text-lg mt-6">
             Stories from readers, contributors, and business leaders shaping the Enspired community.
           </p>
         </FadeInOnScroll>

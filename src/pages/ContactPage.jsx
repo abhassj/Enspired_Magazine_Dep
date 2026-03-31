@@ -136,7 +136,7 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
           </div>
 
           {/* CTA */}
-          <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-bold text-brand-magenta uppercase tracking-[0.15em]
+          <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-bold text-magic-gradient uppercase tracking-[0.15em]
                           group-hover:gap-3 transition-all duration-300">
             {cta}
             <ArrowUpRight
@@ -196,7 +196,7 @@ const ContactPage = () => {
                 className="flex items-center justify-center lg:justify-start gap-2 mb-4 md:mb-6"
               >
                 <Sparkles size={14} className="text-brand-magenta" />
-                <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] font-semibold text-brand-magenta">
+                <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] font-semibold text-magic-gradient inline-block">
                   Let's Talk
                 </span>
               </motion.div>
@@ -216,7 +216,7 @@ const ContactPage = () => {
                           <AnimatedLetter key={`c-${i}`} char={c} index={i} />
                         ))}
                       </span>
-                      <span className="block bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(214,51,132,0.15)] pb-1 md:pb-4">
+                      <span className="block bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(0,163,255,0.15)] pb-1 md:pb-4">
                         {'US'.split('').map((c, i) => (
                           <AnimatedLetter key={`u-${i}`} char={c} index={i + 7} />
                         ))}
@@ -242,7 +242,7 @@ const ContactPage = () => {
                 initial={{ scaleX: 0 }}
                 animate={heroInView ? { scaleX: 1 } : {}}
                 transition={{ duration: 1.2, delay: 1 }}
-                className="mt-8 md:mt-10 h-[2px] w-20 md:w-32 bg-gradient-to-r from-brand-magenta to-transparent origin-left mx-auto lg:mx-0"
+                className="mt-8 md:mt-10 h-[2px] w-20 md:w-32 bg-gradient-to-r from-brand-blue to-transparent origin-left mx-auto lg:mx-0"
               />
             </motion.div>
 
@@ -288,7 +288,7 @@ const ContactPage = () => {
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide">
                   Grace Ramaboa
                 </h3>
-                <p className="mt-0.5 md:mt-1 text-[11px] md:text-sm font-semibold text-brand-magenta tracking-wider uppercase">
+                <p className="mt-0.5 md:mt-1 text-[11px] md:text-sm font-semibold text-magic-gradient tracking-wider uppercase">
                   Founder & CEO
                 </p>
                 <p className="mt-3 text-xs md:text-sm text-brand-lightMuted dark:text-white/45 font-light leading-relaxed md:leading-[1.8]">
@@ -327,8 +327,8 @@ const ContactPage = () => {
             className="mb-12 md:mb-20 text-center sm:text-left"
           >
             <div className="flex items-center justify-center sm:justify-start gap-3 mb-3 md:mb-4">
-              <div className="h-[2px] w-8 bg-brand-magenta rounded-full" />
-              <span className="text-[10px] uppercase tracking-[0.35em] font-semibold text-brand-magenta">
+              <div className="h-[2px] w-8 bg-brand-blue rounded-full" />
+              <span className="text-[10px] uppercase tracking-[0.35em] font-semibold text-magic-gradient inline-block">
                 Get In Touch
               </span>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
@@ -7,14 +7,24 @@ import BrandLogo from './BrandLogo';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -24,25 +34,25 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md pt-1 pb-1.5 shadow-lg' : 'bg-transparent pt-1.5 pb-2'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'} ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md pt-1 pb-1 shadow-lg' : 'bg-transparent pt-1 pb-1'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-12 flex justify-between items-center -translate-y-0.5">
-        {/* Logo — smaller on mobile */}
+        {/* Logo */}
         <Link
           to="/"
-          className="brand-logo-wrap"
+          className="brand-logo-wrap mt-1 -ml-2 md:-ml-4"
           aria-label="GR Enspired Magazine home"
         >
           <BrandLogo
-            className="h-14 md:h-24 lg:h-28"
+            className="h-14 md:h-[84px] lg:h-[100px]"
             imageClassName="h-full w-auto"
             loading="eager"
           />
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-8 text-[10px] md:text-xs font-bold tracking-[0.15em] text-gray-800 dark:text-white transition-colors">
+        <div className="hidden md:flex items-center space-x-8 text-[10px] md:text-sm font-bold tracking-[0.1em] text-gray-800 dark:text-white transition-colors">
           {navLinks.map((link) => (
-            <Link key={link.name} to={link.href} className="hover:text-black/70 dark:hover:text-brand-light/70 transition-colors drop-shadow-md uppercase">
+            <Link key={link.name} to={link.href} className="hover:text-brand-pink hover:drop-shadow-[0_0_8px_rgba(255,77,166,0.6)] dark:hover:drop-shadow-[0_0_10px_rgba(255,77,166,0.9)] transition-all duration-300 drop-shadow-sm uppercase">
               {link.name}
             </Link>
           ))}
@@ -62,9 +72,6 @@ const Navbar = () => {
                 {isDark ? <Moon size={18} /> : <Sun size={18} />}
               </motion.div>
             </AnimatePresence>
-          </button>
-          <button className="bg-brand-magenta/80 backdrop-blur-sm text-white px-6 py-2.5 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-brand-magenta transition-all shadow-[0_4px_14px_0_rgba(214,51,132,0.39)]">
-            Subscribe
           </button>
         </div>
 
@@ -109,7 +116,7 @@ const Navbar = () => {
               aria-label="GR Enspired Magazine home"
             >
               <BrandLogo
-                className="h-16"
+                className="h-12"
                 imageClassName="h-full w-auto"
                 loading="eager"
               />
@@ -120,13 +127,10 @@ const Navbar = () => {
                 to={link.href} 
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-bold tracking-[0.15em] text-gray-800 dark:text-white uppercase"
-               >
+              >
                 {link.name}
               </Link>
             ))}
-            <button className="bg-brand-magenta text-white px-6 py-3 rounded-full font-bold uppercase tracking-wider text-sm mt-2 max-w-xs mx-auto w-full shadow-lg">
-              Subscribe
-            </button>
           </motion.div>
         )}
       </AnimatePresence>

@@ -32,23 +32,23 @@ const MissionVision = () => {
                 </h2>
               </div>
 
-              <div className="h-1.5 w-20 bg-gradient-to-r from-brand-purple to-brand-magenta mb-8 rounded-full shadow-[0_0_15px_rgba(214,51,132,0.4)]"></div>
+              <div className="h-1.5 w-20 bg-gradient-to-r from-brand-blue to-brand-pink mb-8 rounded-full shadow-[0_0_15px_rgba(0,163,255,0.4)]"></div>
 
-              <p className="text-lg md:text-xl lg:text-[1.4rem] text-brand-magenta dark:text-brand-pink font-medium leading-relaxed mb-8">
+              <p className="text-lg md:text-xl lg:text-[1.4rem] text-magic-gradient font-medium leading-relaxed mb-8">
                 A magazine designed to educate, promote and enspire women in business and daily living through:
               </p>
               
               <ul className="space-y-6 text-base md:text-lg text-brand-lightText/80 dark:text-white/70 font-light leading-[1.8]">
                 <li className="flex items-start group">
-                  <span className="block w-2.5 h-2.5 mt-2 mr-5 bg-brand-magenta shrink-0 transform group-hover:rotate-45 transition-transform duration-300 shadow-[0_0_10px_rgba(214,51,132,0.3)]"></span>
+                  <span className="block w-2.5 h-2.5 mt-2 mr-5 bg-brand-blue shrink-0 transform group-hover:rotate-45 transition-transform duration-300 shadow-[0_0_10px_rgba(0,163,255,0.3)]"></span>
                   <span>Business tips to crack the entrepreneurial journey, mentorship programmes unravelling access to finance - meet Financiers, through print media, fashion - meet Divas, Health and Beauty and more.</span>
                 </li>
                 <li className="flex items-start group">
-                  <span className="block w-2.5 h-2.5 mt-2 mr-5 bg-brand-magenta shrink-0 transform group-hover:rotate-45 transition-transform duration-300 shadow-[0_0_10px_rgba(214,51,132,0.3)]"></span>
+                  <span className="block w-2.5 h-2.5 mt-2 mr-5 bg-brand-blue shrink-0 transform group-hover:rotate-45 transition-transform duration-300 shadow-[0_0_10px_rgba(0,163,255,0.3)]"></span>
                   <span>Sharing success stories of youth and SME's (Small Micro Medium Enterprises).</span>
                 </li>
                 <li className="flex items-start group">
-                  <span className="block w-2.5 h-2.5 mt-2 mr-5 bg-brand-magenta shrink-0 transform group-hover:rotate-45 transition-transform duration-300 shadow-[0_0_10px_rgba(214,51,132,0.3)]"></span>
+                  <span className="block w-2.5 h-2.5 mt-2 mr-5 bg-brand-blue shrink-0 transform group-hover:rotate-45 transition-transform duration-300 shadow-[0_0_10px_rgba(0,163,255,0.3)]"></span>
                   <span>Mapping a gateway to success whilst creating new platforms.</span>
                 </li>
               </ul>
@@ -71,11 +71,11 @@ const MissionVision = () => {
                 </h2>
               </div>
               
-              <div className="h-1.5 w-20 bg-gradient-to-r from-brand-magenta to-brand-pink mb-8 rounded-full shadow-[0_0_15px_rgba(255,77,166,0.4)]"></div>
+              <div className="h-1.5 w-20 bg-gradient-to-r from-brand-blue to-brand-pink mb-8 rounded-full shadow-[0_0_15px_rgba(0,163,255,0.4)]"></div>
 
               <div className="relative">
                 <p className="text-base md:text-lg lg:text-[1.2rem] text-brand-lightText/80 dark:text-white/70 font-light leading-[1.8] relative z-10">
-                  <span className="text-brand-magenta font-semibold block mb-3 text-lg md:text-xl lg:text-[1.4rem]">To encourage women to be Brave &amp; Bold,</span> 
+                  <span className="text-magic-gradient font-semibold block mb-3 text-lg md:text-xl lg:text-[1.4rem]">To encourage women to be Brave &amp; Bold,</span> 
                   to never give up and never stop dreaming, turning their dreams into reality and achieving end goals.
                 </p>
               </div>

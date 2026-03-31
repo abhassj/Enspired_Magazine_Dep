@@ -171,7 +171,7 @@ export function Gallery() {
             <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Our</span>
             <span className="block text-brand-lightMuted/40 dark:text-white/30">Gallery</span>
           </h2>
-          <p className="text-brand-pink dark:text-brand-pink max-w-2xl mx-auto text-base md:text-lg mt-4 md:mt-6">
+          <p className="text-magic-gradient max-w-2xl mx-auto text-base md:text-lg mt-4 md:mt-6">
             A glimpse into the world of Enspired — events, launches, and unforgettable moments.
           </p>
         </FadeInOnScroll>

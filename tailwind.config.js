@@ -9,6 +9,7 @@ export default {
     extend: {
       colors: {
         brand: {
+          blue: '#00A3FF',
           purple: '#5C2D91',
           magenta: '#D63384',
           lavender: '#E8D7FF',

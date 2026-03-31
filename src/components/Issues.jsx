@@ -117,7 +117,7 @@ const Issues = () => {
               <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Recent</span>
               <span className="block text-brand-lightMuted/40 dark:text-white/30">Issues</span>
             </h2>
-            <p className="text-brand-pink text-lg md:text-xl font-light mt-4">Explore our latest magazine editions</p>
+            <p className="text-magic-gradient inline-block text-lg md:text-xl font-light mt-4">Explore our latest magazine editions</p>
           </div>
           <button className="hidden md:flex items-center space-x-2 text-brand-magenta hover:text-brand-lightText dark:hover:text-white transition-colors group mt-6 md:mt-0">
             <span className="text-sm font-semibold uppercase tracking-wider">View All Archive</span>
@@ -178,10 +178,10 @@ const Issues = () => {
 
                 {/* Content Area */}
                 <div className="p-8 flex flex-col flex-grow relative z-20 -mt-10">
-                  <span className="text-brand-magenta text-xs font-bold uppercase tracking-[0.2em] mb-3 inline-block">
+                  <span className="text-magic-gradient text-xs font-bold uppercase tracking-[0.2em] mb-3 inline-block">
                     {issue.category}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-snug group-hover/card:text-brand-magenta transition-colors duration-300">
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-snug group-hover/card:text-brand-blue transition-colors duration-300">
                     {issue.title}
                   </h3>
                   <p className="text-brand-lightMuted dark:text-white/60 text-sm leading-relaxed mb-8 line-clamp-3">

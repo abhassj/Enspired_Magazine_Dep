@@ -3,6 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --color-brand-blue: #00A3FF;
   --color-brand-purple: #5C2D91;
   --color-brand-magenta: #D63384;
   --color-brand-lavender: #E8D7FF;
@@ -50,6 +51,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -59,12 +61,17 @@
   0% {
     transform: translateX(-50%);
   }
+
   100% {
     transform: translateX(0);
   }
 }
 
 @layer components {
+  .text-magic-gradient {
+    @apply bg-gradient-to-r from-[#2196F3] via-[#9C27B0] to-[#E91E63] text-transparent bg-clip-text;
+  }
+
   .brand-logo-wrap {
     @apply relative inline-flex items-center;
   }
@@ -124,7 +131,10 @@ section {
   contain-intrinsic-size: 1px 500px;
 }
 
-#gallery, #issues, #contact, #mission {
+#gallery,
+#issues,
+#contact,
+#mission {
   content-visibility: auto;
 }
 
@@ -132,6 +142,7 @@ section {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
