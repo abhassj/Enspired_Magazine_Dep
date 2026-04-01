@@ -5,21 +5,21 @@ import { X } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
 
 // Use exactly the working images and span classes requested by the user
-import img1 from '../assets/image gallery/image_01.jpg';
-import img2 from '../assets/image gallery/image_02.jpg';
-import img3 from '../assets/image gallery/image_03.jpg';
-import img4 from '../assets/image gallery/image_04.jpg';
-import img5 from '../assets/image gallery/image_05.jpg';
-import img6 from '../assets/image gallery/image_06.jpg';
-import img7 from '../assets/image gallery/image_07.jpg';
-import img8 from '../assets/image gallery/image_08.jpg';
-import img9 from '../assets/image gallery/image_09.jpg';
-import img10 from '../assets/image gallery/image_10.jpg';
-import img11 from '../assets/image gallery/image_11.jpg';
-import img12 from '../assets/image gallery/image_12.jpg';
-import img13 from '../assets/image gallery/image_13.jpg';
-import img14 from '../assets/image gallery/image_14.jpg';
-import img15 from '../assets/image gallery/image_15.jpg';
+import img1 from '../assets/Image Gallery/image_01.jpg';
+import img2 from '../assets/Image Gallery/image_02.jpg';
+import img3 from '../assets/Image Gallery/image_03.jpg';
+import img4 from '../assets/Image Gallery/image_04.jpg';
+import img5 from '../assets/Image Gallery/image_05.jpg';
+import img6 from '../assets/Image Gallery/image_06.jpg';
+import img7 from '../assets/Image Gallery/image_07.jpg';
+import img8 from '../assets/Image Gallery/image_08.jpg';
+import img9 from '../assets/Image Gallery/image_09.jpg';
+import img10 from '../assets/Image Gallery/image_10.jpg';
+import img11 from '../assets/Image Gallery/image_11.jpg';
+import img12 from '../assets/Image Gallery/image_12.jpg';
+import img13 from '../assets/Image Gallery/image_13.jpg';
+import img14 from '../assets/Image Gallery/image_14.jpg';
+import img15 from '../assets/Image Gallery/image_15.jpg';
 
 const galleryData = [
   { id: 1, src: img1, alt: "Enspired London Event", title: "Enspired London Event", span: "sm:col-span-2" },
