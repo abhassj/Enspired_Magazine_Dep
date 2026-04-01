@@ -3,6 +3,15 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
 import { motion } from 'framer-motion';
 
+import img1 from '../assets/cover images for issues/ISSUE 01.jfif';
+import img2 from '../assets/cover images for issues/ISSUE 02.jfif';
+import img3 from '../assets/cover images for issues/ISSUE 03.jfif';
+import img4 from '../assets/cover images for issues/ISSUE 04.jfif';
+import img5 from '../assets/cover images for issues/ISSUE 05.jfif';
+import img6 from '../assets/cover images for issues/ISSUE 06.jfif';
+import img7 from '../assets/cover images for issues/ISSUE 07 (SPECIAL COVER).jfif';
+import img8 from '../assets/cover images for issues/ISSUE 08.jfif';
+
 const issues = [
   {
     id: 1,
@@ -10,7 +19,7 @@ const issues = [
     year: '2025',
     category: 'CULTURE & LEADERSHIP',
     description: 'Exploring the influential voices shaping our generation — leaders, creators, and visionaries redefining what power means today.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop',
+    image: img1,
   },
   {
     id: 2,
@@ -18,7 +27,7 @@ const issues = [
     year: '2024',
     category: 'INNOVATION',
     description: 'A deep dive into the next generation of changemakers — young innovators, activists, and artists building a brighter future.',
-    image: 'https://images.unsplash.com/photo-1542156822-6924d1a71ace?q=80&w=800&auto=format&fit=crop',
+    image: img2,
   },
   {
     id: 3,
@@ -26,7 +35,7 @@ const issues = [
     year: '2024',
     category: 'ART & DESIGN',
     description: 'Celebrating the intersection of art, design, and technology — where creative brilliance meets modern innovation.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop',
+    image: img3,
   },
   {
     id: 4,
@@ -34,7 +43,7 @@ const issues = [
     year: '2024',
     category: 'TECHNOLOGY',
     description: 'A dedicated look into the emerging technologies transforming our future — from AI breakthroughs to green energy solutions.',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop',
+    image: img4,
   },
   {
     id: 5,
@@ -42,7 +51,31 @@ const issues = [
     year: '2023',
     category: 'ENVIRONMENT',
     description: 'Examining the brands, businesses, and leaders pioneering sustainable practices and fighting for a greener tomorrow.',
-    image: 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=800&auto=format&fit=crop',
+    image: img5,
+  },
+  {
+    id: 6,
+    title: 'The Lifestyle Issue',
+    year: '2023',
+    category: 'CULTURE & LIFE',
+    description: 'A curated exploration of modern living, highlighting trends across fashion, wellness, and mindful daily practices.',
+    image: img6,
+  },
+  {
+    id: 7,
+    title: 'The Elite Special',
+    year: '2022',
+    category: 'EXCLUSIVE',
+    description: 'A special collector’s edition featuring behind-the-scenes interviews and untold stories from our most requested visionaries.',
+    image: img7,
+  },
+  {
+    id: 8,
+    title: 'The Visionary Edit',
+    year: '2022',
+    category: 'FUTURE FORECAST',
+    description: 'Looking ahead to the next decade: bold ideas, disruptive mentalities, and the pioneers sketching the blueprint for tomorrow.',
+    image: img8,
   }
 ];
 

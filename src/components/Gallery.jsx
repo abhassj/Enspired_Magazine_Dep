@@ -5,70 +5,38 @@ import { X } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
 
 // Use exactly the working images and span classes requested by the user
+import img1 from '../assets/image gallery/image_01.jpg';
+import img2 from '../assets/image gallery/image_02.jpg';
+import img3 from '../assets/image gallery/image_03.jpg';
+import img4 from '../assets/image gallery/image_04.jpg';
+import img5 from '../assets/image gallery/image_05.jpg';
+import img6 from '../assets/image gallery/image_06.jpg';
+import img7 from '../assets/image gallery/image_07.jpg';
+import img8 from '../assets/image gallery/image_08.jpg';
+import img9 from '../assets/image gallery/image_09.jpg';
+import img10 from '../assets/image gallery/image_10.jpg';
+import img11 from '../assets/image gallery/image_11.jpg';
+import img12 from '../assets/image gallery/image_12.jpg';
+import img13 from '../assets/image gallery/image_13.jpg';
+import img14 from '../assets/image gallery/image_14.jpg';
+import img15 from '../assets/image gallery/image_15.jpg';
+
 const galleryData = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1470&auto=format&fit=crop",
-    alt: "Cityscape at dusk",
-    title: "Enspired London",
-    span: "col-span-1"
-  },
-  {
-    id: 2,
-    src: "https://ix-marketing.imgix.net/focalpoint.png?q=80&w=1470&auto=format&fit=crop",
-    alt: "Portrait",
-    title: "Editorial Showcase",
-    span: "sm:col-span-2"
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?q=80&w=1470&auto=format&fit=crop",
-    alt: "Sunlight through a forest",
-    title: "Nature & Design Panel",
-    span: "col-span-1"
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop",
-    alt: "Portrait of a person",
-    title: "Creative Minds",
-    span: "col-span-1"
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?q=80&w=1470&auto=format&fit=crop",
-    alt: "Wildlife photography",
-    title: "Global Visionaries Gala",
-    span: "sm:col-span-2"
-  },
-  {
-    id: 6,
-    src: "https://ix-marketing.imgix.net/bg-remove_after.png?q=80&w=1470&auto=format&fit=crop",
-    alt: "Modern architecture",
-    title: "Innovation Keynote",
-    span: "col-span-1"
-  },
-  {
-    id: 7,
-    src: "https://images.unsplash.com/photo-1488866022504-f2584929ca5f?q=80&w=1470&auto=format&fit=crop",
-    alt: "Starry night sky",
-    title: "Night of Excellence",
-    span: "col-span-1"
-  },
-  {
-    id: 8,
-    src: "https://ix-marketing.imgix.net/autocompress.png?q=80&w=1287&auto=format&fit=crop",
-    alt: "Street art",
-    title: "Community Meetup",
-    span: "col-span-1"
-  },
-  {
-    id: 9,
-    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1470&auto=format&fit=crop",
-    alt: "Mountain Range",
-    title: "Future Landscapes",
-    span: "sm:col-span-2"
-  },
+  { id: 1, src: img1, alt: "Enspired London Event", title: "Enspired London Event", span: "sm:col-span-2" },
+  { id: 2, src: img2, alt: "Fashion Week Spotlight", title: "Fashion Week Spotlight", span: "col-span-1" },
+  { id: 3, src: img3, alt: "Creative Minds Panel", title: "Creative Minds Panel", span: "col-span-1" },
+  { id: 4, src: img4, alt: "Modern Design Gala", title: "Modern Design Gala", span: "col-span-1" },
+  { id: 5, src: img5, alt: "VIP Access Experience", title: "VIP Access Experience", span: "col-span-1" },
+  { id: 6, src: img6, alt: "Cover Shoot Setup", title: "Cover Shoot Setup", span: "sm:col-span-2" },
+  { id: 7, src: img7, alt: "Annual Excellence Gala", title: "Annual Excellence Gala", span: "col-span-1" },
+  { id: 8, src: img8, alt: "Urban Street Style", title: "Urban Street Style", span: "col-span-1" },
+  { id: 9, src: img9, alt: "Tech Innovation Keynote", title: "Tech Innovation Keynote", span: "sm:col-span-2" },
+  { id: 10, src: img10, alt: "Leadership Summit", title: "Leadership Summit", span: "col-span-1" },
+  { id: 11, src: img11, alt: "Contemporary Art Expo", title: "Contemporary Art Expo", span: "col-span-1" },
+  { id: 12, src: img12, alt: "Live Music Session", title: "Live Music Session", span: "col-span-1" },
+  { id: 13, src: img13, alt: "Global Community Meetup", title: "Global Community Meetup", span: "sm:col-span-2" },
+  { id: 14, src: img14, alt: "Visionary Awards", title: "Visionary Awards", span: "col-span-1" },
+  { id: 15, src: img15, alt: "Enspired Afterparty", title: "Enspired Afterparty", span: "col-span-1" },
 ];
 
 const ImageModal = ({ src, onClose }) => {
@@ -113,22 +81,25 @@ const ImageModal = ({ src, onClose }) => {
   );
 };
 
-/* ─── Mobile Gallery Slider Card ─── */
-const MobileSliderCard = ({ img, onClick }) => (
+/* ─── Premium Marquee Slider Card ─── */
+const GallerySliderCard = ({ img, onClick }) => (
   <div
-    className="shrink-0 w-[75vw] h-[220px] rounded-2xl overflow-hidden relative cursor-pointer group"
+    className="shrink-0 w-[75vw] sm:w-[45vw] md:w-[320px] lg:w-[400px] h-[220px] md:h-[280px] lg:h-[320px] rounded-2xl md:rounded-3xl overflow-hidden relative cursor-pointer group shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.15)] transition-all duration-500 border border-transparent dark:border-white/5 hover:border-brand-magenta/40 mr-4 md:mr-8"
     onClick={onClick}
   >
     <img
       src={img.src}
       alt={img.alt}
-      className="w-full h-full object-cover"
+      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
       loading="lazy"
     />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4">
-      <p className="text-white text-sm font-bold tracking-wide">
-        {img.title}
-      </p>
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex items-end p-5 md:p-8 opacity-90 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+        <p className="text-white text-base md:text-xl font-bold tracking-wide">
+          {img.title}
+        </p>
+        <div className="w-8 h-1 bg-brand-magenta mt-2 md:mt-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 transform origin-left scale-x-0 group-hover:scale-x-100" />
+      </div>
     </div>
   </div>
 );
@@ -159,56 +130,65 @@ export function Gallery() {
     };
   }, [modalImage]);
 
-  // Duplicate the gallery data for infinite loop effect on mobile
-  const mobileSliderData = [...galleryData, ...galleryData];
+  // Split gallery into two tracks for the double marquee
+  const row1 = galleryData.slice(0, 8);
+  const row2 = galleryData.slice(8, 15);
+  
+  // Duplicate arrays to achieve seamless CSS marquee-left/right infinite loop
+  const row1Sliding = [...row1, ...row1];
+  const row2Sliding = [...row2, ...row2];
 
   return (
-    <section id="gallery" className="py-16 md:py-24 bg-white dark:bg-brand-dark relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="gallery" className="py-20 md:py-32 bg-white dark:bg-brand-dark relative z-10">
+      
+      {/* Background Decorators */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-purple/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-pink/5 blur-[120px] rounded-full pointer-events-none translate-y-1/3 -translate-x-1/3" />
+
+      <div className="max-w-[1600px] mx-auto relative z-20">
         
-        <FadeInOnScroll direction="up" className="text-center mb-10 md:mb-16">
-          <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2rem,8vw,4rem)] mb-4">
-            <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Our</span>
+        <FadeInOnScroll direction="up" className="text-center mb-12 md:mb-20 px-6">
+          <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4.5rem)] mb-4">
+            <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Event</span>
             <span className="block text-brand-lightMuted/40 dark:text-white/30">Gallery</span>
           </h2>
-          <p className="text-magic-gradient max-w-2xl mx-auto text-base md:text-lg mt-4 md:mt-6">
+          <p className="text-magic-gradient max-w-2xl mx-auto text-base md:text-xl font-medium tracking-wide mt-4 md:mt-6">
             A glimpse into the world of Enspired — events, launches, and unforgettable moments.
           </p>
         </FadeInOnScroll>
 
-        {/* ═══ Desktop Grid (md and above) ═══ */}
-        <div className="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px]">
-          {galleryData.map((img) => (
-            <div
-              key={img.id}
-              className={`group cursor-pointer relative overflow-hidden rounded-2xl ${img.span} bg-brand-lightCard dark:bg-white/5`}
-              onClick={() => openModal(img.src)}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <p className="text-white text-lg font-bold tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                  {img.title}
-                </p>
+        {/* ═══ Premium Double Marquee Sliders ═══ */}
+        {/* We use group/sliders to pause both tracks when hovering inside the container */}
+        <div className="w-full px-4 md:px-8 lg:px-12 group/sliders">
+          
+          <div className="w-full overflow-hidden flex flex-col gap-6 md:gap-8 pointer-events-auto rounded-[32px] md:rounded-[48px] bg-brand-lightCard/30 dark:bg-white/5 backdrop-blur-sm border border-brand-purple/5 dark:border-white/10">
+            
+            {/* Top Track - Scrolls Left */}
+            <div className="relative w-[100vw] sm:w-[150vw] md:w-[200vw] lg:w-[250vw] overflow-visible flex pt-6 md:pt-10">
+              <div className="marquee-track marquee-left group-hover/sliders:[animation-play-state:paused] hover:[animation-play-state:paused] transition-all duration-300">
+                {row1Sliding.map((img, idx) => (
+                  <GallerySliderCard
+                    key={`r1-${img.id}-${idx}`}
+                    img={img}
+                    onClick={() => openModal(img.src)}
+                  />
+                ))}
               </div>
             </div>
-          ))}
-        </div>
 
-        {/* ═══ Mobile Auto-Sliding Marquee (below md) ═══ */}
-        <div className="md:hidden overflow-hidden -mx-6">
-          <div className="gallery-slider-track flex gap-4 px-6">
-            {mobileSliderData.map((img, idx) => (
-              <MobileSliderCard
-                key={`mobile-${img.id}-${idx}`}
-                img={img}
-                onClick={() => openModal(img.src)}
-              />
-            ))}
+            {/* Bottom Track - Scrolls Right */}
+            <div className="relative w-[100vw] sm:w-[150vw] md:w-[200vw] lg:w-[250vw] overflow-visible flex pb-6 md:pb-10">
+              <div className="marquee-track marquee-right group-hover/sliders:[animation-play-state:paused] hover:[animation-play-state:paused] transition-all duration-300">
+                {row2Sliding.map((img, idx) => (
+                  <GallerySliderCard
+                    key={`r2-${img.id}-${idx}`}
+                    img={img}
+                    onClick={() => openModal(img.src)}
+                  />
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
