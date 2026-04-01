@@ -1,18 +1,18 @@
 import React, { useRef } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { Phone, Mail, Instagram, Linkedin, ArrowUpRight, MapPin, Sparkles } from 'lucide-react';
+import { Phone, Mail, Instagram, Facebook, ArrowUpRight, MapPin, Sparkles } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ceoImage from '../assets/ceo-placeholder.png';
+import ceoImage from '../assets/Ceo-final.png';
 
 /* ─── mock data ─── */
 const CONTACT_CHANNELS = [
   {
     icon: Phone,
     title: 'Phone',
-    lines: ['+27 11 234 5678', '+44 20 7946 0958'],
-    href: 'tel:+27112345678',
+    lines: ['UK: +44 78252 82654', 'SA: +27 74 461 3719'],
+    href: 'tel:+447825282654',
     cta: 'Call Us',
     gradient: 'from-brand-blue to-brand-purple',
     iconFrame: 'from-brand-blue via-brand-purple to-brand-magenta',
@@ -21,8 +21,8 @@ const CONTACT_CHANNELS = [
   {
     icon: Mail,
     title: 'Email',
-    lines: ['enspiredmag@gmail.com', 'hello@enspiredmagazine.com'],
-    href: 'mailto:enspiredmag@gmail.com',
+    lines: ['enspiredmag@outlook.com'],
+    href: 'mailto:enspiredmag@outlook.com',
     cta: 'Send Mail',
     gradient: 'from-brand-purple to-brand-magenta',
     iconFrame: 'from-brand-purple via-brand-magenta to-brand-pink',
@@ -31,18 +31,18 @@ const CONTACT_CHANNELS = [
   {
     icon: Instagram,
     title: 'Instagram',
-    lines: ['@enspired_magazine', '@enspired_uk'],
-    href: 'https://instagram.com/enspired_magazine',
+    lines: ['@enspiredmagazine1'],
+    href: 'https://www.instagram.com/enspiredmagazine1',
     cta: 'Follow Us',
     gradient: 'from-brand-magenta to-brand-pink',
     iconFrame: 'from-brand-magenta via-brand-pink to-brand-purple',
     iconGlow: 'shadow-[0_14px_32px_-16px_rgba(214,51,132,0.75)]',
   },
   {
-    icon: Linkedin,
-    title: 'LinkedIn',
-    lines: ['GR Enspired Magazine', 'Enspired Media Group'],
-    href: 'https://linkedin.com/company/enspired-magazine',
+    icon: Facebook,
+    title: 'Facebook',
+    lines: ['Enspired Women'],
+    href: 'https://www.facebook.com/enspiredwomen/',
     cta: 'Connect',
     gradient: 'from-brand-blue via-brand-purple to-brand-pink',
     iconFrame: 'from-brand-blue via-brand-magenta to-brand-pink',
@@ -184,7 +184,7 @@ const ContactPage = () => {
         <div className="relative max-w-7xl mx-auto px-6 md:px-12">
 
           {/* ── ROW: Title text + CEO image side by side ── */}
-          <div className="pt-24 md:pt-32 lg:pt-36 flex flex-col lg:flex-row items-center lg:items-end gap-12 lg:gap-0">
+          <div className="pt-20 md:pt-24 lg:pt-28 pb-36 lg:pb-48 flex flex-col lg:flex-row items-center lg:items-center gap-12 lg:gap-8">
 
             {/* LEFT: Giant title + tagline */}
             <motion.div style={{ y: heroParallax }} className="flex-1 lg:pr-8 relative z-20 text-center lg:text-left">
@@ -265,7 +265,7 @@ const ContactPage = () => {
                 <div className="relative overflow-hidden rounded-t-[2rem] rounded-b-xl px-4 md:px-0">
                   <img
                     src={ceoImage}
-                    alt="Grace Ramaboa — Founder & CEO"
+                    alt="VIKY & RESHMA — Founder & CEO"
                     className="w-full h-auto object-cover grayscale-[10%] contrast-[1.05]"
                     style={{
                       maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
@@ -286,15 +286,15 @@ const ContactPage = () => {
                 className="relative -mt-12 md:-mt-16 px-6 md:px-2 text-center lg:text-left"
               >
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide">
-                  Grace Ramaboa
+                  VIKY & RESHMA
                 </h3>
                 <p className="mt-0.5 md:mt-1 text-[11px] md:text-sm font-semibold text-magic-gradient tracking-wider uppercase">
                   Founder & CEO
                 </p>
                 <p className="mt-3 text-xs md:text-sm text-brand-lightMuted dark:text-white/45 font-light leading-relaxed md:leading-[1.8]">
-                  A visionary leader with a passion for amplifying African voices on the global stage.
-                  Grace founded GR Enspired Magazine to bridge cultures, celebrate creativity, and inspire
-                  the next generation of storytellers and change-makers.
+                  Viky and Reshma are visionary leaders behind GR Enspired , now expanded to London.
+                  Empowering women, men, and youth across Africa and beyond.
+                  Through magazine, they amplify voices, share inspiring stories, and support entrepreneurs building connection and financial stability.
                 </p>
               </motion.div>
             </motion.div>
