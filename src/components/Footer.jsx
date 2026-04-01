@@ -44,17 +44,37 @@ const Footer = () => {
               <div>
                 <h4 className="text-base md:text-lg font-bold mb-4 md:mb-6 text-brand-lightText dark:text-white tracking-wide">Issues</h4>
                 <ul className="space-y-3 md:space-y-4 text-brand-lightMuted dark:text-white/70 font-light text-xs md:text-sm">
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-purple/70 shrink-0"></span><span>Issue #4: Next Gen</span>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-purple/70 shrink-0 shadow-[0_0_8px_rgba(92,45,145,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Issue 01: Business</span>
                   </li>
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta/70 shrink-0"></span><span>Issue #3: Innovators</span>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta/70 shrink-0 shadow-[0_0_8px_rgba(214,51,132,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Issue 02: Motivation</span>
                   </li>
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-pink/70 shrink-0"></span><span>Issue #2: Global Impact</span>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-pink/70 shrink-0 shadow-[0_0_8px_rgba(255,77,166,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Issue 03: Resilience</span>
                   </li>
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-blue/70 shrink-0"></span><span>Issue #1: The Genesis</span>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-purple/70 shrink-0 shadow-[0_0_8px_rgba(92,45,145,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Issue 04: Finance</span>
+                  </li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta/70 shrink-0 shadow-[0_0_8px_rgba(214,51,132,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Issue 05: Growth</span>
+                  </li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-pink/70 shrink-0 shadow-[0_0_8px_rgba(255,77,166,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Issue 06: Leadership</span>
+                  </li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-purple/70 shrink-0 shadow-[0_0_8px_rgba(92,45,145,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Exclusive Edition: Awards</span>
+                  </li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2 md:gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta/70 shrink-0 shadow-[0_0_8px_rgba(214,51,132,0.6)]"></span>
+                    <span className="truncate group-hover:text-brand-pink transition-colors">Issue 08: Development</span>
                   </li>
                 </ul>
               </div>

@@ -179,7 +179,7 @@ const Testimonials = () => {
   const totalPages = Math.ceil(testimonials.length / visibleCols);
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-brand-dark">
+    <section className="pb-16 pt-8 md:pb-24 md:pt-12 relative overflow-hidden bg-white dark:bg-brand-dark">
       <svg width="0" height="0" className="absolute">
         <defs>
           <linearGradient id="star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -195,7 +195,7 @@ const Testimonials = () => {
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         
-        <FadeInOnScroll direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+        <FadeInOnScroll direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-14">
           <div className="flex flex-col space-y-2">
             <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4rem)]">
               <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Client</span>

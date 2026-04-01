@@ -4,39 +4,39 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
 
-// Use exactly the working images and span classes requested by the user
-import img1 from '../assets/Image Gallery/image_01.jpg';
-import img2 from '../assets/Image Gallery/image_02.jpg';
-import img3 from '../assets/Image Gallery/image_03.jpg';
-import img4 from '../assets/Image Gallery/image_04.jpg';
-import img5 from '../assets/Image Gallery/image_05.jpg';
-import img6 from '../assets/Image Gallery/image_06.jpg';
-import img7 from '../assets/Image Gallery/image_07.jpg';
-import img8 from '../assets/Image Gallery/image_08.jpg';
-import img9 from '../assets/Image Gallery/image_09.jpg';
-import img10 from '../assets/Image Gallery/image_10.jpg';
-import img11 from '../assets/Image Gallery/image_11.jpg';
-import img12 from '../assets/Image Gallery/image_12.jpg';
-import img13 from '../assets/Image Gallery/image_13.jpg';
-import img14 from '../assets/Image Gallery/image_14.jpg';
-import img15 from '../assets/Image Gallery/image_15.jpg';
+// Linux-compatible precise imports from 'Event Gallery'
+import img1 from '../assets/Event Gallery/img1_Beach Fashion show X KZN.jpg';
+import img2 from '../assets/Event Gallery/img2_Business showcasing event.jpg';
+import img3 from '../assets/Event Gallery/img3_Cover signings.jpg';
+import img4 from '../assets/Event Gallery/img4_Enspire X WILL.jpeg';
+import img5 from '../assets/Event Gallery/img5_Enspired High Tea Soirée.jpg';
+import img6 from '../assets/Event Gallery/img6_Gala event.jpg';
+import img7 from '../assets/Event Gallery/img7_Inspiring SME_s.jpg';
+import img8 from '../assets/Event Gallery/img8_Networking Workshops.jpg';
+import img9 from '../assets/Event Gallery/img9_Recognition events.jpg';
+import img10 from '../assets/Event Gallery/img10_Speaker sessions.jpg';
+import img11 from '../assets/Event Gallery/img11_TWA 2018 Finalist.jpeg';
+import img12 from '../assets/Event Gallery/img12_VIP launch party.jpg';
+import img13 from '../assets/Event Gallery/img13_Women leadership awards 2019.jpg';
+import img14 from '../assets/Event Gallery/img14_Women_s Wine pairing eve.jpg';
+import img15 from '../assets/Event Gallery/img15_Panel event.jpg';
 
 const galleryData = [
-  { id: 1, src: img1, alt: "Enspired London Event", title: "Enspired London Event", span: "sm:col-span-2" },
-  { id: 2, src: img2, alt: "Fashion Week Spotlight", title: "Fashion Week Spotlight", span: "col-span-1" },
-  { id: 3, src: img3, alt: "Creative Minds Panel", title: "Creative Minds Panel", span: "col-span-1" },
-  { id: 4, src: img4, alt: "Modern Design Gala", title: "Modern Design Gala", span: "col-span-1" },
-  { id: 5, src: img5, alt: "VIP Access Experience", title: "VIP Access Experience", span: "col-span-1" },
-  { id: 6, src: img6, alt: "Cover Shoot Setup", title: "Cover Shoot Setup", span: "sm:col-span-2" },
-  { id: 7, src: img7, alt: "Annual Excellence Gala", title: "Annual Excellence Gala", span: "col-span-1" },
-  { id: 8, src: img8, alt: "Urban Street Style", title: "Urban Street Style", span: "col-span-1" },
-  { id: 9, src: img9, alt: "Tech Innovation Keynote", title: "Tech Innovation Keynote", span: "sm:col-span-2" },
-  { id: 10, src: img10, alt: "Leadership Summit", title: "Leadership Summit", span: "col-span-1" },
-  { id: 11, src: img11, alt: "Contemporary Art Expo", title: "Contemporary Art Expo", span: "col-span-1" },
-  { id: 12, src: img12, alt: "Live Music Session", title: "Live Music Session", span: "col-span-1" },
-  { id: 13, src: img13, alt: "Global Community Meetup", title: "Global Community Meetup", span: "sm:col-span-2" },
-  { id: 14, src: img14, alt: "Visionary Awards", title: "Visionary Awards", span: "col-span-1" },
-  { id: 15, src: img15, alt: "Enspired Afterparty", title: "Enspired Afterparty", span: "col-span-1" },
+  { id: 1, src: img1, alt: "Beach Fashion Show X KZN", title: "Beach Fashion Show X KZN", span: "sm:col-span-2" },
+  { id: 2, src: img2, alt: "Business Showcasing Event", title: "Business Showcasing Event", span: "col-span-1" },
+  { id: 3, src: img3, alt: "Cover Signings", title: "Cover Signings", span: "col-span-1" },
+  { id: 4, src: img4, alt: "Enspire X WILL", title: "Enspire X WILL", span: "col-span-1" },
+  { id: 5, src: img5, alt: "Enspired High Tea Soirée", title: "Enspired High Tea Soirée", span: "col-span-1" },
+  { id: 6, src: img6, alt: "Gala Event", title: "Gala Event", span: "sm:col-span-2" },
+  { id: 7, src: img7, alt: "Inspiring SMEs", title: "Inspiring SMEs", span: "col-span-1" },
+  { id: 8, src: img8, alt: "Networking Workshops", title: "Networking Workshops", span: "col-span-1" },
+  { id: 9, src: img9, alt: "Recognition Events", title: "Recognition Events", span: "sm:col-span-2" },
+  { id: 10, src: img10, alt: "Speaker Sessions", title: "Speaker Sessions", span: "col-span-1" },
+  { id: 11, src: img11, alt: "TWA 2018 Finalist", title: "TWA 2018 Finalist", span: "col-span-1" },
+  { id: 12, src: img12, alt: "VIP Launch Party", title: "VIP Launch Party", span: "col-span-1" },
+  { id: 13, src: img13, alt: "Women Leadership Awards 2019", title: "Women Leadership Awards 2019", span: "sm:col-span-2" },
+  { id: 14, src: img14, alt: "Women's Wine Pairing Evening", title: "Women's Wine Pairing Evening", span: "col-span-1" },
+  { id: 15, src: img15, alt: "Panel Event", title: "Panel Event", span: "col-span-1" },
 ];
 
 const ImageModal = ({ src, onClose }) => {
@@ -139,7 +139,7 @@ export function Gallery() {
   const row2Sliding = [...row2, ...row2];
 
   return (
-    <section id="gallery" className="py-20 md:py-32 bg-white dark:bg-brand-dark relative z-10">
+    <section id="gallery" className="pb-16 pt-8 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-10">
       
       {/* Background Decorators */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-purple/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
@@ -147,7 +147,7 @@ export function Gallery() {
 
       <div className="max-w-[1600px] mx-auto relative z-20">
         
-        <FadeInOnScroll direction="up" className="text-center mb-12 md:mb-20 px-6">
+        <FadeInOnScroll direction="up" className="text-center mb-8 md:mb-14 px-6">
           <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,4.5rem)] mb-4">
             <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Event</span>
             <span className="block text-brand-lightMuted/40 dark:text-white/30">Gallery</span>

@@ -15,66 +15,66 @@ import img8 from '../assets/cover images for issues/ISSUE 08.jfif';
 const issues = [
   {
     id: 1,
-    title: 'The Power Edition',
-    year: '2025',
-    category: 'CULTURE & LEADERSHIP',
-    description: 'Exploring the influential voices shaping our generation — leaders, creators, and visionaries redefining what power means today.',
+    title: 'Enspired Women Magazine – Issue 01',
+    year: '2017',
+    category: 'BUSINESS',
+    description: 'Features Maseru Madlala, business tips, and overcoming personal adversity.',
     image: img1,
   },
   {
     id: 2,
-    title: 'Voices of Tomorrow',
-    year: '2024',
-    category: 'INNOVATION',
-    description: 'A deep dive into the next generation of changemakers — young innovators, activists, and artists building a brighter future.',
+    title: 'Enspired Women Magazine – Issue 02',
+    year: '2018', // Placeholder year
+    category: 'MOTIVATION',
+    description: 'Features Chloe Tryon, mindset for success, and risk management tips.',
     image: img2,
   },
   {
     id: 3,
-    title: 'Creative Minds',
-    year: '2024',
-    category: 'ART & DESIGN',
-    description: 'Celebrating the intersection of art, design, and technology — where creative brilliance meets modern innovation.',
+    title: 'Enspired Women Magazine – Issue 03',
+    year: '2018', // Placeholder year
+    category: 'RESILIENCE',
+    description: 'Features Thobile Mseleku, mental health resilience, and recession survival guides.',
     image: img3,
   },
   {
     id: 4,
-    title: 'Tech Horizons',
-    year: '2024',
-    category: 'TECHNOLOGY',
-    description: 'A dedicated look into the emerging technologies transforming our future — from AI breakthroughs to green energy solutions.',
+    title: 'Enspired Women Magazine – Issue 04',
+    year: '2019',
+    category: 'FINANCE',
+    description: 'Features Yegas Naidoo, financial management, and same-sex parenting rights.',
     image: img4,
   },
   {
     id: 5,
-    title: 'Sustainable Futures',
-    year: '2023',
-    category: 'ENVIRONMENT',
-    description: 'Examining the brands, businesses, and leaders pioneering sustainable practices and fighting for a greener tomorrow.',
+    title: 'Enspired Women Magazine – Issue 05',
+    year: '2019', // Placeholder year
+    category: 'GROWTH',
+    description: 'Features Estelle Symcox, real estate insights, and family business transitions.',
     image: img5,
   },
   {
     id: 6,
-    title: 'The Lifestyle Issue',
-    year: '2023',
-    category: 'CULTURE & LIFE',
-    description: 'A curated exploration of modern living, highlighting trends across fashion, wellness, and mindful daily practices.',
+    title: 'Enspired Women Magazine – Issue 06',
+    year: '2020',
+    category: 'LEADERSHIP',
+    description: 'Features Vodacom executives, corporate leadership, and 2020 financial planning.',
     image: img6,
   },
   {
     id: 7,
-    title: 'The Elite Special',
-    year: '2022',
-    category: 'EXCLUSIVE',
-    description: 'A special collector’s edition featuring behind-the-scenes interviews and untold stories from our most requested visionaries.',
+    title: 'Enspired Woman Magazine – Exclusive',
+    year: '2019',
+    category: 'AWARDS',
+    description: 'Celebrates the 2019 Enspired Women Top Achievers across various industries.',
     image: img7,
   },
   {
     id: 8,
-    title: 'The Visionary Edit',
-    year: '2022',
-    category: 'FUTURE FORECAST',
-    description: 'Looking ahead to the next decade: bold ideas, disruptive mentalities, and the pioneers sketching the blueprint for tomorrow.',
+    title: 'Enspired Women Magazine – Issue 08',
+    year: '2020', // Placeholder year
+    category: 'DEVELOPMENT',
+    description: 'Features Fundi Zwane, artistic entrepreneurship, and global business coaching.',
     image: img8,
   }
 ];
@@ -82,22 +82,37 @@ const issues = [
 const Issues = () => {
   const [current, setCurrent] = useState(0);
   const [cardWidth, setCardWidth] = useState(0);
+  const [dragBounds, setDragBounds] = useState({ left: 0, right: 0 });
   const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef(null);
   const firstCardRef = useRef(null);
 
-  // Measure card width on mount and resize
+  // Measure card width and compute drag bounds accurately on mount/resize
   useEffect(() => {
-    const measureCard = () => {
+    const handleResize = () => {
       if (firstCardRef.current) {
-        // card width + gap (24px for gap-6)
-        setCardWidth(firstCardRef.current.offsetWidth + 24);
+        // GPU-friendly precision calculation instead of offsetWidth
+        const width = firstCardRef.current.getBoundingClientRect().width;
+        const computedStepWidth = width + 24; // 24px represents gap-6
+        setCardWidth(computedStepWidth);
+
+        // Precompute boundaries natively to avoid Framer Motion layout thrashing during drag
+        const isDesktop = window.innerWidth >= 768;
+        const maxIndex = Math.max(0, issues.length - (isDesktop ? 3 : 1));
+        
+        setDragBounds({
+          right: 0,
+          left: -(maxIndex * computedStepWidth)
+        });
       }
     };
     
-    measureCard();
-    window.addEventListener('resize', measureCard);
-    return () => window.removeEventListener('resize', measureCard);
+    // Slight delay ensures the DOM is fully painted with styles
+    const timer = setTimeout(handleResize, 50);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const next = () => {
@@ -131,7 +146,7 @@ const Issues = () => {
         }
         return Math.min(prev + step, maxIndex);
       });
-    }, 3000);
+    }, 4000); // 4 seconds is more elegant for reading magazine info
     
     return () => clearInterval(timer);
   }, [isHovered]);
@@ -139,12 +154,12 @@ const Issues = () => {
   const xPosition = -(current * cardWidth);
 
   return (
-    <section id="issues" className="py-24 bg-white dark:bg-brand-dark relative z-20 overflow-hidden">
+    <section id="issues" className="pb-16 pt-8 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-20 overflow-hidden">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-purple/5 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         
-        <FadeInOnScroll direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+        <FadeInOnScroll direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-14">
           <div className="flex flex-col space-y-2">
             <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,8vw,3.5rem)]">
               <span className="block text-brand-lightText dark:text-white drop-shadow-sm">Recent</span>
@@ -160,18 +175,20 @@ const Issues = () => {
 
         {/* Framer Motion Butter Smooth Slider */}
         <div 
-          className="relative group overflow-hidden pb-12"
-          ref={containerRef}
+          className="relative group overflow-hidden pb-12 cursor-grab active:cursor-grabbing"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onTouchStart={() => setIsHovered(true)}
+          onTouchEnd={() => setIsHovered(false)}
         >
           <motion.div 
-            className="flex gap-6 w-max cursor-grab active:cursor-grabbing"
+            className="flex gap-6 w-max items-stretch"
             drag="x"
-            dragConstraints={containerRef}
-            dragElastic={0.1}
+            dragConstraints={dragBounds}
+            dragElastic={0.05}
             animate={{ x: xPosition }}
-            transition={{ type: "spring", stiffness: 70, damping: 20, mass: 1 }}
+            transition={{ type: "tween", ease: [0.32, 0.72, 0, 1], duration: 0.6 }}
+            style={{ willChange: "transform" }}
             onDragEnd={(e, { offset, velocity }) => {
               const swipe = Math.abs(offset.x) * velocity.x;
               const swipeThreshold = 5000;
@@ -195,38 +212,43 @@ const Issues = () => {
                 className="shrink-0 w-[80vw] sm:w-[85vw] md:w-[400px] flex flex-col bg-white dark:bg-[#0d0714] border border-gray-100 dark:border-white/10 hover:border-brand-magenta/40 rounded-2xl overflow-hidden group/card transition-shadow duration-500 shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.1)] relative"
               >
                 {/* Header Image Area */}
-                <div className="relative h-64 overflow-hidden bg-black dark:bg-black">
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-lightCard dark:from-[#0d0714] to-transparent z-10 opacity-90 h-full w-full bottom-0 pointer-events-none"></div>
+                <div className="relative w-full aspect-[1/1] overflow-hidden bg-brand-lightCard dark:bg-black">
+                  
+                  {/* The image is now explicitly rendered in 1:1 aspect ratio natively with the container, ensuring 100% precision from top without cropping */}
                   <img 
                     src={issue.image} 
                     alt={issue.title} 
-                    className="w-full h-full object-cover transform group-hover/card:scale-105 transition-transform duration-700 opacity-80 pointer-events-none" 
+                    className="absolute inset-0 w-full h-full object-cover object-top transform group-hover/card:scale-[1.03] transition-transform duration-700 opacity-95 pointer-events-none z-10" 
                   />
-                  <div className="absolute top-5 right-5 z-20 pointer-events-none">
-                    <span className="bg-white/80 dark:bg-white/10 backdrop-blur-md text-brand-lightText dark:text-white/90 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest border border-gray-200 dark:border-white/20">
-                      {issue.year}
+
+                  {/* Elegant fade out gradient overlapping the bottom of the image into the card content */}
+                  <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-white dark:from-[#0d0714] via-white/80 dark:via-[#0d0714]/80 to-transparent z-20 pointer-events-none"></div>
+
+                  <div className="absolute top-5 right-5 z-30 pointer-events-none">
+                    <span className="bg-white/90 dark:bg-black/60 backdrop-blur-md text-brand-lightText dark:text-white/90 text-[11px] font-bold px-3 py-1.5 rounded-full border border-gray-100 dark:border-white/10 shadow-sm">
+                      ISSUE {issue.year}
                     </span>
                   </div>
                 </div>
 
-                {/* Content Area */}
-                <div className="p-8 flex flex-col flex-grow relative z-20 -mt-10">
-                  <span className="text-magic-gradient text-xs font-bold uppercase tracking-[0.2em] mb-3 inline-block">
+                {/* Content Area - Pulled higher into the white gradient to reduce overall card height */}
+                <div className="p-6 md:p-8 flex flex-col flex-grow relative z-20 -mt-20 md:-mt-24">
+                  <span className="text-magic-gradient text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-2 inline-block drop-shadow-sm">
                     {issue.category}
                   </span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-snug group-hover/card:text-brand-blue transition-colors duration-300">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 leading-snug group-hover/card:text-brand-blue transition-colors duration-300 drop-shadow-md">
                     {issue.title}
                   </h3>
-                  <p className="text-brand-lightMuted dark:text-white/60 text-sm leading-relaxed mb-8 line-clamp-3">
+                  <p className="text-brand-lightMuted dark:text-white/80 text-[13px] md:text-sm leading-relaxed mb-6 line-clamp-2">
                     {issue.description}
                   </p>
                   
-                  <div className="mt-auto flex items-center justify-between">
-                    <span className="text-brand-lightMuted/70 dark:text-white/40 text-sm font-mono tracking-wider">
+                  <div className="mt-auto flex items-center justify-between pt-2">
+                    <span className="text-brand-lightMuted/80 dark:text-white/50 text-[12px] md:text-sm font-mono tracking-wider font-semibold">
                       ISSUE #{String(issue.id).padStart(2, '0')}
                     </span>
-                    <button className="w-10 h-10 rounded-full border border-gray-200 dark:border-white/20 bg-white/80 dark:bg-transparent flex items-center justify-center text-brand-lightText/70 dark:text-white/70 group-hover/card:bg-brand-magenta group-hover/card:border-brand-magenta group-hover/card:text-white transition-all duration-300 pointer-events-auto">
-                      <ArrowRight size={18} className="transform group-hover/card:-rotate-45 transition-transform duration-300" />
+                    <button className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 dark:border-white/20 bg-white/90 dark:bg-transparent flex items-center justify-center text-brand-lightText/70 dark:text-white/70 group-hover/card:bg-brand-magenta group-hover/card:border-brand-magenta group-hover/card:text-white transition-all duration-300 pointer-events-auto shadow-sm">
+                      <ArrowRight size={16} className="transform group-hover/card:-rotate-45 transition-transform duration-300" />
                     </button>
                   </div>
                 </div>

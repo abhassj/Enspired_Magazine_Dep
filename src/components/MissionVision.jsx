@@ -3,10 +3,10 @@ import { motion, useInView } from 'framer-motion';
 
 const MissionVision = () => {
   return (
-    <section id="mission" className="py-16 md:py-32 bg-white dark:bg-[#000000] relative overflow-hidden">
+    <section id="mission" className="pt-12 pb-16 md:pt-16 md:pb-24 bg-white dark:bg-gradient-to-b dark:from-[#000000] dark:to-brand-dark relative overflow-hidden">
       {/* Subtle Background Glows */}
       <div className="absolute top-0 left-0 w-[40vw] h-[40vw] bg-brand-purple/5 dark:bg-brand-purple/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen -translate-y-1/2 -translate-x-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-[50vw] h-[50vw] bg-brand-magenta/5 dark:bg-brand-magenta/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-brand-magenta/5 dark:bg-brand-magenta/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         
@@ -56,7 +56,7 @@ const MissionVision = () => {
           </div>
 
           {/* Right Column: Our Vision */}
-          <div className="w-full relative z-10 pt-16 lg:pt-40 lg:pl-12">
+          <div className="w-full relative z-10 pt-16 lg:pt-24 lg:pl-12">
              {/* Uses custom amount and margins to trigger distinctly after scrolling further down */}
              <motion.div
               initial={{ opacity: 0, y: 50 }}
