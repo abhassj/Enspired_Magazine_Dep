@@ -14,9 +14,9 @@ const CONTACT_CHANNELS = [
     lines: ['+27 11 234 5678', '+44 20 7946 0958'],
     href: 'tel:+27112345678',
     cta: 'Call Us',
-    gradient: 'from-violet-500 to-purple-600',
-    iconFrame: 'from-violet-500 via-fuchsia-500 to-purple-700',
-    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(109,40,217,0.75)]',
+    gradient: 'from-brand-blue to-brand-purple',
+    iconFrame: 'from-brand-blue via-brand-purple to-brand-magenta',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(0,163,255,0.75)]',
   },
   {
     icon: Mail,
@@ -24,9 +24,9 @@ const CONTACT_CHANNELS = [
     lines: ['enspiredmag@gmail.com', 'hello@enspiredmagazine.com'],
     href: 'mailto:enspiredmag@gmail.com',
     cta: 'Send Mail',
-    gradient: 'from-pink-500 to-rose-600',
-    iconFrame: 'from-pink-500 via-rose-500 to-fuchsia-600',
-    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(225,29,119,0.7)]',
+    gradient: 'from-brand-purple to-brand-magenta',
+    iconFrame: 'from-brand-purple via-brand-magenta to-brand-pink',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(92,45,145,0.7)]',
   },
   {
     icon: Instagram,
@@ -34,9 +34,9 @@ const CONTACT_CHANNELS = [
     lines: ['@enspired_magazine', '@enspired_uk'],
     href: 'https://instagram.com/enspired_magazine',
     cta: 'Follow Us',
-    gradient: 'from-amber-500 to-orange-600',
-    iconFrame: 'from-orange-400 via-pink-500 to-fuchsia-600',
-    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(249,115,22,0.75)]',
+    gradient: 'from-brand-magenta to-brand-pink',
+    iconFrame: 'from-brand-magenta via-brand-pink to-brand-purple',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(214,51,132,0.75)]',
   },
   {
     icon: Linkedin,
@@ -44,9 +44,9 @@ const CONTACT_CHANNELS = [
     lines: ['GR Enspired Magazine', 'Enspired Media Group'],
     href: 'https://linkedin.com/company/enspired-magazine',
     cta: 'Connect',
-    gradient: 'from-cyan-500 to-blue-600',
-    iconFrame: 'from-cyan-400 via-sky-500 to-blue-700',
-    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(14,165,233,0.7)]',
+    gradient: 'from-brand-blue via-brand-purple to-brand-pink',
+    iconFrame: 'from-brand-blue via-brand-magenta to-brand-pink',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(0,163,255,0.7)]',
   },
 ];
 
@@ -216,7 +216,7 @@ const ContactPage = () => {
                           <AnimatedLetter key={`c-${i}`} char={c} index={i} />
                         ))}
                       </span>
-                      <span className="block bg-gradient-to-r from-brand-blue to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(0,163,255,0.15)] pb-1 md:pb-4">
+                      <span className="block bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(214,51,132,0.25)] pb-1 md:pb-4">
                         {'US'.split('').map((c, i) => (
                           <AnimatedLetter key={`u-${i}`} char={c} index={i + 7} />
                         ))}

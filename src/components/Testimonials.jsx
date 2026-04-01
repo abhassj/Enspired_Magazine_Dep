@@ -56,19 +56,21 @@ const TestimonialCard = ({ item }) => (
     <div className="text-magic-gradient inline-block text-4xl leading-none mb-3">&ldquo;</div>
     <p className="text-brand-lightText dark:text-white/90 leading-relaxed text-sm md:text-base min-h-[112px]">{item.quote}</p>
 
-    <div className="h-px w-full bg-brand-blue/40 my-5"></div>
+    <div className="h-px w-full bg-gradient-to-r from-brand-purple/20 via-brand-magenta/30 to-brand-pink/20 my-5"></div>
 
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-brand-blue/15 border border-brand-blue/30"></div>
+        <div className="w-10 h-10 rounded-full bg-brand-gradient flex items-center justify-center text-white shadow-md font-bold uppercase text-xs">
+          {item.name.charAt(0)}
+        </div>
         <div>
           <p className="text-sm font-semibold text-brand-lightText dark:text-white">{item.name}</p>
           <p className="text-xs text-brand-lightMuted dark:text-white/60">{item.role}</p>
         </div>
       </div>
-      <div className="flex items-center gap-1 text-brand-blue">
+      <div className="flex items-center gap-1">
         {Array.from({ length: 5 }).map((_, idx) => (
-          <Star key={idx} size={12} fill="currentColor" strokeWidth={1.5} />
+          <Star key={idx} size={13} fill="url(#star-grad)" stroke="url(#star-grad)" strokeWidth={1} />
         ))}
       </div>
     </div>
@@ -81,6 +83,16 @@ const Testimonials = () => {
 
   return (
     <section className="py-24 relative overflow-hidden bg-white dark:bg-brand-dark">
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#5C2D91" />
+            <stop offset="50%" stopColor="#D63384" />
+            <stop offset="100%" stopColor="#FF4DA6" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       <div className="absolute top-[-20%] left-[-12%] w-[40vw] h-[40vw] bg-brand-purple/5 dark:bg-brand-purple/10 rounded-full blur-[140px] pointer-events-none"></div>
       <div className="absolute bottom-[-20%] right-[-10%] w-[42vw] h-[42vw] bg-brand-magenta/5 dark:bg-brand-magenta/10 rounded-full blur-[150px] pointer-events-none"></div>
 

@@ -45,10 +45,20 @@ const Footer = () => {
 
             <div className="grid grid-cols-2 gap-8 sm:gap-16 md:gap-24 w-full md:w-auto mt-4 md:mt-0">
               <div>
-                <h4 className="text-base md:text-lg font-bold mb-4 md:mb-6 text-brand-lightText dark:text-white tracking-wide">Chapters</h4>
+                <h4 className="text-base md:text-lg font-bold mb-4 md:mb-6 text-brand-lightText dark:text-white tracking-wide">Issues</h4>
                 <ul className="space-y-3 md:space-y-4 text-brand-lightMuted dark:text-white/70 font-light text-xs md:text-sm">
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer">South African Chapter</li>
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer">United Kingdom Chapter</li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-purple/70 shrink-0"></span><span>Issue #4: Next Gen</span>
+                  </li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta/70 shrink-0"></span><span>Issue #3: Innovators</span>
+                  </li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-pink/70 shrink-0"></span><span>Issue #2: Global Impact</span>
+                  </li>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-blue/70 shrink-0"></span><span>Issue #1: The Genesis</span>
+                  </li>
                 </ul>
               </div>
               <div>
