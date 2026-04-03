@@ -6,22 +6,39 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ceoImage from '../assets/Ceo-final.png';
 
+/* ─── Custom Icons ─── */
+const WhatsAppIcon = ({ size = 24, className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    style={{ strokeWidth: 0 }}
+  >
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+);
+
 /* ─── mock data ─── */
 const CONTACT_CHANNELS = [
   {
-    icon: Phone,
-    title: 'Phone',
-    lines: ['UK: +44 78252 82654', 'SA: +27 74 461 3719'],
-    href: 'tel:+447825282654',
-    cta: 'Call Us',
-    gradient: 'from-brand-blue to-brand-purple',
-    iconFrame: 'from-brand-blue via-brand-purple to-brand-magenta',
-    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(0,163,255,0.75)]',
+    icon: WhatsAppIcon,
+    title: 'WhatsApp',
+    lines: [
+      { text: 'UK: +44 78252 82654', href: 'https://wa.me/447825282654' },
+      { text: 'SA: +27 74 461 3719', href: 'https://wa.me/27744613719' }
+    ],
+    cta: 'WhatsApp Us',
+    gradient: 'from-[#25D366] to-[#128C7E]',
+    iconFrame: 'from-[#25D366] via-[#128C7E] to-[#075E54]',
+    iconGlow: 'shadow-[0_14px_32px_-16px_rgba(37,211,102,0.75)]',
   },
   {
     icon: Mail,
     title: 'Email',
-    lines: ['enspiredmag@outlook.com'],
+    lines: [{ text: 'enspiredmag@outlook.com' }],
     href: 'mailto:enspiredmag@outlook.com',
     cta: 'Send Mail',
     gradient: 'from-brand-purple to-brand-magenta',
@@ -31,7 +48,7 @@ const CONTACT_CHANNELS = [
   {
     icon: Instagram,
     title: 'Instagram',
-    lines: ['@enspiredmagazine1'],
+    lines: [{ text: '@enspiredmagazine1' }],
     href: 'https://www.instagram.com/enspiredmagazine1',
     cta: 'Follow Us',
     gradient: 'from-brand-magenta to-brand-pink',
@@ -41,7 +58,7 @@ const CONTACT_CHANNELS = [
   {
     icon: Facebook,
     title: 'Facebook',
-    lines: ['Enspired Women'],
+    lines: [{ text: 'Enspired Women' }],
     href: 'https://www.facebook.com/enspiredwomen/',
     cta: 'Connect',
     gradient: 'from-brand-blue via-brand-purple to-brand-pink',
@@ -72,17 +89,17 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <motion.a
+    <motion.div
       ref={ref}
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -10 }}
-      className="group relative block rounded-3xl overflow-hidden cursor-pointer h-full"
+      className="group relative block rounded-3xl overflow-hidden h-full touch-feedback"
     >
+      {/* Primary Card Link */}
+      {href && <a href={href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10 cursor-pointer" aria-label={title}></a>}
+
       {/* Card background with glass effect */}
       <div className="relative p-7 md:p-8 lg:p-10 h-full
                       bg-white/70 dark:bg-white/[0.03]
@@ -127,11 +144,19 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
           </h3>
 
           {/* Lines */}
-          <div className="space-y-1.5 md:space-y-2 mb-6 md:mb-8 flex-grow">
+          <div className="space-y-1.5 md:space-y-2 mb-6 md:mb-8 flex-grow relative z-20 pointer-events-none">
             {lines.map((line, idx) => (
-              <p key={idx} className="text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide">
-                {line}
-              </p>
+              <div key={idx} className="pointer-events-auto w-fit">
+                {line.href ? (
+                  <a href={line.href} target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide hover:text-[#25D366] transition-colors block">
+                    {line.text}
+                  </a>
+                ) : (
+                  <p className="text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide">
+                    {line.text || line}
+                  </p>
+                )}
+              </div>
             ))}
           </div>
 
@@ -146,7 +171,7 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
           </span>
         </div>
       </div>
-    </motion.a>
+    </motion.div>
   );
 };
 
@@ -170,7 +195,7 @@ const ContactPage = () => {
       {/* ══════════════════════════════════════
           HERO: Giant title + CEO image + Bio
           ══════════════════════════════════════ */}
-      <section ref={heroRef} className="relative min-h-screen overflow-hidden bg-white dark:bg-brand-dark">
+      <section ref={heroRef} className="relative min-h-[auto] md:min-h-screen overflow-hidden bg-white dark:bg-brand-dark">
         {/* ── Ambient background glows ── */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-40 -right-40 w-[400px] md:w-[700px] h-[400px] md:h-[700px] rounded-full
@@ -184,7 +209,7 @@ const ContactPage = () => {
         <div className="relative max-w-7xl mx-auto px-6 md:px-12">
 
           {/* ── ROW: Title text + CEO image side by side ── */}
-          <div className="pt-20 md:pt-24 lg:pt-28 pb-36 lg:pb-48 flex flex-col lg:flex-row items-center lg:items-center gap-12 lg:gap-8">
+          <div className="pt-20 md:pt-24 lg:pt-28 pb-16 md:pb-36 lg:pb-48 flex flex-col lg:flex-row items-center lg:items-center gap-8 md:gap-12 lg:gap-8">
 
             {/* LEFT: Giant title + tagline */}
             <motion.div style={{ y: heroParallax }} className="flex-1 lg:pr-8 relative z-20 text-center lg:text-left">
@@ -249,7 +274,7 @@ const ContactPage = () => {
             {/* RIGHT: CEO photo with bio underneath */}
             <motion.div
               style={{ y: imageParallax }}
-              className="relative w-full sm:w-[350px] md:w-[400px] lg:w-[420px] xl:w-[460px] shrink-0 z-10"
+              className="relative w-full sm:w-[350px] md:w-[400px] lg:w-[420px] xl:w-[460px] shrink-0 z-10 max-h-[60vh] md:max-h-none overflow-hidden"
             >
               {/* CEO Image */}
               <motion.div
@@ -283,7 +308,7 @@ const ContactPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.8 }}
-                className="relative -mt-12 md:-mt-16 px-6 md:px-2 text-center lg:text-left"
+                className="relative -mt-8 md:-mt-16 px-4 md:px-2 text-center lg:text-left"
               >
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide">
                   VIKY & RESHMA

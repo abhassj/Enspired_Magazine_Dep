@@ -84,7 +84,7 @@ const ImageModal = ({ src, onClose }) => {
 /* ─── Premium Marquee Slider Card ─── */
 const GallerySliderCard = ({ img, onClick }) => (
   <div
-    className="shrink-0 w-[75vw] sm:w-[45vw] md:w-[320px] lg:w-[400px] h-[220px] md:h-[280px] lg:h-[320px] rounded-2xl md:rounded-3xl overflow-hidden relative cursor-pointer group shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.15)] transition-all duration-500 border border-transparent dark:border-white/5 hover:border-brand-magenta/40 mr-4 md:mr-8"
+    className="shrink-0 w-[75vw] sm:w-[45vw] md:w-[320px] lg:w-[400px] h-[220px] md:h-[280px] lg:h-[320px] rounded-2xl md:rounded-3xl overflow-hidden relative cursor-pointer group shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.15)] transition-all duration-500 border border-transparent dark:border-white/5 hover:border-brand-magenta/40 mr-4 md:mr-8 active:scale-[0.97]"
     onClick={onClick}
   >
     <img
@@ -139,7 +139,7 @@ export function Gallery() {
   const row2Sliding = [...row2, ...row2];
 
   return (
-    <section id="gallery" className="pb-16 pt-8 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-10">
+    <section id="gallery" className="pb-10 pt-6 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-10">
       
       {/* Background Decorators */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-purple/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />

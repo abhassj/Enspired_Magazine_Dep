@@ -179,7 +179,7 @@ const Testimonials = () => {
   const totalPages = Math.ceil(testimonials.length / visibleCols);
 
   return (
-    <section className="pb-16 pt-8 md:pb-24 md:pt-12 relative overflow-hidden bg-white dark:bg-brand-dark">
+    <section className="pb-10 pt-6 md:pb-24 md:pt-12 relative overflow-hidden bg-white dark:bg-brand-dark">
       <svg width="0" height="0" className="absolute">
         <defs>
           <linearGradient id="star-grad" x1="0%" y1="0%" x2="100%" y2="100%">

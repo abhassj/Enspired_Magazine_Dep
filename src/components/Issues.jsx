@@ -11,12 +11,40 @@ import img5 from '../assets/cover images for issues/ISSUE 05.jfif';
 import img6 from '../assets/cover images for issues/ISSUE 06.jfif';
 import img7 from '../assets/cover images for issues/ISSUE 07 (SPECIAL COVER).jfif';
 import img8 from '../assets/cover images for issues/ISSUE 08.jfif';
+import img9 from '../assets/cover images for issues/ISSUE 09.png';
+
+import pdfCovid from '../assets/Issues PDFs/Enspired Women Magazine Covid 19 Issue (ISSUE 09).pdf';
+import pdfIssue03 from '../assets/Issues PDFs/Enspired Women Magazine ISSUE 03.pdf';
+import pdfIssue08 from '../assets/Issues PDFs/Enspired Women Magazine ISSUE 08.pdf';
 
 const issues = [
   {
+    id: 9,
+    title: 'Enspired Women Magazine - COVID19',
+    category: 'INSPIRATIONAL',
+    description: 'COVID-era stories honoring frontline heroes, resilience, and community support worldwide.',
+    image: img9,
+    pdf: pdfCovid,
+  },
+  {
+    id: 3,
+    title: 'Enspired Women Magazine – Issue 03',
+    category: 'RESILIENCE',
+    description: 'Features Thobile Mseleku, mental health resilience, and recession survival guides.',
+    image: img3,
+    pdf: pdfIssue03,
+  },
+  {
+    id: 8,
+    title: 'Enspired Women Magazine – Issue 08',
+    category: 'DEVELOPMENT',
+    description: 'Features Fundi Zwane, artistic entrepreneurship, and global business coaching.',
+    image: img8,
+    pdf: pdfIssue08,
+  },
+  {
     id: 1,
     title: 'Enspired Women Magazine – Issue 01',
-    year: '2017',
     category: 'BUSINESS',
     description: 'Features Maseru Madlala, business tips, and overcoming personal adversity.',
     image: img1,
@@ -24,23 +52,13 @@ const issues = [
   {
     id: 2,
     title: 'Enspired Women Magazine – Issue 02',
-    year: '2018', // Placeholder year
     category: 'MOTIVATION',
     description: 'Features Chloe Tryon, mindset for success, and risk management tips.',
     image: img2,
   },
   {
-    id: 3,
-    title: 'Enspired Women Magazine – Issue 03',
-    year: '2018', // Placeholder year
-    category: 'RESILIENCE',
-    description: 'Features Thobile Mseleku, mental health resilience, and recession survival guides.',
-    image: img3,
-  },
-  {
     id: 4,
     title: 'Enspired Women Magazine – Issue 04',
-    year: '2019',
     category: 'FINANCE',
     description: 'Features Yegas Naidoo, financial management, and same-sex parenting rights.',
     image: img4,
@@ -48,7 +66,6 @@ const issues = [
   {
     id: 5,
     title: 'Enspired Women Magazine – Issue 05',
-    year: '2019', // Placeholder year
     category: 'GROWTH',
     description: 'Features Estelle Symcox, real estate insights, and family business transitions.',
     image: img5,
@@ -56,7 +73,6 @@ const issues = [
   {
     id: 6,
     title: 'Enspired Women Magazine – Issue 06',
-    year: '2020',
     category: 'LEADERSHIP',
     description: 'Features Vodacom executives, corporate leadership, and 2020 financial planning.',
     image: img6,
@@ -64,18 +80,9 @@ const issues = [
   {
     id: 7,
     title: 'Enspired Woman Magazine – Exclusive',
-    year: '2019',
     category: 'AWARDS',
     description: 'Celebrates the 2019 Enspired Women Top Achievers across various industries.',
     image: img7,
-  },
-  {
-    id: 8,
-    title: 'Enspired Women Magazine – Issue 08',
-    year: '2020', // Placeholder year
-    category: 'DEVELOPMENT',
-    description: 'Features Fundi Zwane, artistic entrepreneurship, and global business coaching.',
-    image: img8,
   }
 ];
 
@@ -84,6 +91,7 @@ const Issues = () => {
   const [cardWidth, setCardWidth] = useState(0);
   const [dragBounds, setDragBounds] = useState({ left: 0, right: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const firstCardRef = useRef(null);
 
   // Measure card width and compute drag bounds accurately on mount/resize
@@ -154,7 +162,7 @@ const Issues = () => {
   const xPosition = -(current * cardWidth);
 
   return (
-    <section id="issues" className="pb-16 pt-8 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-20 overflow-hidden">
+    <section id="issues" className="pb-10 pt-6 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-20 overflow-hidden">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-purple/5 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
@@ -167,10 +175,6 @@ const Issues = () => {
             </h2>
             <p className="text-magic-gradient inline-block text-lg md:text-xl font-light mt-4">Explore our latest magazine editions</p>
           </div>
-          <button className="hidden md:flex items-center space-x-2 text-brand-magenta hover:text-brand-lightText dark:hover:text-white transition-colors group mt-6 md:mt-0">
-            <span className="text-sm font-semibold uppercase tracking-wider">View All Archive</span>
-            <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
-          </button>
         </FadeInOnScroll>
 
         {/* Framer Motion Butter Smooth Slider */}
@@ -186,10 +190,12 @@ const Issues = () => {
             drag="x"
             dragConstraints={dragBounds}
             dragElastic={0.05}
+            onDragStart={() => setIsDragging(true)}
             animate={{ x: xPosition }}
             transition={{ type: "tween", ease: [0.32, 0.72, 0, 1], duration: 0.6 }}
             style={{ willChange: "transform" }}
             onDragEnd={(e, { offset, velocity }) => {
+              setTimeout(() => setIsDragging(false), 50); // delay to prevent click firing
               const swipe = Math.abs(offset.x) * velocity.x;
               const swipeThreshold = 5000;
               const isDesktop = window.innerWidth >= 768;
@@ -209,7 +215,8 @@ const Issues = () => {
               <div 
                 key={issue.id} 
                 ref={index === 0 ? firstCardRef : null}
-                className="shrink-0 w-[80vw] sm:w-[85vw] md:w-[400px] flex flex-col bg-white dark:bg-[#0d0714] border border-gray-100 dark:border-white/10 hover:border-brand-magenta/40 rounded-2xl overflow-hidden group/card transition-shadow duration-500 shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.1)] relative"
+                onClick={() => !isDragging && issue.pdf && window.open(issue.pdf, '_blank')}
+                className={`shrink-0 w-[80vw] sm:w-[85vw] md:w-[400px] flex flex-col bg-white dark:bg-[#0d0714] border border-gray-100 dark:border-white/10 hover:border-brand-magenta/40 rounded-2xl overflow-hidden group/card transition-shadow duration-500 shadow-lg dark:shadow-none hover:shadow-[0_8px_30px_rgba(235,77,156,0.1)] relative ${issue.pdf ? 'cursor-pointer' : ''}`}
               >
                 {/* Header Image Area */}
                 <div className="relative w-full aspect-[1/1] overflow-hidden bg-brand-lightCard dark:bg-black">
@@ -225,9 +232,15 @@ const Issues = () => {
                   <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-white dark:from-[#0d0714] via-white/80 dark:via-[#0d0714]/80 to-transparent z-20 pointer-events-none"></div>
 
                   <div className="absolute top-5 right-5 z-30 pointer-events-none">
-                    <span className="bg-white/90 dark:bg-black/60 backdrop-blur-md text-brand-lightText dark:text-white/90 text-[11px] font-bold px-3 py-1.5 rounded-full border border-gray-100 dark:border-white/10 shadow-sm">
-                      ISSUE {issue.year}
-                    </span>
+                    {issue.pdf ? (
+                      <span className="bg-brand-pink/90 backdrop-blur-md text-white text-[11px] font-bold px-4 py-1.5 rounded-full border border-brand-pink/20 shadow-[0_0_15px_rgba(255,77,166,0.5)]">
+                        VIEW
+                      </span>
+                    ) : (
+                      <span className="bg-white/90 dark:bg-black/60 backdrop-blur-md text-brand-lightText dark:text-white/90 text-[11px] font-bold px-3 py-1.5 rounded-full border border-gray-100 dark:border-white/10 shadow-sm">
+                        EXCLUSIVE
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -236,7 +249,7 @@ const Issues = () => {
                   <span className="text-magic-gradient text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-2 inline-block drop-shadow-sm">
                     {issue.category}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 leading-snug group-hover/card:text-brand-blue transition-colors duration-300 drop-shadow-md">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 leading-snug group-hover/card:text-transparent group-hover/card:bg-clip-text group-hover/card:bg-gradient-to-r group-hover/card:from-[#2196F3] group-hover/card:via-[#9C27B0] group-hover/card:to-[#E91E63] transition-all duration-300 drop-shadow-md">
                     {issue.title}
                   </h3>
                   <p className="text-brand-lightMuted dark:text-white/80 text-[13px] md:text-sm leading-relaxed mb-6 line-clamp-2">
@@ -247,9 +260,11 @@ const Issues = () => {
                     <span className="text-brand-lightMuted/80 dark:text-white/50 text-[12px] md:text-sm font-mono tracking-wider font-semibold">
                       ISSUE #{String(issue.id).padStart(2, '0')}
                     </span>
-                    <button className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 dark:border-white/20 bg-white/90 dark:bg-transparent flex items-center justify-center text-brand-lightText/70 dark:text-white/70 group-hover/card:bg-brand-magenta group-hover/card:border-brand-magenta group-hover/card:text-white transition-all duration-300 pointer-events-auto shadow-sm">
-                      <ArrowRight size={16} className="transform group-hover/card:-rotate-45 transition-transform duration-300" />
-                    </button>
+                    {issue.pdf && (
+                      <button className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 dark:border-white/20 bg-white/90 dark:bg-transparent flex items-center justify-center text-brand-lightText/70 dark:text-white/70 group-hover/card:bg-brand-magenta group-hover/card:border-brand-magenta group-hover/card:text-white transition-all duration-300 pointer-events-auto shadow-sm">
+                        <ArrowRight size={16} className="transform group-hover/card:-rotate-45 transition-transform duration-300" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

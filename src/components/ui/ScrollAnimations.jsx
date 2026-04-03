@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 // Fade-in on scroll with configurable direction
 export const FadeInOnScroll = ({ children, direction = 'up', delay = 0, className = '' }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-40px' });
 
   const variants = {
     up: { hidden: { opacity: 0, y: 60 }, visible: { opacity: 1, y: 0 } },

@@ -3,7 +3,7 @@ import { motion, useInView } from 'framer-motion';
 
 const MissionVision = () => {
   return (
-    <section id="mission" className="pt-12 pb-16 md:pt-16 md:pb-24 bg-white dark:bg-gradient-to-b dark:from-[#000000] dark:to-brand-dark relative overflow-hidden">
+    <section id="mission" className="pt-8 pb-10 md:pt-16 md:pb-24 bg-white dark:bg-gradient-to-b dark:from-[#000000] dark:to-brand-dark relative overflow-hidden">
       {/* Subtle Background Glows */}
       <div className="absolute top-0 left-0 w-[40vw] h-[40vw] bg-brand-purple/5 dark:bg-brand-purple/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen -translate-y-1/2 -translate-x-1/2"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-brand-magenta/5 dark:bg-brand-magenta/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen"></div>
@@ -11,7 +11,7 @@ const MissionVision = () => {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         
         {/* Container for Side-by-Side Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 relative">
           
           {/* Vertical Divider Line for Large Screens */}
           <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-gray-200 dark:via-white/10 to-transparent -translate-x-1/2"></div>

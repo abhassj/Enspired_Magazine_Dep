@@ -19,7 +19,7 @@ const BrandLogo = ({
   const logoSrc = LOGO_SRC;
 
   return (
-    <span className={`relative inline-block transition-all duration-500 ${className}`}>
+    <span className={`relative inline-block min-w-fit transition-all duration-500 ${className}`}>
       <motion.img
         key={logoSrc}
         src={logoSrc}
