@@ -67,14 +67,14 @@ function AppContent() {
     setIsRouteTransitioning(true)
     const timerId = window.setTimeout(() => {
       setIsRouteTransitioning(false)
-    }, 240)
+    }, 120)
 
     return () => window.clearTimeout(timerId)
   }, [location.pathname])
 
   useEffect(() => {
     let isMounted = true
-    const minimumPreloaderMs = 900
+    const minimumPreloaderMs = 500
     const startedAt = Date.now()
 
     const waitForWindowLoad = document.readyState === 'complete'

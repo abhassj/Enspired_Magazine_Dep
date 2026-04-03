@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { Phone, Mail, Instagram, Facebook, ArrowUpRight, MapPin, Sparkles } from 'lucide-react';
+import React, { useRef, useMemo } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Mail, Instagram, Facebook, ArrowUpRight, MapPin, Sparkles } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ceoImage from '../assets/Ceo-final.png';
+import { siteImageAssets } from '../config/cloudinaryAssets';
 
 /* ─── Custom Icons ─── */
 const WhatsAppIcon = ({ size = 24, className }) => (
@@ -67,35 +67,15 @@ const CONTACT_CHANNELS = [
   },
 ];
 
-/* ─── animated letter ─── */
-const AnimatedLetter = ({ char, index }) => (
-  <motion.span
-    initial={{ opacity: 0, y: 120, rotateX: -90 }}
-    animate={{ opacity: 1, y: 0, rotateX: 0 }}
-    transition={{
-      duration: 0.8,
-      delay: 0.15 + index * 0.05,
-      ease: [0.22, 1, 0.36, 1],
-    }}
-    className="inline-block"
-  >
-    {char === ' ' ? '\u00A0' : char}
-  </motion.span>
-);
-
-/* ─── contact card ─── */
+/* ─── contact card — lightweight, no useInView per card ─── */
 const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame, iconGlow, index }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -10 }}
+    <div
       className="group relative block rounded-3xl overflow-hidden h-full touch-feedback"
+      style={{
+        opacity: 1,
+        animation: `card-fade-in 0.4s ease-out ${0.05 + index * 0.08}s both`,
+      }}
     >
       {/* Primary Card Link */}
       {href && <a href={href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10 cursor-pointer" aria-label={title}></a>}
@@ -103,11 +83,11 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
       {/* Card background with glass effect */}
       <div className="relative p-7 md:p-8 lg:p-10 h-full
                       bg-white/70 dark:bg-white/[0.03]
-                      backdrop-blur-2xl
+                      backdrop-blur-xl
                       border border-gray-200/60 dark:border-white/[0.06]
                       rounded-3xl
                       hover:border-brand-magenta/30 dark:hover:border-brand-magenta/30
-                      transition-all duration-500">
+                      transition-all duration-300">
 
         {/* Hover glow */}
         <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500
@@ -171,22 +151,22 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
           </span>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 /* ═══════════════════════════════════════════
-   MAIN CONTACT PAGE
+   MAIN CONTACT PAGE — Optimized for mobile performance
    ═══════════════════════════════════════════ */
 const ContactPage = () => {
   const heroRef = useRef(null);
-  const heroInView = useInView(heroRef, { once: true, margin: '-30px' });
+  const heroInView = useInView(heroRef, { once: true, margin: '0px' });
   const channelsHeaderRef = useRef(null);
-  const channelsHeaderInView = useInView(channelsHeaderRef, { once: true, margin: '-80px' });
+  const channelsHeaderInView = useInView(channelsHeaderRef, { once: true, margin: '0px' });
 
-  const { scrollY } = useScroll();
-  const heroParallax = useTransform(scrollY, [0, 600], [0, -80]);
-  const imageParallax = useTransform(scrollY, [0, 600], [0, -40]);
+  // Memoize the title letters to avoid re-creating on every render
+  const contactLetters = useMemo(() => 'CONTACT'.split(''), []);
+  const usLetters = useMemo(() => 'US'.split(''), []);
 
   return (
     <>
@@ -194,16 +174,15 @@ const ContactPage = () => {
 
       {/* ══════════════════════════════════════
           HERO: Giant title + CEO image + Bio
+          — NO parallax transforms (they kill mobile perf)
           ══════════════════════════════════════ */}
       <section ref={heroRef} className="relative min-h-[auto] md:min-h-screen overflow-hidden bg-white dark:bg-brand-dark">
-        {/* ── Ambient background glows ── */}
+        {/* ── Ambient background glows — reduced on mobile ── */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-40 -right-40 w-[400px] md:w-[700px] h-[400px] md:h-[700px] rounded-full
                           bg-brand-magenta/[0.07] dark:bg-brand-magenta/[0.04] blur-[100px] md:blur-[150px]" />
           <div className="absolute top-1/3 -left-20 md:-left-40 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full
                           bg-brand-purple/[0.06] dark:bg-brand-purple/[0.03] blur-[80px] md:blur-[120px]" />
-          <div className="absolute bottom-0 right-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[300px] rounded-full
-                          bg-brand-pink/[0.05] dark:bg-brand-pink/[0.03] blur-[70px] md:blur-[100px]" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 md:px-12">
@@ -211,22 +190,20 @@ const ContactPage = () => {
           {/* ── ROW: Title text + CEO image side by side ── */}
           <div className="pt-20 md:pt-24 lg:pt-28 pb-16 md:pb-36 lg:pb-48 flex flex-col lg:flex-row items-center lg:items-center gap-8 md:gap-12 lg:gap-8">
 
-            {/* LEFT: Giant title + tagline */}
-            <motion.div style={{ y: heroParallax }} className="flex-1 lg:pr-8 relative z-20 text-center lg:text-left">
+            {/* LEFT: Giant title + tagline — lightweight CSS animation instead of per-letter Framer */}
+            <div className="flex-1 lg:pr-8 relative z-20 text-center lg:text-left">
               {/* Small decorative label */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={heroInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.05 }}
+              <div
                 className="flex items-center justify-center lg:justify-start gap-2 mb-4 md:mb-6"
+                style={{ animation: heroInView ? 'card-fade-in 0.5s ease-out 0.1s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
                 <Sparkles size={14} className="text-brand-magenta" />
                 <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] font-semibold text-magic-gradient inline-block">
                   Let's Talk
                 </span>
-              </motion.div>
+              </div>
 
-              {/* GIANT title with enhanced effects */}
+              {/* GIANT title — simple fade-in instead of per-letter animation */}
               <h1 className="font-condensed font-extrabold uppercase leading-[0.9] tracking-wide
                              text-[clamp(3.5rem,15vw,9rem)]
                              relative py-2">
@@ -234,54 +211,47 @@ const ContactPage = () => {
                 <div className="absolute -inset-4 md:-inset-6 bg-gradient-to-r from-brand-purple/[0.08] via-brand-magenta/[0.12] to-brand-pink/[0.08] dark:from-brand-purple/[0.06] dark:via-brand-magenta/[0.1] dark:to-brand-pink/[0.06] blur-2xl -z-10 opacity-80" />
                 
                 <span className="block relative z-10 text-brand-lightText dark:text-white drop-shadow-[0_2px_8px_rgba(26,10,46,0.1)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-                  {heroInView && (
-                    <>
-                      <span className="block mb-1 md:mb-2">
-                        {'CONTACT'.split('').map((c, i) => (
-                          <AnimatedLetter key={`c-${i}`} char={c} index={i} />
-                        ))}
-                      </span>
-                      <span className="block bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(214,51,132,0.25)] pb-1 md:pb-4">
-                        {'US'.split('').map((c, i) => (
-                          <AnimatedLetter key={`u-${i}`} char={c} index={i + 7} />
-                        ))}
-                      </span>
-                    </>
-                  )}
+                  <span
+                    className="block mb-1 md:mb-2"
+                    style={{ animation: heroInView ? 'title-slide-up 0.6s ease-out 0.15s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                  >
+                    CONTACT
+                  </span>
+                  <span
+                    className="block bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(214,51,132,0.25)] pb-1 md:pb-4"
+                    style={{ animation: heroInView ? 'title-slide-up 0.6s ease-out 0.3s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                  >
+                    US
+                  </span>
                 </span>
               </h1>
 
               {/* Tagline */}
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.7 }}
+              <p
                 className="mt-6 md:mt-8 mx-auto lg:mx-0 max-w-sm md:max-w-md text-brand-lightMuted dark:text-white/50 text-xs md:text-sm lg:text-base font-light leading-relaxed md:leading-[1.8] tracking-wide"
+                style={{ animation: heroInView ? 'card-fade-in 0.6s ease-out 0.4s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
                 For inquiries, collaborations, or just to say hello — we'd love to hear from you.
                 Let's connect and create something extraordinary together.
-              </motion.p>
+              </p>
 
               {/* Decorative animated line */}
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={heroInView ? { scaleX: 1 } : {}}
-                transition={{ duration: 1.2, delay: 1 }}
-                className="mt-8 md:mt-10 h-[2px] w-20 md:w-32 bg-gradient-to-r from-brand-blue to-transparent origin-left mx-auto lg:mx-0"
+              <div
+                className="mt-8 md:mt-10 h-[2px] w-20 md:w-32 bg-gradient-to-r from-brand-blue to-transparent mx-auto lg:mx-0"
+                style={{
+                  animation: heroInView ? 'line-scale-x 0.8s ease-out 0.6s both' : 'none',
+                  transformOrigin: 'left',
+                  opacity: heroInView ? undefined : 0,
+                }}
               />
-            </motion.div>
+            </div>
 
-            {/* RIGHT: CEO photo with bio underneath */}
-            <motion.div
-              style={{ y: imageParallax }}
-              className="relative w-full sm:w-[350px] md:w-[400px] lg:w-[420px] xl:w-[460px] shrink-0 z-10 max-h-[60vh] md:max-h-none overflow-hidden"
-            >
+            {/* RIGHT: CEO photo with bio underneath — lazy loaded, no parallax */}
+            <div className="relative w-full sm:w-[350px] md:w-[400px] lg:w-[420px] xl:w-[460px] shrink-0 z-10 max-h-[60vh] md:max-h-none overflow-hidden">
               {/* CEO Image */}
-              <motion.div
-                initial={{ opacity: 0, y: 60, scale: 0.95 }}
-                animate={heroInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              <div
                 className="relative"
+                style={{ animation: heroInView ? 'card-fade-in 0.7s ease-out 0.25s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
                 {/* Magenta glow behind image */}
                 <div className="absolute -inset-6 bg-gradient-to-b from-brand-magenta/10 via-brand-purple/5 to-transparent rounded-[2rem] blur-3xl opacity-70" />
@@ -289,12 +259,12 @@ const ContactPage = () => {
                 {/* Image container */}
                 <div className="relative overflow-hidden rounded-t-[2rem] rounded-b-xl px-4 md:px-0">
                   <img
-                    src={ceoImage}
+                    src={siteImageAssets.ceoImage}
                     alt="VIKY & RESHMA — Founder & CEO"
                     className="w-full h-auto object-cover grayscale-[10%] contrast-[1.05]"
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
-                    fetchPriority="high"
+                    fetchPriority="low"
                     style={{
                       maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
                       WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
@@ -304,14 +274,12 @@ const ContactPage = () => {
                   {/* Overlay gradient at bottom for blend */}
                   <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white dark:from-brand-dark to-transparent" />
                 </div>
-              </motion.div>
+              </div>
 
               {/* CEO Bio — directly under the image */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.8 }}
+              <div
                 className="relative -mt-8 md:-mt-16 px-4 md:px-2 text-center lg:text-left"
+                style={{ animation: heroInView ? 'card-fade-in 0.6s ease-out 0.5s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide">
                   VIKY & RESHMA
@@ -324,8 +292,8 @@ const ContactPage = () => {
                   Empowering women, men, and youth across Africa and beyond.
                   Through magazine, they amplify voices, share inspiring stories, and support entrepreneurs building connection and financial stability.
                 </p>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -341,18 +309,14 @@ const ContactPage = () => {
         <div className="absolute inset-0 pointer-events-none overflow-hidden text-center sm:text-left">
           <div className="absolute top-0 left-1/3 w-[500px] h-[400px] rounded-full
                           bg-brand-purple/[0.04] dark:bg-brand-purple/[0.02] blur-[100px] md:blur-[120px]" />
-          <div className="absolute bottom-20 right-0 w-[200px] md:w-[350px] h-[200px] md:h-[350px] rounded-full
-                          bg-brand-magenta/[0.05] dark:bg-brand-magenta/[0.02] blur-[80px] md:blur-[100px]" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 md:px-12">
           {/* Section header */}
-          <motion.div
+          <div
             ref={channelsHeaderRef}
-            initial={{ opacity: 0, y: 40 }}
-            animate={channelsHeaderInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
             className="mb-12 md:mb-20 text-center sm:text-left"
+            style={{ animation: channelsHeaderInView ? 'card-fade-in 0.5s ease-out both' : 'none', opacity: channelsHeaderInView ? undefined : 0 }}
           >
             <div className="flex items-center justify-center sm:justify-start gap-3 mb-3 md:mb-4">
               <div className="h-[2px] w-8 bg-brand-blue rounded-full" />
@@ -366,7 +330,7 @@ const ContactPage = () => {
                 Anywhere, Anytime
               </span>
             </h2>
-          </motion.div>
+          </div>
 
           {/* Cards grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -376,19 +340,16 @@ const ContactPage = () => {
           </div>
 
           {/* Location accent */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.5 }}
+          <div
             className="mt-16 md:mt-20 flex flex-col sm:flex-row items-center justify-center gap-3
                        text-brand-lightMuted/60 dark:text-white/25 text-[10px] md:text-xs tracking-widest uppercase text-center"
+            style={{ animation: 'card-fade-in 0.6s ease-out 0.8s both' }}
           >
             <MapPin size={13} className="text-brand-magenta/60" />
             <span className="font-light">
               South Africa · United Kingdom — Serving readers across the globe
             </span>
-          </motion.div>
+          </div>
         </div>
 
         {/* Seamless blend into footer */}
@@ -396,6 +357,22 @@ const ContactPage = () => {
       </section>
 
       <Footer />
+
+      {/* CSS animations for this page only — no Framer Motion overhead */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes card-fade-in {
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes title-slide-up {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes line-scale-x {
+          from { opacity: 0; transform: scaleX(0); }
+          to { opacity: 1; transform: scaleX(1); }
+        }
+      `}} />
     </>
   );
 };

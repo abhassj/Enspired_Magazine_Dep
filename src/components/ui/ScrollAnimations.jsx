@@ -4,14 +4,14 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 // Fade-in on scroll with configurable direction
 export const FadeInOnScroll = ({ children, direction = 'up', delay = 0, className = '' }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const isInView = useInView(ref, { once: true, margin: '-20px' });
 
   const variants = {
-    up: { hidden: { opacity: 0, y: 60 }, visible: { opacity: 1, y: 0 } },
-    down: { hidden: { opacity: 0, y: -60 }, visible: { opacity: 1, y: 0 } },
-    left: { hidden: { opacity: 0, x: -60 }, visible: { opacity: 1, x: 0 } },
-    right: { hidden: { opacity: 0, x: 60 }, visible: { opacity: 1, x: 0 } },
-    scale: { hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } },
+    up: { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } },
+    down: { hidden: { opacity: 0, y: -30 }, visible: { opacity: 1, y: 0 } },
+    left: { hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0 } },
+    right: { hidden: { opacity: 0, x: 30 }, visible: { opacity: 1, x: 0 } },
+    scale: { hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } },
   };
 
   return (
@@ -20,7 +20,7 @@ export const FadeInOnScroll = ({ children, direction = 'up', delay = 0, classNam
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
       variants={variants[direction]}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
       className={className}
     >
       {children}

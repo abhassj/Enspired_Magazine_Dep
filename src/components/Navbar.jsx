@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { Link, useLocation } from 'react-router-dom';
 import BrandLogo from './BrandLogo';
@@ -31,14 +30,26 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open — use overflow hidden only (avoid position:fixed reflow)
   useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.classList.add('body-scroll-locked');
+      const scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      document.body.dataset.scrollY = scrollY;
     } else {
-      document.body.classList.remove('body-scroll-locked');
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      const savedY = document.body.dataset.scrollY;
+      if (savedY) {
+        window.scrollTo(0, parseInt(savedY, 10));
+        delete document.body.dataset.scrollY;
+      }
     }
-    return () => document.body.classList.remove('body-scroll-locked');
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
   }, [mobileMenuOpen]);
 
   // Close menu on route change
@@ -51,11 +62,19 @@ const Navbar = () => {
     { name: 'CONTACT', href: '/contact' },
   ];
 
-  const preloadRoute = (href) => {
+  const preloadRoute = useCallback((href) => {
     if (href !== '/contact' || contactRoutePrefetched.current) return;
     contactRoutePrefetched.current = true;
     void import('../pages/ContactPage');
-  };
+  }, []);
+
+  const closeMobileMenu = useCallback(() => {
+    setMobileMenuOpen(false);
+  }, []);
+
+  const toggleMobileMenu = useCallback(() => {
+    setMobileMenuOpen(prev => !prev);
+  }, []);
 
   return (
     <>
@@ -70,17 +89,7 @@ const Navbar = () => {
               aria-label="Toggle color mode"
               className="w-11 h-11 rounded-full border border-gray-200 dark:border-white/20 bg-white/85 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-brand-lightText dark:text-white justify-self-start"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={isDark ? 'moon-mobile' : 'sun-mobile'}
-                  initial={{ opacity: 0, rotate: -180, scale: 0.7 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, rotate: 180, scale: 0.7 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {isDark ? <Moon size={18} /> : <Sun size={18} />}
-                </motion.div>
-              </AnimatePresence>
+              {isDark ? <Moon size={18} /> : <Sun size={18} />}
             </button>
 
             {/* Center: Brand Logo */}
@@ -96,23 +105,13 @@ const Navbar = () => {
               />
             </Link>
 
-            {/* Right: Hamburger / Close */}
+            {/* Right: Hamburger / Close — pure CSS icon swap, no AnimatePresence */}
             <button 
               className="w-11 h-11 flex items-center justify-center text-gray-800 dark:text-white drop-shadow-md justify-self-end" 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={toggleMobileMenu}
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={mobileMenuOpen ? 'close' : 'open'}
-                  initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-                </motion.div>
-              </AnimatePresence>
+              {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
 
@@ -148,122 +147,95 @@ const Navbar = () => {
               aria-label="Toggle color mode"
               className="w-11 h-11 rounded-full border border-gray-200 dark:border-white/20 bg-white/80 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-brand-lightText dark:text-white hover:border-brand-magenta/60 transition-all"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={isDark ? 'moon' : 'sun'}
-                  initial={{ opacity: 0, rotate: -180, scale: 0.7 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, rotate: 180, scale: 0.7 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {isDark ? <Moon size={18} /> : <Sun size={18} />}
-                </motion.div>
-              </AnimatePresence>
+              {isDark ? <Moon size={18} /> : <Sun size={18} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* ═══ MOBILE FULL-SCREEN OVERLAY MENU — Portaled to body root ═══ */}
+      {/* ═══ MOBILE FULL-SCREEN OVERLAY MENU — Pure CSS transitions for 60fps ═══ */}
       {typeof document !== 'undefined' && createPortal(
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-0 md:hidden flex flex-col"
-              style={{ 
-                backgroundColor: isDark ? '#0a0510' : '#ffffff',
-                zIndex: 9999,
-              }}
+        <div 
+          className="fixed inset-0 md:hidden flex flex-col mobile-menu-overlay"
+          style={{ 
+            backgroundColor: isDark ? '#0a0510' : '#ffffff',
+            zIndex: 9999,
+            opacity: mobileMenuOpen ? 1 : 0,
+            visibility: mobileMenuOpen ? 'visible' : 'hidden',
+            transition: 'opacity 0.2s ease-out, visibility 0.2s ease-out',
+            willChange: 'opacity',
+          }}
+          aria-hidden={!mobileMenuOpen}
+        >
+          {/* Top gradient accent */}
+          <div className="h-[3px] w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink shrink-0" />
+
+          {/* Ambient glow — static, no animation */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div 
+              className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-[100px]"
+              style={{ backgroundColor: isDark ? 'rgba(214,51,132,0.08)' : 'rgba(214,51,132,0.04)' }}
+            />
+            <div 
+              className="absolute bottom-1/4 right-0 w-[200px] h-[200px] rounded-full blur-[80px]"
+              style={{ backgroundColor: isDark ? 'rgba(92,45,145,0.08)' : 'rgba(92,45,145,0.04)' }}
+            />
+          </div>
+
+          {/* Close button in top-right */}
+          <button 
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center z-50 rounded-full border"
+            style={{
+              color: isDark ? '#ffffff' : '#1a0a2e',
+              borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+              backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+            }}
+            onClick={closeMobileMenu}
+            aria-label="Close menu"
+          >
+            <X size={20} />
+          </button>
+
+          {/* Navigation links centered in the screen */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-8 relative z-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                onTouchStart={() => preloadRoute(link.href)}
+                onClick={closeMobileMenu}
+                className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group"
+                style={{ color: isDark ? '#ffffff' : '#1a0a2e' }}
+              >
+                {link.name}
+                {/* Underline on hover/active */}
+                <span className="block h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink transition-all duration-300 mt-1 rounded-full" />
+              </Link>
+            ))}
+          </div>
+
+          {/* Brand logo at bottom */}
+          <div className="pb-10 flex flex-col items-center gap-3 relative z-10">
+            <Link
+              to="/"
+              onClick={closeMobileMenu}
+              className="brand-logo-wrap"
+              aria-label="GR Enspired Magazine home"
             >
-              {/* Top gradient accent */}
-              <div className="h-[3px] w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink shrink-0" />
-
-              {/* Ambient glow */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div 
-                  className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-[100px]"
-                  style={{ backgroundColor: isDark ? 'rgba(214,51,132,0.08)' : 'rgba(214,51,132,0.04)' }}
-                />
-                <div 
-                  className="absolute bottom-1/4 right-0 w-[200px] h-[200px] rounded-full blur-[80px]"
-                  style={{ backgroundColor: isDark ? 'rgba(92,45,145,0.08)' : 'rgba(92,45,145,0.04)' }}
-                />
-              </div>
-
-              {/* Close button in top-right */}
-              <button 
-                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center z-50 rounded-full border"
-                style={{
-                  color: isDark ? '#ffffff' : '#1a0a2e',
-                  borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-                  backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
-                }}
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close menu"
-              >
-                <X size={20} />
-              </button>
-
-              {/* Navigation links centered in the screen */}
-              <div className="flex-1 flex flex-col items-center justify-center gap-8 relative z-10">
-                {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Link
-                      to={link.href}
-                      onMouseEnter={() => preloadRoute(link.href)}
-                      onFocus={() => preloadRoute(link.href)}
-                      onTouchStart={() => preloadRoute(link.href)}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group"
-                      style={{ color: isDark ? '#ffffff' : '#1a0a2e' }}
-                    >
-                      {link.name}
-                      {/* Underline on hover/active */}
-                      <span className="block h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink transition-all duration-300 mt-1 rounded-full" />
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Brand logo at bottom */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.35 }}
-                className="pb-10 flex flex-col items-center gap-3 relative z-10"
-              >
-                <Link
-                  to="/"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="brand-logo-wrap"
-                  aria-label="GR Enspired Magazine home"
-                >
-                  <BrandLogo
-                    className="h-16"
-                    imageClassName="h-full w-auto"
-                    loading="eager"
-                  />
-                </Link>
-                <span 
-                  className="text-[9px] uppercase tracking-[0.3em] font-medium"
-                  style={{ color: isDark ? 'rgba(255,255,255,0.25)' : 'rgba(107,88,128,0.5)' }}
-                >
-                  GR Enspired Magazine
-                </span>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>,
+              <BrandLogo
+                className="h-16"
+                imageClassName="h-full w-auto"
+                loading="eager"
+              />
+            </Link>
+            <span 
+              className="text-[9px] uppercase tracking-[0.3em] font-medium"
+              style={{ color: isDark ? 'rgba(255,255,255,0.25)' : 'rgba(107,88,128,0.5)' }}
+            >
+              GR Enspired Magazine
+            </span>
+          </div>
+        </div>,
         document.body
       )}
     </>

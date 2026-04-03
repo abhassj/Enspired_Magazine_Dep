@@ -36,4 +36,9 @@ export const eventGalleryAssets = {
   img15: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226433/img15_Panel_event_mj1jl5.jpg',
 };
 
+export const siteImageAssets = {
+  ceoImage: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775258120/Ceo-final_tsfjvm.png',
+  heroImageMobile: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775258184/Hero_img_mobile_urqxdi.png',
+};
+
 export const isCloudinaryConfigured = Boolean(CLOUDINARY_CLOUD_NAME);

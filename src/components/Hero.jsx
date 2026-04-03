@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
-import heroImageMobile from '../assets/Hero_img_mobile.png';
+import { siteImageAssets } from '../config/cloudinaryAssets';
 
 const HeroSpline = lazy(() => import('./HeroSpline'));
 
@@ -110,7 +110,7 @@ const Hero = () => {
               >
                 <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[350px] overflow-hidden rounded-[1.2rem] border border-white/12 bg-white/5 shadow-[0_16px_40px_-24px_rgba(214,51,132,0.65)]">
                   <img
-                    src={heroImageMobile}
+                    src={siteImageAssets.heroImageMobile}
                     alt="Enspired Magazine issue highlights"
                     className="w-full h-auto max-h-[39svh] object-contain"
                     loading="eager"

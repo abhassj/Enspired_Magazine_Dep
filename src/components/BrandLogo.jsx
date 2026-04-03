@@ -24,7 +24,6 @@ const BrandLogo = ({
         loading={loading}
         decoding={loading === 'eager' ? 'sync' : 'async'}
         fetchPriority={loading === 'eager' ? 'high' : 'auto'}
-        style={{ imageRendering: '-webkit-optimize-contrast' }}
         draggable="false"
       />
     </span>

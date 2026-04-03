@@ -1,6 +1,4 @@
-import heroImageMobile from '../assets/Hero_img_mobile.png';
-import ceoImage from '../assets/Ceo-final.png';
-import { eventGalleryAssets, issueCoverAssets, issuePdfAssets } from '../config/cloudinaryAssets';
+import { siteImageAssets } from '../config/cloudinaryAssets';
 
 const IMAGE_TIMEOUT_MS = 12000;
 const NETWORK_TIMEOUT_MS = 9000;
@@ -78,22 +76,17 @@ const runWithConcurrency = async (taskFns, concurrency, onTaskComplete) => {
 };
 
 export const preloadSiteAssets = async ({ onProgress } = {}) => {
+  // Only pre-load critical above-the-fold assets on initial page load
+  // Gallery images, CEO photo, and PDFs load lazily as user navigates
   const imageUrls = [
-    heroImageMobile,
-    ceoImage,
+    siteImageAssets.heroImageMobile,
     '/GR_branding_final.svg',
     '/gr-favicon.svg',
-    ...Object.values(issueCoverAssets),
-    ...Object.values(eventGalleryAssets),
   ];
-
-  const resourceUrls = [...Object.values(issuePdfAssets)];
 
   const taskFns = [
     ...imageUrls.map((url) => () => preloadImage(url)),
-    ...resourceUrls.map((url) => () => warmResource(url)),
     () => import('../pages/ContactPage').then(() => true).catch(() => false),
-    () => import('../components/HeroSpline').then(() => true).catch(() => false),
     () => waitForFonts(),
   ];
 
@@ -102,7 +95,7 @@ export const preloadSiteAssets = async ({ onProgress } = {}) => {
 
   onProgress?.(0);
 
-  await runWithConcurrency(taskFns, 6, () => {
+  await runWithConcurrency(taskFns, 4, () => {
     completed += 1;
     onProgress?.(Math.min(1, completed / total));
   });
