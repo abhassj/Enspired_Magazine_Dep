@@ -20,10 +20,11 @@ const BrandLogo = ({
         alt={alt}
         width={LOGO_WIDTH}
         height={LOGO_HEIGHT}
-        className={`brand-logo h-full w-auto max-w-none object-contain ${imageClassName}`}
+        className={`brand-logo h-full w-full max-w-full object-contain select-none ${imageClassName}`}
         loading={loading}
         decoding={loading === 'eager' ? 'sync' : 'async'}
         fetchPriority={loading === 'eager' ? 'high' : 'auto'}
+        style={{ imageRendering: '-webkit-optimize-contrast' }}
         draggable="false"
       />
     </span>

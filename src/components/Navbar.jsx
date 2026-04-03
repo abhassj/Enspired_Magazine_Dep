@@ -90,8 +90,8 @@ const Navbar = () => {
               aria-label="GR Enspired Magazine home"
             >
               <BrandLogo
-                className="h-[56px]"
-                imageClassName="h-full w-auto"
+                className="h-[52px] w-[116px]"
+                imageClassName="h-full w-full"
                 loading="eager"
               />
             </Link>

@@ -2,20 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
 import { motion } from 'framer-motion';
-
-import img1 from '../assets/cover images for issues/ISSUE 01.jfif';
-import img2 from '../assets/cover images for issues/ISSUE 02.jfif';
-import img3 from '../assets/cover images for issues/ISSUE 03.jfif';
-import img4 from '../assets/cover images for issues/ISSUE 04.jfif';
-import img5 from '../assets/cover images for issues/ISSUE 05.jfif';
-import img6 from '../assets/cover images for issues/ISSUE 06.jfif';
-import img7 from '../assets/cover images for issues/ISSUE 07 (SPECIAL COVER).jfif';
-import img8 from '../assets/cover images for issues/ISSUE 08.jfif';
-import img9 from '../assets/cover images for issues/ISSUE 09.png';
-
-import pdfCovid from '../assets/Issues PDFs/Enspired Women Magazine Covid 19 Issue (ISSUE 09).pdf';
-import pdfIssue03 from '../assets/Issues PDFs/Enspired Women Magazine ISSUE 03.pdf';
-import pdfIssue08 from '../assets/Issues PDFs/Enspired Women Magazine ISSUE 08.pdf';
+import { issueCoverAssets, issuePdfAssets } from '../config/cloudinaryAssets';
 
 const issues = [
   {
@@ -23,66 +10,66 @@ const issues = [
     title: 'Enspired Women Magazine - COVID19',
     category: 'INSPIRATIONAL',
     description: 'COVID-era stories honoring frontline heroes, resilience, and community support worldwide.',
-    image: img9,
-    pdf: pdfCovid,
+    image: issueCoverAssets.issue09,
+    pdf: issuePdfAssets.issue09,
   },
   {
     id: 3,
     title: 'Enspired Women Magazine – Issue 03',
     category: 'RESILIENCE',
     description: 'Features Thobile Mseleku, mental health resilience, and recession survival guides.',
-    image: img3,
-    pdf: pdfIssue03,
+    image: issueCoverAssets.issue03,
+    pdf: issuePdfAssets.issue03,
   },
   {
     id: 8,
     title: 'Enspired Women Magazine – Issue 08',
     category: 'DEVELOPMENT',
     description: 'Features Fundi Zwane, artistic entrepreneurship, and global business coaching.',
-    image: img8,
-    pdf: pdfIssue08,
+    image: issueCoverAssets.issue08,
+    pdf: issuePdfAssets.issue08,
   },
   {
     id: 1,
     title: 'Enspired Women Magazine – Issue 01',
     category: 'BUSINESS',
     description: 'Features Maseru Madlala, business tips, and overcoming personal adversity.',
-    image: img1,
+    image: issueCoverAssets.issue01,
   },
   {
     id: 2,
     title: 'Enspired Women Magazine – Issue 02',
     category: 'MOTIVATION',
     description: 'Features Chloe Tryon, mindset for success, and risk management tips.',
-    image: img2,
+    image: issueCoverAssets.issue02,
   },
   {
     id: 4,
     title: 'Enspired Women Magazine – Issue 04',
     category: 'FINANCE',
     description: 'Features Yegas Naidoo, financial management, and same-sex parenting rights.',
-    image: img4,
+    image: issueCoverAssets.issue04,
   },
   {
     id: 5,
     title: 'Enspired Women Magazine – Issue 05',
     category: 'GROWTH',
     description: 'Features Estelle Symcox, real estate insights, and family business transitions.',
-    image: img5,
+    image: issueCoverAssets.issue05,
   },
   {
     id: 6,
     title: 'Enspired Women Magazine – Issue 06',
     category: 'LEADERSHIP',
     description: 'Features Vodacom executives, corporate leadership, and 2020 financial planning.',
-    image: img6,
+    image: issueCoverAssets.issue06,
   },
   {
     id: 7,
     title: 'Enspired Woman Magazine – Exclusive',
     category: 'AWARDS',
     description: 'Celebrates the 2019 Enspired Women Top Achievers across various industries.',
-    image: img7,
+    image: issueCoverAssets.issue07,
   }
 ];
 
@@ -226,6 +213,8 @@ const Issues = () => {
                     src={issue.image} 
                     alt={issue.title} 
                     className="absolute inset-0 w-full h-full object-cover object-top transform group-hover/card:scale-[1.03] transition-transform duration-700 opacity-95 pointer-events-none z-10" 
+                    loading={index < 2 ? 'eager' : 'lazy'}
+                    decoding="async"
                   />
 
                   {/* Elegant fade out gradient overlapping the bottom of the image into the card content */}

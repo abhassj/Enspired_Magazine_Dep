@@ -1,4 +1,4 @@
-import React from 'react'; // force save
+import React from 'react';
 import { Instagram, Facebook, Mail } from 'lucide-react';
 
 const WhatsAppIcon = ({ size = 24, className }) => (
@@ -16,10 +16,7 @@ const WhatsAppIcon = ({ size = 24, className }) => (
 );
 import { FadeInOnScroll } from './ui/ScrollAnimations';
 import BrandLogo from './BrandLogo';
-
-import pdfCovid from '../assets/Issues PDFs/Enspired Women Magazine Covid 19 Issue (ISSUE 09).pdf';
-import pdfIssue03 from '../assets/Issues PDFs/Enspired Women Magazine ISSUE 03.pdf';
-import pdfIssue08 from '../assets/Issues PDFs/Enspired Women Magazine ISSUE 08.pdf';
+import { issuePdfAssets } from '../config/cloudinaryAssets';
 
 const Footer = () => {
   return (
@@ -62,15 +59,15 @@ const Footer = () => {
               <div>
                 <h4 className="text-base md:text-lg font-bold mb-3 md:mb-6 text-brand-lightText dark:text-white tracking-wide">Digital Issues</h4>
                 <ul className="space-y-3 md:space-y-4 text-brand-lightMuted dark:text-white/70 font-light text-xs md:text-sm">
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center sm:justify-start gap-2 md:gap-3 active:text-brand-pink" onClick={() => window.open(pdfIssue03, '_blank')}>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center sm:justify-start gap-2 md:gap-3 active:text-brand-pink" onClick={() => window.open(issuePdfAssets.issue03, '_blank')}>
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-purple/70 shrink-0 shadow-[0_0_8px_rgba(92,45,145,0.6)]"></span>
                     <span className="truncate group-hover:text-brand-pink transition-colors">Issue 03</span>
                   </li>
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center sm:justify-start gap-2 md:gap-3 active:text-brand-pink" onClick={() => window.open(pdfIssue08, '_blank')}>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center sm:justify-start gap-2 md:gap-3 active:text-brand-pink" onClick={() => window.open(issuePdfAssets.issue08, '_blank')}>
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta/70 shrink-0 shadow-[0_0_8px_rgba(214,51,132,0.6)]"></span>
                     <span className="truncate group-hover:text-brand-pink transition-colors">Issue 08</span>
                   </li>
-                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center sm:justify-start gap-2 md:gap-3 active:text-brand-pink" onClick={() => window.open(pdfCovid, '_blank')}>
+                  <li className="hover:text-brand-lightText dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center sm:justify-start gap-2 md:gap-3 active:text-brand-pink" onClick={() => window.open(issuePdfAssets.issue09, '_blank')}>
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-pink/70 shrink-0 shadow-[0_0_8px_rgba(255,77,166,0.6)]"></span>
                     <span className="truncate group-hover:text-brand-pink transition-colors">Issue 09</span>
                   </li>

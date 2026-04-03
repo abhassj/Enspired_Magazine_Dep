@@ -44,6 +44,21 @@ npm run preview
 - `npm run lint`: Run ESLint checks
 - `npm run sync-deploy`: Execute deployment sync PowerShell script
 
+## Cloudinary Asset Delivery
+
+Issue cover images, event gallery images, and issue PDFs are configured to be served from Cloudinary.
+
+Cloudinary setup is currently hardcoded in `src/config/cloudinaryAssets.js`:
+
+- Cloud name: `dyxnqe7sq`
+- Issue covers: direct Cloudinary delivery URLs
+- Event gallery: direct Cloudinary delivery URLs
+- Issue PDFs: direct Cloudinary delivery URLs
+
+Notes:
+
+- If an asset URL fails, use that asset's direct delivery URL from Cloudinary and replace the mapped value in `src/config/cloudinaryAssets.js`.
+
 ## Recent UI Update
 
 The Contact page channel cards were refined to improve logo/icon presence and professional appeal:

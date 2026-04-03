@@ -3,40 +3,24 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
-
-// Linux-compatible precise imports from 'Event Gallery'
-import img1 from '../assets/Event Gallery/img1_Beach Fashion show X KZN.jpg';
-import img2 from '../assets/Event Gallery/img2_Business showcasing event.jpg';
-import img3 from '../assets/Event Gallery/img3_Cover signings.jpg';
-import img4 from '../assets/Event Gallery/img4_Enspire X WILL.jpeg';
-import img5 from '../assets/Event Gallery/img5_Enspired High Tea Soirée.jpg';
-import img6 from '../assets/Event Gallery/img6_Gala event.jpg';
-import img7 from '../assets/Event Gallery/img7_Inspiring SME_s.jpg';
-import img8 from '../assets/Event Gallery/img8_Networking Workshops.jpg';
-import img9 from '../assets/Event Gallery/img9_Recognition events.jpg';
-import img10 from '../assets/Event Gallery/img10_Speaker sessions.jpg';
-import img11 from '../assets/Event Gallery/img11_TWA 2018 Finalist.jpeg';
-import img12 from '../assets/Event Gallery/img12_VIP launch party.jpg';
-import img13 from '../assets/Event Gallery/img13_Women leadership awards 2019.jpg';
-import img14 from '../assets/Event Gallery/img14_Women_s Wine pairing eve.jpg';
-import img15 from '../assets/Event Gallery/img15_Panel event.jpg';
+import { eventGalleryAssets } from '../config/cloudinaryAssets';
 
 const galleryData = [
-  { id: 1, src: img1, alt: "Beach Fashion Show X KZN", title: "Beach Fashion Show X KZN", span: "sm:col-span-2" },
-  { id: 2, src: img2, alt: "Business Showcasing Event", title: "Business Showcasing Event", span: "col-span-1" },
-  { id: 3, src: img3, alt: "Cover Signings", title: "Cover Signings", span: "col-span-1" },
-  { id: 4, src: img4, alt: "Enspire X WILL", title: "Enspire X WILL", span: "col-span-1" },
-  { id: 5, src: img5, alt: "Enspired High Tea Soirée", title: "Enspired High Tea Soirée", span: "col-span-1" },
-  { id: 6, src: img6, alt: "Gala Event", title: "Gala Event", span: "sm:col-span-2" },
-  { id: 7, src: img7, alt: "Inspiring SMEs", title: "Inspiring SMEs", span: "col-span-1" },
-  { id: 8, src: img8, alt: "Networking Workshops", title: "Networking Workshops", span: "col-span-1" },
-  { id: 9, src: img9, alt: "Recognition Events", title: "Recognition Events", span: "sm:col-span-2" },
-  { id: 10, src: img10, alt: "Speaker Sessions", title: "Speaker Sessions", span: "col-span-1" },
-  { id: 11, src: img11, alt: "TWA 2018 Finalist", title: "TWA 2018 Finalist", span: "col-span-1" },
-  { id: 12, src: img12, alt: "VIP Launch Party", title: "VIP Launch Party", span: "col-span-1" },
-  { id: 13, src: img13, alt: "Women Leadership Awards 2019", title: "Women Leadership Awards 2019", span: "sm:col-span-2" },
-  { id: 14, src: img14, alt: "Women's Wine Pairing Evening", title: "Women's Wine Pairing Evening", span: "col-span-1" },
-  { id: 15, src: img15, alt: "Panel Event", title: "Panel Event", span: "col-span-1" },
+  { id: 1, src: eventGalleryAssets.img1, alt: "Beach Fashion Show X KZN", title: "Beach Fashion Show X KZN", span: "sm:col-span-2" },
+  { id: 2, src: eventGalleryAssets.img2, alt: "Business Showcasing Event", title: "Business Showcasing Event", span: "col-span-1" },
+  { id: 3, src: eventGalleryAssets.img3, alt: "Cover Signings", title: "Cover Signings", span: "col-span-1" },
+  { id: 4, src: eventGalleryAssets.img4, alt: "Enspire X WILL", title: "Enspire X WILL", span: "col-span-1" },
+  { id: 5, src: eventGalleryAssets.img5, alt: "Enspired High Tea Soirée", title: "Enspired High Tea Soirée", span: "col-span-1" },
+  { id: 6, src: eventGalleryAssets.img6, alt: "Gala Event", title: "Gala Event", span: "sm:col-span-2" },
+  { id: 7, src: eventGalleryAssets.img7, alt: "Inspiring SMEs", title: "Inspiring SMEs", span: "col-span-1" },
+  { id: 8, src: eventGalleryAssets.img8, alt: "Networking Workshops", title: "Networking Workshops", span: "col-span-1" },
+  { id: 9, src: eventGalleryAssets.img9, alt: "Recognition Events", title: "Recognition Events", span: "sm:col-span-2" },
+  { id: 10, src: eventGalleryAssets.img10, alt: "Speaker Sessions", title: "Speaker Sessions", span: "col-span-1" },
+  { id: 11, src: eventGalleryAssets.img11, alt: "TWA 2018 Finalist", title: "TWA 2018 Finalist", span: "col-span-1" },
+  { id: 12, src: eventGalleryAssets.img12, alt: "VIP Launch Party", title: "VIP Launch Party", span: "col-span-1" },
+  { id: 13, src: eventGalleryAssets.img13, alt: "Women Leadership Awards 2019", title: "Women Leadership Awards 2019", span: "sm:col-span-2" },
+  { id: 14, src: eventGalleryAssets.img14, alt: "Women's Wine Pairing Evening", title: "Women's Wine Pairing Evening", span: "col-span-1" },
+  { id: 15, src: eventGalleryAssets.img15, alt: "Panel Event", title: "Panel Event", span: "col-span-1" },
 ];
 
 const ImageModal = ({ src, onClose }) => {
@@ -92,6 +76,8 @@ const GallerySliderCard = ({ img, onClick }) => (
       alt={img.alt}
       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
       loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
     />
     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex items-end p-5 md:p-8 opacity-90 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
       <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-500 ease-out">

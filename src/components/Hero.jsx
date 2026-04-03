@@ -33,7 +33,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[100dvh] md:min-h-screen w-full flex items-start md:items-center overflow-hidden" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}>
+    <section className="relative min-h-[100svh] md:min-h-screen w-full flex items-start md:items-center overflow-x-hidden md:overflow-hidden" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}>
       
       {/* Pure background */}
       <div className="absolute inset-0 z-0" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}></div>
@@ -79,18 +79,18 @@ const Hero = () => {
       </div>
 
       {/* Text content */}
-      <div className="absolute inset-0 z-[2] pointer-events-none">
+      <div className="relative md:absolute inset-0 z-[2] pointer-events-none">
         {/* Soft gradient only on the left to keep text readable — desktop only */}
         <div className="absolute inset-0 hidden md:block" style={{ background: 'var(--hero-overlay-left)' }}></div>
         
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full min-h-[100dvh] md:min-h-screen flex items-start md:items-center pt-[5.15rem] md:pt-0 pb-5 md:pb-0 relative">
+        <div className="max-w-7xl mx-auto px-5 md:px-12 w-full min-h-[100svh] md:min-h-screen flex items-start md:items-center pt-[4.95rem] md:pt-0 pb-4 md:pb-0 relative">
           <motion.div 
-            className="flex flex-col w-full max-w-xl pointer-events-auto pt-0 md:pt-10 lg:pt-12 min-h-[calc(100dvh-7rem)] md:min-h-0"
+            className="flex flex-col w-full max-w-xl pointer-events-auto pt-0 md:pt-10 lg:pt-12 min-h-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="space-y-4 md:space-y-6">
+            <div className="space-y-3 md:space-y-6">
               {/* Mobile brand accent */}
               <motion.div
                 className="flex items-center gap-3 md:hidden"
@@ -108,11 +108,11 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/5 shadow-[0_18px_45px_-26px_rgba(214,51,132,0.65)]">
+                <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[350px] overflow-hidden rounded-[1.2rem] border border-white/12 bg-white/5 shadow-[0_16px_40px_-24px_rgba(214,51,132,0.65)]">
                   <img
                     src={heroImageMobile}
                     alt="Enspired Magazine issue highlights"
-                    className="w-full h-auto object-contain"
+                    className="w-full h-auto max-h-[39svh] object-contain"
                     loading="eager"
                     decoding="async"
                     fetchPriority="high"
@@ -123,7 +123,7 @@ const Hero = () => {
               </motion.div>
 
               <motion.h1 
-                className="text-[2.35rem] sm:text-[2.65rem] md:text-[4.2rem] lg:text-[5rem] font-condensed font-bold uppercase text-brand-lightText dark:text-white leading-[0.97] tracking-wide mb-2 md:mb-6 mt-0.5 md:mt-8"
+                className="text-[2.1rem] sm:text-[2.5rem] md:text-[4.2rem] lg:text-[5rem] font-condensed font-bold uppercase text-brand-lightText dark:text-white leading-[0.95] tracking-wide mb-1 md:mb-6 mt-0 md:mt-8"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
@@ -133,7 +133,7 @@ const Hero = () => {
               </motion.h1>
               
               <motion.p 
-                className="text-[0.9rem] md:text-[1.1rem] text-brand-lightMuted dark:text-white/80 max-w-[34ch] md:max-w-xl font-sans font-light leading-[1.5] md:leading-relaxed mb-2 md:mb-4 border-l-4 border-brand-magenta pl-4 md:pl-6 text-left"
+                className="text-[0.84rem] sm:text-[0.9rem] md:text-[1.1rem] text-brand-lightMuted dark:text-white/80 max-w-[33ch] md:max-w-xl font-sans font-light leading-[1.42] md:leading-relaxed mb-1 md:mb-4 border-l-4 border-brand-magenta pl-4 md:pl-6 text-left"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -143,7 +143,8 @@ const Hero = () => {
             </div>
             
             <motion.div 
-              className="pt-2 md:pt-4 mt-auto"
+              className="pt-2 md:pt-4 mt-4 md:mt-auto"
+              style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}

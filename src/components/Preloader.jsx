@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Preloader = ({ isLoading }) => {
+const Preloader = ({ isLoading, progress = 0 }) => {
+  const normalizedProgress = Math.max(0, Math.min(1, progress));
+  const percent = Math.round(normalizedProgress * 100);
+
   return (
     <AnimatePresence>
       {isLoading && (
@@ -57,18 +60,21 @@ const Preloader = ({ isLoading }) => {
             </motion.div>
 
             {/* Premium Loading Progress */}
-            <div className="relative w-40 h-[1.5px] bg-gray-100 dark:bg-white/5 overflow-hidden">
+            <div className="relative w-44 h-[2px] bg-gray-100 dark:bg-white/10 overflow-hidden">
               <motion.div
-                initial={{ left: "-100%" }}
-                animate={{ left: "100%" }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: normalizedProgress }}
                 transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear"
+                  duration: 0.25,
+                  ease: "easeOut"
                 }}
-                className="absolute w-1/2 h-full bg-gradient-to-r from-transparent via-brand-magenta to-transparent"
+                className="absolute inset-y-0 left-0 origin-left bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink"
               />
             </div>
+
+            <p className="mt-2 text-[10px] tracking-[0.2em] text-gray-500 dark:text-gray-400 uppercase">
+              Loading {percent}%
+            </p>
 
             {/* Enterprise Branding */}
             <motion.div

@@ -292,6 +292,9 @@ const ContactPage = () => {
                     src={ceoImage}
                     alt="VIKY & RESHMA — Founder & CEO"
                     className="w-full h-auto object-cover grayscale-[10%] contrast-[1.05]"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
                     style={{
                       maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
                       WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
