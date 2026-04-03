@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -7,10 +7,18 @@ import Issues from './components/Issues'
 import Gallery from './components/Gallery'
 import Footer from './components/Footer'
 import Testimonials from './components/Testimonials'
-import ContactPage from './pages/ContactPage'
 import { ScrollProgress } from './components/ui/ScrollAnimations'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import Preloader from './components/Preloader'
+import ceoImage from './assets/Ceo-final.png'
+
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+
+function RouteFallback() {
+  return (
+    <div className="min-h-screen bg-white dark:bg-brand-dark" />
+  )
+}
 
 /* Scroll to top on route change */
 function ScrollToTop() {
@@ -40,6 +48,26 @@ function AppContent() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    const preloadContactRoute = () => {
+      void import('./pages/ContactPage')
+
+      const heroImage = new Image()
+      heroImage.decoding = 'async'
+      heroImage.src = ceoImage
+    }
+
+    if (typeof window === 'undefined') return undefined
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preloadContactRoute, { timeout: 1500 })
+      return () => window.cancelIdleCallback(idleId)
+    }
+
+    const timeoutId = window.setTimeout(preloadContactRoute, 500)
+    return () => window.clearTimeout(timeoutId)
+  }, [])
+
+  useEffect(() => {
     // Check if document is already loaded
     if (document.readyState === 'complete') {
       setIsLoading(false)
@@ -61,7 +89,14 @@ function AppContent() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route
+            path="/contact"
+            element={(
+              <Suspense fallback={<RouteFallback />}>
+                <ContactPage />
+              </Suspense>
+            )}
+          />
         </Routes>
       </div>
     </>

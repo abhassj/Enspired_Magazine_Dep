@@ -13,6 +13,7 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
   const location = useLocation();
+  const contactRoutePrefetched = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,18 +51,24 @@ const Navbar = () => {
     { name: 'CONTACT', href: '/contact' },
   ];
 
+  const preloadRoute = (href) => {
+    if (href !== '/contact' || contactRoutePrefetched.current) return;
+    contactRoutePrefetched.current = true;
+    void import('../pages/ContactPage');
+  };
+
   return (
     <>
-      <nav className={`fixed w-full z-50 transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'} ${isScrolled ? 'bg-white/90 dark:bg-brand-dark/90 backdrop-blur-md pt-1 pb-1 shadow-lg' : 'bg-transparent pt-1 pb-1'}`}>
-        <div className="max-w-7xl mx-auto px-4 md:px-12 flex justify-between items-center -translate-y-0.5">
+      <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'} ${isScrolled ? 'bg-white/92 dark:bg-brand-dark/90 backdrop-blur-md py-2 md:py-1 shadow-lg' : 'bg-transparent py-2 md:py-1'}`}>
+        <div className="max-w-7xl mx-auto px-4 md:px-12 flex justify-between items-center min-h-[72px] md:min-h-[84px]">
           
           {/* ═══ MOBILE LAYOUT: 3-column grid (theme | logo | hamburger) ═══ */}
-          <div className="md:hidden flex items-center justify-between w-full relative">
+          <div className="md:hidden grid grid-cols-[3rem_1fr_3rem] items-center w-full">
             {/* Left: Theme toggle */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle color mode"
-              className="w-9 h-9 rounded-full border border-gray-200 dark:border-white/20 bg-white/80 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-brand-lightText dark:text-white z-10"
+              className="w-11 h-11 rounded-full border border-gray-200 dark:border-white/20 bg-white/85 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-brand-lightText dark:text-white justify-self-start"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
@@ -71,19 +78,19 @@ const Navbar = () => {
                   exit={{ opacity: 0, rotate: 180, scale: 0.7 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {isDark ? <Moon size={15} /> : <Sun size={15} />}
+                  {isDark ? <Moon size={18} /> : <Sun size={18} />}
                 </motion.div>
               </AnimatePresence>
             </button>
 
-            {/* Center: Brand Logo (absolutely centered) */}
+            {/* Center: Brand Logo */}
             <Link
               to="/"
-              className="brand-logo-wrap absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+              className="brand-logo-wrap justify-self-center"
               aria-label="GR Enspired Magazine home"
             >
               <BrandLogo
-                className="h-12"
+                className="h-[56px]"
                 imageClassName="h-full w-auto"
                 loading="eager"
               />
@@ -91,7 +98,7 @@ const Navbar = () => {
 
             {/* Right: Hamburger / Close */}
             <button 
-              className="w-9 h-9 flex items-center justify-center text-gray-800 dark:text-white drop-shadow-md z-10" 
+              className="w-11 h-11 flex items-center justify-center text-gray-800 dark:text-white drop-shadow-md justify-self-end" 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
@@ -103,7 +110,7 @@ const Navbar = () => {
                   exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
                   transition={{ duration: 0.2 }}
                 >
-                  {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                  {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
                 </motion.div>
               </AnimatePresence>
             </button>
@@ -125,7 +132,14 @@ const Navbar = () => {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8 text-[10px] md:text-sm font-bold tracking-[0.1em] text-gray-800 dark:text-white transition-colors">
             {navLinks.map((link) => (
-              <Link key={link.name} to={link.href} className="hover:text-brand-pink hover:drop-shadow-[0_0_8px_rgba(255,77,166,0.6)] dark:hover:drop-shadow-[0_0_10px_rgba(255,77,166,0.9)] transition-all duration-300 drop-shadow-sm uppercase">
+              <Link
+                key={link.name}
+                to={link.href}
+                onMouseEnter={() => preloadRoute(link.href)}
+                onFocus={() => preloadRoute(link.href)}
+                onTouchStart={() => preloadRoute(link.href)}
+                className="hover:text-brand-pink hover:drop-shadow-[0_0_8px_rgba(255,77,166,0.6)] dark:hover:drop-shadow-[0_0_10px_rgba(255,77,166,0.9)] transition-all duration-300 drop-shadow-sm uppercase"
+              >
                 {link.name}
               </Link>
             ))}
@@ -206,6 +220,9 @@ const Navbar = () => {
                   >
                     <Link
                       to={link.href}
+                      onMouseEnter={() => preloadRoute(link.href)}
+                      onFocus={() => preloadRoute(link.href)}
+                      onTouchStart={() => preloadRoute(link.href)}
                       onClick={() => setMobileMenuOpen(false)}
                       className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group"
                       style={{ color: isDark ? '#ffffff' : '#1a0a2e' }}
@@ -232,7 +249,7 @@ const Navbar = () => {
                   aria-label="GR Enspired Magazine home"
                 >
                   <BrandLogo
-                    className="h-14"
+                    className="h-16"
                     imageClassName="h-full w-auto"
                     loading="eager"
                   />

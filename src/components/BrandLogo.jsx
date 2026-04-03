@@ -1,13 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
 
 const LOGO_SRC = 'GR_branding_final.svg';
-
-const logoTransition = {
-  duration: 0.55,
-  ease: [0.4, 0, 0.2, 1],
-};
+const LOGO_WIDTH = 1181;
+const LOGO_HEIGHT = 531;
 
 const BrandLogo = ({
   alt = 'GR Enspired Magazine',
@@ -15,22 +10,17 @@ const BrandLogo = ({
   imageClassName = '',
   loading = 'eager',
 }) => {
-  const { isDark } = useTheme();
-  const logoSrc = LOGO_SRC;
-
   return (
-    <span className={`relative inline-block min-w-fit transition-all duration-500 ${className}`}>
-      <motion.img
-        key={logoSrc}
-        src={logoSrc}
+    <span
+      className={`relative inline-block min-w-fit ${className}`}
+      style={{ aspectRatio: `${LOGO_WIDTH} / ${LOGO_HEIGHT}` }}
+    >
+      <img
+        src={LOGO_SRC}
         alt={alt}
-        initial={false}
-        animate={{
-          opacity: 1,
-          scale: 1,
-        }}
-        transition={logoTransition}
-        className={`brand-logo h-full w-full object-contain ${imageClassName}`}
+        width={LOGO_WIDTH}
+        height={LOGO_HEIGHT}
+        className={`brand-logo h-full w-auto max-w-none object-contain ${imageClassName}`}
         loading={loading}
         decoding={loading === 'eager' ? 'sync' : 'async'}
         fetchPriority={loading === 'eager' ? 'high' : 'auto'}

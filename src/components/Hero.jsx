@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import heroImageMobile from '../assets/Hero_img_mobile.png';
 
 const HeroSpline = lazy(() => import('./HeroSpline'));
 
@@ -32,7 +33,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[92svh] md:min-h-screen w-full flex items-center overflow-hidden" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}>
+    <section className="relative min-h-[100dvh] md:min-h-screen w-full flex items-start md:items-center overflow-hidden" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}>
       
       {/* Pure background */}
       <div className="absolute inset-0 z-0" style={{ background: isDark ? '#000000' : 'var(--bg-hero)' }}></div>
@@ -82,52 +83,74 @@ const Hero = () => {
         {/* Soft gradient only on the left to keep text readable — desktop only */}
         <div className="absolute inset-0 hidden md:block" style={{ background: 'var(--hero-overlay-left)' }}></div>
         
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full min-h-screen flex items-center pt-20 md:pt-0 relative">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full min-h-[100dvh] md:min-h-screen flex items-start md:items-center pt-[5.15rem] md:pt-0 pb-5 md:pb-0 relative">
           <motion.div 
-            className="flex flex-col space-y-5 md:space-y-6 max-w-xl pointer-events-auto pt-2 md:pt-10 lg:pt-12"
+            className="flex flex-col w-full max-w-xl pointer-events-auto pt-0 md:pt-10 lg:pt-12 min-h-[calc(100dvh-7rem)] md:min-h-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Mobile brand accent */}
-            <motion.div
-              className="flex items-center gap-3 md:hidden"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="h-[2px] w-8 bg-gradient-to-r from-brand-purple to-brand-magenta rounded-full" />
-              <span className="text-[9px] uppercase tracking-[0.3em] font-semibold text-magic-gradient">GR Enspired</span>
-            </motion.div>
+            <div className="space-y-4 md:space-y-6">
+              {/* Mobile brand accent */}
+              <motion.div
+                className="flex items-center gap-3 md:hidden"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <div className="h-[2px] w-8 bg-gradient-to-r from-brand-purple to-brand-magenta rounded-full" />
+                <span className="text-[9px] uppercase tracking-[0.3em] font-semibold text-magic-gradient">GR Enspired</span>
+              </motion.div>
 
-            <motion.h1 
-              className="text-[2.5rem] md:text-[4.2rem] lg:text-[5rem] font-condensed font-bold uppercase text-brand-lightText dark:text-white leading-[1.05] tracking-wide mb-2 md:mb-6 mt-2 md:mt-8"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Empowering <span className="text-magic-gradient">Individuals</span> to <br className="hidden md:block"/> 
-              dream, lead, <br className="hidden lg:block"/> and inspire.
-            </motion.h1>
-            
-            <motion.p 
-              className="text-sm md:text-[1.1rem] text-brand-lightMuted dark:text-white/80 max-w-xl font-sans font-light leading-relaxed mb-3 md:mb-4 border-l-4 border-brand-magenta pl-4 md:pl-6 text-justify sm:text-left"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              A global magazine celebrating the voices, journeys, and achievements of Individuals in business and everyday life — sharing stories, knowledge, and opportunities that turn ambition into success.
-            </motion.p>
+              <motion.div
+                className="md:hidden"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/5 shadow-[0_18px_45px_-26px_rgba(214,51,132,0.65)]">
+                  <img
+                    src={heroImageMobile}
+                    alt="Enspired Magazine issue highlights"
+                    className="w-full h-auto object-contain"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    draggable="false"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/14 via-transparent to-transparent" />
+                </div>
+              </motion.div>
+
+              <motion.h1 
+                className="text-[2.35rem] sm:text-[2.65rem] md:text-[4.2rem] lg:text-[5rem] font-condensed font-bold uppercase text-brand-lightText dark:text-white leading-[0.97] tracking-wide mb-2 md:mb-6 mt-0.5 md:mt-8"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Empowering <span className="text-magic-gradient">Individuals</span> to <br className="hidden md:block"/> 
+                dream, lead, <br className="hidden lg:block"/> and inspire.
+              </motion.h1>
+              
+              <motion.p 
+                className="text-[0.9rem] md:text-[1.1rem] text-brand-lightMuted dark:text-white/80 max-w-[34ch] md:max-w-xl font-sans font-light leading-[1.5] md:leading-relaxed mb-2 md:mb-4 border-l-4 border-brand-magenta pl-4 md:pl-6 text-left"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
+                A global magazine celebrating the voices, journeys, and achievements of Individuals in business and everyday life — sharing stories, knowledge, and opportunities that turn ambition into success.
+              </motion.p>
+            </div>
             
             <motion.div 
-              className="pt-1 md:pt-4"
+              className="pt-2 md:pt-4 mt-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               <a 
                 href="#issues"
-                className="inline-block bg-brand-dark text-white dark:bg-white dark:text-black px-8 md:px-10 py-3.5 md:py-4 font-bold uppercase tracking-widest text-xs md:text-sm hover:shadow-[0_0_30px_rgba(214,51,132,0.35)] dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.8)] hover:opacity-95 transition-all duration-300 cursor-pointer md:cta-shimmer-off active:scale-95"
+                className="inline-block bg-brand-dark text-white dark:bg-white dark:text-black px-7 md:px-10 py-3 md:py-4 font-bold uppercase tracking-[0.2em] text-[11px] md:text-sm hover:shadow-[0_0_30px_rgba(214,51,132,0.35)] dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.8)] hover:opacity-95 transition-all duration-300 cursor-pointer md:cta-shimmer-off active:scale-95"
               >
                 Read Latest Issue
               </a>
