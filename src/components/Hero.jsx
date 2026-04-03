@@ -5,31 +5,62 @@ import { siteImageAssets } from '../config/cloudinaryAssets';
 
 const HeroSpline = lazy(() => import('./HeroSpline'));
 
+const isConstrainedNetwork = () => {
+  if (typeof navigator === 'undefined') return false;
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!connection) return false;
+
+  return connection.saveData || ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+};
+
 const getIsDesktopViewport = () => (
   typeof window !== 'undefined' &&
   typeof window.matchMedia === 'function' &&
   window.matchMedia('(min-width: 768px)').matches
 );
 
+const getShouldRenderSpline = () => getIsDesktopViewport() && !isConstrainedNetwork();
+
 const Hero = () => {
   const { isDark } = useTheme();
-  const [showSpline, setShowSpline] = useState(getIsDesktopViewport);
+  const [showSpline, setShowSpline] = useState(getShouldRenderSpline);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
 
     const mediaQuery = window.matchMedia('(min-width: 768px)');
-    const syncSplineVisibility = (event) => {
-      setShowSpline(event.matches);
+    const syncSplineVisibility = () => {
+      setShowSpline(getShouldRenderSpline());
     };
+
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
     if (typeof mediaQuery.addEventListener === 'function') {
       mediaQuery.addEventListener('change', syncSplineVisibility);
-      return () => mediaQuery.removeEventListener('change', syncSplineVisibility);
+      if (connection && typeof connection.addEventListener === 'function') {
+        connection.addEventListener('change', syncSplineVisibility);
+      }
+
+      return () => {
+        mediaQuery.removeEventListener('change', syncSplineVisibility);
+        if (connection && typeof connection.removeEventListener === 'function') {
+          connection.removeEventListener('change', syncSplineVisibility);
+        }
+      };
     }
 
     mediaQuery.addListener(syncSplineVisibility);
-    return () => mediaQuery.removeListener(syncSplineVisibility);
+    if (connection && typeof connection.addListener === 'function') {
+      connection.addListener(syncSplineVisibility);
+    }
+
+    return () => {
+      mediaQuery.removeListener(syncSplineVisibility);
+      if (connection && typeof connection.removeListener === 'function') {
+        connection.removeListener(syncSplineVisibility);
+      }
+    };
   }, []);
 
   return (

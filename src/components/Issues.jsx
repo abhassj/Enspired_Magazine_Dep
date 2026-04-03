@@ -213,7 +213,7 @@ const Issues = () => {
                     src={issue.image} 
                     alt={issue.title} 
                     className="absolute inset-0 w-full h-full object-cover object-top transform group-hover/card:scale-[1.03] transition-transform duration-700 opacity-95 pointer-events-none z-10" 
-                    loading={index < 2 ? 'eager' : 'lazy'}
+                    loading="lazy"
                     decoding="async"
                   />
 

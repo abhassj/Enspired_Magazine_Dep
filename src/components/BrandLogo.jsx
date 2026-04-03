@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LOGO_SRC = 'GR_branding_final.svg';
+const LOGO_SRC = '/GR_branding_final.svg';
 const LOGO_WIDTH = 1181;
 const LOGO_HEIGHT = 531;
 

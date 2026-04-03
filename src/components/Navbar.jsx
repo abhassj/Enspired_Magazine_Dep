@@ -5,6 +5,15 @@ import { useTheme } from '../context/ThemeContext';
 import { Link, useLocation } from 'react-router-dom';
 import BrandLogo from './BrandLogo';
 
+const isConstrainedNetwork = () => {
+  if (typeof navigator === 'undefined') return false;
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!connection) return false;
+
+  return connection.saveData || ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+};
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -63,7 +72,7 @@ const Navbar = () => {
   ];
 
   const preloadRoute = useCallback((href) => {
-    if (href !== '/contact' || contactRoutePrefetched.current) return;
+    if (href !== '/contact' || contactRoutePrefetched.current || isConstrainedNetwork()) return;
     contactRoutePrefetched.current = true;
     void import('../pages/ContactPage');
   }, []);
@@ -136,7 +145,6 @@ const Navbar = () => {
                 to={link.href}
                 onMouseEnter={() => preloadRoute(link.href)}
                 onFocus={() => preloadRoute(link.href)}
-                onTouchStart={() => preloadRoute(link.href)}
                 className="hover:text-brand-pink hover:drop-shadow-[0_0_8px_rgba(255,77,166,0.6)] dark:hover:drop-shadow-[0_0_10px_rgba(255,77,166,0.9)] transition-all duration-300 drop-shadow-sm uppercase"
               >
                 {link.name}
@@ -162,10 +170,11 @@ const Navbar = () => {
             zIndex: 9999,
             opacity: mobileMenuOpen ? 1 : 0,
             visibility: mobileMenuOpen ? 'visible' : 'hidden',
+            pointerEvents: mobileMenuOpen ? 'auto' : 'none',
             transition: 'opacity 0.2s ease-out, visibility 0.2s ease-out',
             willChange: 'opacity',
           }}
-          aria-hidden={!mobileMenuOpen}
+          inert={!mobileMenuOpen ? '' : undefined}
         >
           {/* Top gradient accent */}
           <div className="h-[3px] w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink shrink-0" />
@@ -202,7 +211,6 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                onTouchStart={() => preloadRoute(link.href)}
                 onClick={closeMobileMenu}
                 className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group"
                 style={{ color: isDark ? '#ffffff' : '#1a0a2e' }}
@@ -225,7 +233,7 @@ const Navbar = () => {
               <BrandLogo
                 className="h-16"
                 imageClassName="h-full w-auto"
-                loading="eager"
+                loading="lazy"
               />
             </Link>
             <span 

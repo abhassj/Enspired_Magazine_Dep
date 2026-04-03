@@ -3,6 +3,15 @@ import { siteImageAssets } from '../config/cloudinaryAssets';
 const IMAGE_TIMEOUT_MS = 12000;
 const NETWORK_TIMEOUT_MS = 9000;
 
+const isConstrainedNetwork = () => {
+  if (typeof navigator === 'undefined') return false;
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!connection) return false;
+
+  return connection.saveData || ['slow-2g', '2g', '3g'].includes(connection.effectiveType);
+};
+
 const withTimeout = (promise, timeoutMs) => (
   Promise.race([
     promise,
@@ -37,21 +46,6 @@ const preloadImage = (src) => {
   );
 };
 
-const warmResource = (url) => {
-  if (!url) return Promise.resolve(false);
-
-  return withTimeout(
-    fetch(url, {
-      method: 'HEAD',
-      mode: 'cors',
-      cache: 'force-cache',
-    })
-      .then(() => true)
-      .catch(() => false),
-    NETWORK_TIMEOUT_MS,
-  );
-};
-
 const waitForFonts = () => {
   if (typeof document === 'undefined' || !document.fonts || !document.fonts.ready) {
     return Promise.resolve(true);
@@ -76,17 +70,19 @@ const runWithConcurrency = async (taskFns, concurrency, onTaskComplete) => {
 };
 
 export const preloadSiteAssets = async ({ onProgress } = {}) => {
+  const constrainedNetwork = isConstrainedNetwork();
+
   // Only pre-load critical above-the-fold assets on initial page load
-  // Gallery images, CEO photo, and PDFs load lazily as user navigates
-  const imageUrls = [
-    siteImageAssets.heroImageMobile,
-    '/GR_branding_final.svg',
-    '/gr-favicon.svg',
-  ];
+  // Avoid extra image warming on constrained networks (3G/save-data)
+  const imageUrls = constrainedNetwork
+    ? []
+    : [
+        siteImageAssets.heroImageMobile,
+        '/GR_branding_final.svg',
+      ];
 
   const taskFns = [
     ...imageUrls.map((url) => () => preloadImage(url)),
-    () => import('../pages/ContactPage').then(() => true).catch(() => false),
     () => waitForFonts(),
   ];
 
@@ -95,7 +91,7 @@ export const preloadSiteAssets = async ({ onProgress } = {}) => {
 
   onProgress?.(0);
 
-  await runWithConcurrency(taskFns, 4, () => {
+  await runWithConcurrency(taskFns, constrainedNetwork ? 1 : 3, () => {
     completed += 1;
     onProgress?.(Math.min(1, completed / total));
   });

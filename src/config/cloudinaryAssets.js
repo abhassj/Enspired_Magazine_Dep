@@ -1,6 +1,11 @@
 const CLOUDINARY_CLOUD_NAME = 'dyxnqe7sq';
 
-export const issueCoverAssets = {
+const optimizeCloudinaryImage = (url, transformation = 'q_auto:eco/f_auto/dpr_auto/c_limit,w_1200') => {
+  if (!url) return url;
+  return url.replace('/upload/q_auto/f_auto/', `/upload/${transformation}/`);
+};
+
+const issueCoverAssetSources = {
   issue01: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226414/ISSUE_01_tuhyq4.jpg',
   issue02: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226414/ISSUE_02_sd9nhn.jpg',
   issue03: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226414/ISSUE_03_hpvddy.jpg',
@@ -12,13 +17,17 @@ export const issueCoverAssets = {
   issue09: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226416/ISSUE_09_eq8cyz.png',
 };
 
+export const issueCoverAssets = Object.fromEntries(
+  Object.entries(issueCoverAssetSources).map(([key, value]) => [key, optimizeCloudinaryImage(value)]),
+);
+
 export const issuePdfAssets = {
   issue03: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/v1775227144/Enspired_Women_Magazine_ISSUE_03_bag9vh.pdf',
   issue08: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/v1775227130/Enspired_Women_Magazine_ISSUE_08_bavff8.pdf',
   issue09: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/v1775227143/Enspired_Women_Magazine_Covid_19_Issue_ISSUE_09_svlpbp.pdf',
 };
 
-export const eventGalleryAssets = {
+const eventGalleryAssetSources = {
   img1: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226432/img1_Beach_Fashion_show_X_KZN_iwvzps.jpg',
   img2: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226434/img2_Business_showcasing_event_uf2ufy.jpg',
   img3: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226433/img3_Cover_signings_zth9sa.jpg',
@@ -36,9 +45,21 @@ export const eventGalleryAssets = {
   img15: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775226433/img15_Panel_event_mj1jl5.jpg',
 };
 
-export const siteImageAssets = {
+export const eventGalleryAssets = Object.fromEntries(
+  Object.entries(eventGalleryAssetSources).map(([key, value]) => [key, optimizeCloudinaryImage(value)]),
+);
+
+const siteImageAssetSources = {
   ceoImage: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775258120/Ceo-final_tsfjvm.png',
   heroImageMobile: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775258184/Hero_img_mobile_urqxdi.png',
+};
+
+export const siteImageAssets = {
+  ceoImage: optimizeCloudinaryImage(siteImageAssetSources.ceoImage),
+  heroImageMobile: optimizeCloudinaryImage(
+    siteImageAssetSources.heroImageMobile,
+    'q_auto:eco/f_auto/dpr_auto/c_limit,w_960',
+  ),
 };
 
 export const isCloudinaryConfigured = Boolean(CLOUDINARY_CLOUD_NAME);
