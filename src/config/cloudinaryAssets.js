@@ -1,8 +1,20 @@
 const CLOUDINARY_CLOUD_NAME = 'dyxnqe7sq';
 
+/* ─── Detect mobile at module load for image size optimization ─── */
+const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+
 const optimizeCloudinaryImage = (url, transformation = 'q_auto:eco/f_auto/dpr_auto/c_limit,w_1200') => {
   if (!url) return url;
   return url.replace('/upload/q_auto/f_auto/', `/upload/${transformation}/`);
+};
+
+/* ─── Mobile: use smaller image widths to reduce data transfer ─── */
+const mobileOptimize = (url, mobileWidth = 600) => {
+  if (!url) return url;
+  if (isMobileDevice) {
+    return url.replace('/upload/q_auto/f_auto/', `/upload/q_auto:eco/f_auto/dpr_auto/c_limit,w_${mobileWidth}/`);
+  }
+  return optimizeCloudinaryImage(url);
 };
 
 const issueCoverAssetSources = {
@@ -18,7 +30,7 @@ const issueCoverAssetSources = {
 };
 
 export const issueCoverAssets = Object.fromEntries(
-  Object.entries(issueCoverAssetSources).map(([key, value]) => [key, optimizeCloudinaryImage(value)]),
+  Object.entries(issueCoverAssetSources).map(([key, value]) => [key, mobileOptimize(value, 500)]),
 );
 
 export const issuePdfAssets = {
@@ -46,7 +58,7 @@ const eventGalleryAssetSources = {
 };
 
 export const eventGalleryAssets = Object.fromEntries(
-  Object.entries(eventGalleryAssetSources).map(([key, value]) => [key, optimizeCloudinaryImage(value)]),
+  Object.entries(eventGalleryAssetSources).map(([key, value]) => [key, mobileOptimize(value, 480)]),
 );
 
 const siteImageAssetSources = {
@@ -55,7 +67,9 @@ const siteImageAssetSources = {
 };
 
 export const siteImageAssets = {
-  ceoImage: optimizeCloudinaryImage(siteImageAssetSources.ceoImage),
+  ceoImage: isMobileDevice
+    ? optimizeCloudinaryImage(siteImageAssetSources.ceoImage, 'q_auto:eco/f_auto/dpr_auto/c_limit,w_480')
+    : optimizeCloudinaryImage(siteImageAssetSources.ceoImage),
   heroImageMobile: optimizeCloudinaryImage(
     siteImageAssetSources.heroImageMobile,
     'q_auto:eco/f_auto/dpr_auto/c_limit,w_960',
@@ -74,7 +88,7 @@ const collaborationLogoSources = {
 };
 
 export const collaborationLogoAssets = Object.fromEntries(
-  Object.entries(collaborationLogoSources).map(([key, value]) => [key, optimizeCloudinaryImage(value)]),
+  Object.entries(collaborationLogoSources).map(([key, value]) => [key, mobileOptimize(value, 300)]),
 );
 
 export const isCloudinaryConfigured = Boolean(CLOUDINARY_CLOUD_NAME);

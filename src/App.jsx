@@ -16,6 +16,8 @@ import Preloader from './components/Preloader'
 import { preloadSiteAssets } from './utils/preloadSiteAssets'
 import RouteTransitionSkeleton from './components/RouteTransitionSkeleton'
 
+const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768
+
 const contactPageImport = () => import('./pages/ContactPage')
 const ContactPage = lazy(contactPageImport)
 
@@ -65,6 +67,12 @@ function AppContent() {
       return undefined
     }
 
+    // Mobile: no artificial transition delay — content appears instantly
+    if (isMobileDevice) {
+      return undefined
+    }
+
+    // Desktop: subtle 60ms skeleton transition (unchanged)
     setIsRouteTransitioning(true)
     const timerId = window.setTimeout(() => {
       setIsRouteTransitioning(false)
@@ -75,7 +83,8 @@ function AppContent() {
 
   useEffect(() => {
     let isMounted = true
-    const minimumPreloaderMs = 500
+    // Mobile: shorter minimum preloader to get content visible faster
+    const minimumPreloaderMs = isMobileDevice ? 300 : 500
     const startedAt = Date.now()
 
     const waitForWindowLoad = document.readyState === 'complete'
@@ -117,20 +126,22 @@ function AppContent() {
   }, [])
 
   // Eagerly prefetch the Contact page chunk after initial load completes
+  // Mobile: prefetch sooner (500ms) for instant navigation
   useEffect(() => {
     if (isLoading) return
-    // After main content is visible, pre-warm Contact page JS chunk
+    const delay = isMobileDevice ? 500 : 2000
     const timer = window.setTimeout(() => {
       void contactPageImport()
-    }, 2000)
+    }, delay)
     return () => window.clearTimeout(timer)
   }, [isLoading])
 
   return (
     <>
       <Preloader isLoading={isLoading} progress={preloadProgress} />
-      <div className={`${isDark ? 'dark' : ''} min-h-screen bg-white text-brand-lightText dark:bg-brand-dark dark:text-brand-light font-sans selection:bg-brand-magenta selection:text-white`}>
-        <RouteTransitionSkeleton visible={isRouteTransitioning} />
+      <div className={`${isDark ? 'dark' : ''} min-h-screen max-w-[100vw] overflow-x-hidden bg-white text-brand-lightText dark:bg-brand-dark dark:text-brand-light font-sans selection:bg-brand-magenta selection:text-white`}>
+        {/* Route transition skeleton — desktop only */}
+        {!isMobileDevice && <RouteTransitionSkeleton visible={isRouteTransitioning} />}
         <ScrollProgress />
         <ScrollToTop />
         <Routes>

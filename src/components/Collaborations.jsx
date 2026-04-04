@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { FadeInOnScroll, StaggerChildren } from './ui/ScrollAnimations';
 import { collaborationLogoAssets } from '../config/cloudinaryAssets';
 
+const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+
 const collaborations = [
   { id: 1, name: 'Mercedes-Benz', image: collaborationLogoAssets.mercedes },
   { id: 2, name: 'Mangwanani African Spa', image: collaborationLogoAssets.mangwanani },
@@ -14,11 +16,51 @@ const collaborations = [
   { id: 8, name: 'Vodacom', image: collaborationLogoAssets.vodacom },
 ];
 
+/* ─── Mobile logo card: no Framer Motion hover, uses CSS :active ─── */
+const MobileLogoCard = ({ collab }) => (
+  <div
+    className="flex flex-col items-center justify-center group cursor-default active:scale-95 transition-transform duration-200"
+  >
+    <div className="w-full h-24 sm:h-28 flex items-center justify-center p-4 bg-transparent transition-all duration-300">
+      <img
+        src={collab.image}
+        alt={`${collab.name} logo`}
+        className="max-w-full max-h-full object-contain"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <span className="mt-4 text-center font-sans text-sm md:text-base text-gray-400 dark:text-white/40 group-hover:text-brand-lightText dark:group-hover:text-white/90 group-hover:font-medium transition-colors duration-300">
+      {collab.name}
+    </span>
+  </div>
+);
+
+/* ─── Desktop logo card: full Framer Motion hover (unchanged) ─── */
+const DesktopLogoCard = ({ collab }) => (
+  <motion.div 
+    className="flex flex-col items-center justify-center group cursor-default"
+    whileHover={{ y: -5 }}
+  >
+    <div className="w-full h-24 sm:h-28 flex items-center justify-center p-4 bg-transparent transition-all duration-300">
+      <img
+        src={collab.image}
+        alt={`${collab.name} logo`}
+        className="max-w-full max-h-full object-contain transition-transform duration-500 will-change-transform group-hover:scale-[1.03]"
+        loading="lazy"
+      />
+    </div>
+    <span className="mt-4 text-center font-sans text-sm md:text-base text-gray-400 dark:text-white/40 group-hover:text-brand-lightText dark:group-hover:text-white/90 group-hover:font-medium transition-colors duration-300">
+      {collab.name}
+    </span>
+  </motion.div>
+);
+
 const Collaborations = () => {
   return (
     <section id="collaborations" className="py-16 md:py-24 bg-white dark:bg-brand-dark overflow-hidden relative border-t border-gray-100 dark:border-white/5">
-      {/* Subtle Background Elements */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-purple/5 opacity-50 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
+      {/* Subtle Background Elements — reduced blur on mobile */}
+      <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-brand-purple/5 opacity-50 rounded-full blur-[60px] md:blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
         
@@ -37,26 +79,9 @@ const Collaborations = () => {
         <StaggerChildren staggerDelay={0.1}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 md:gap-x-12 md:gap-y-16">
             {collaborations.map((collab) => (
-              <motion.div 
-                key={collab.id}
-                className="flex flex-col items-center justify-center group cursor-default"
-                whileHover={{ y: -5 }}
-              >
-                {/* Logo Image */}
-                <div className="w-full h-24 sm:h-28 flex items-center justify-center p-4 bg-transparent transition-all duration-300">
-                  <img
-                    src={collab.image}
-                    alt={`${collab.name} logo`}
-                    className="max-w-full max-h-full object-contain transition-transform duration-500 will-change-transform group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
-                </div>
-                
-                {/* Partner Name Label */}
-                <span className="mt-4 text-center font-sans text-sm md:text-base text-gray-400 dark:text-white/40 group-hover:text-brand-lightText dark:group-hover:text-white/90 group-hover:font-medium transition-colors duration-300">
-                  {collab.name}
-                </span>
-              </motion.div>
+              isMobileDevice
+                ? <MobileLogoCard key={collab.id} collab={collab} />
+                : <DesktopLogoCard key={collab.id} collab={collab} />
             ))}
           </div>
         </StaggerChildren>

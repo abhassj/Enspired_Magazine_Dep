@@ -1,10 +1,12 @@
-import React, { useRef, useMemo } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useRef } from 'react';
+import { useInView } from 'framer-motion';
 import { Mail, Instagram, Facebook, ArrowUpRight, MapPin, Sparkles } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { siteImageAssets } from '../config/cloudinaryAssets';
+
+const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
 
 /* ─── Custom Icons ─── */
 const WhatsAppIcon = ({ size = 24, className }) => (
@@ -21,7 +23,7 @@ const WhatsAppIcon = ({ size = 24, className }) => (
   </svg>
 );
 
-/* ─── mock data ─── */
+/* ─── contact data ─── */
 const CONTACT_CHANNELS = [
   {
     icon: WhatsAppIcon,
@@ -67,11 +69,11 @@ const CONTACT_CHANNELS = [
   },
 ];
 
-/* ─── contact card — lightweight, no useInView per card ─── */
+/* ─── contact card — lightweight, no backdrop-blur on mobile ─── */
 const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame, iconGlow, index }) => {
   return (
     <div
-      className="group relative block rounded-3xl overflow-hidden h-full touch-feedback"
+      className="group relative block rounded-2xl md:rounded-3xl overflow-hidden h-full touch-feedback"
       style={{
         opacity: 1,
         animation: `card-fade-in 0.4s ease-out ${0.05 + index * 0.08}s both`,
@@ -80,51 +82,51 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
       {/* Primary Card Link */}
       {href && <a href={href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10 cursor-pointer" aria-label={title}></a>}
 
-      {/* Card background with glass effect */}
-      <div className="relative p-7 md:p-8 lg:p-10 h-full
+      {/* Card background */}
+      <div className={`relative p-5 md:p-8 lg:p-10 h-full
                       bg-white/70 dark:bg-white/[0.03]
-                      backdrop-blur-xl
+                      ${isMobileDevice ? '' : 'backdrop-blur-xl'}
                       border border-gray-200/60 dark:border-white/[0.06]
-                      rounded-3xl
+                      rounded-2xl md:rounded-3xl
                       hover:border-brand-magenta/30 dark:hover:border-brand-magenta/30
-                      transition-all duration-300">
+                      transition-all duration-300`}>
 
-        {/* Hover glow */}
+        {/* Hover glow — desktop only */}
         <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500
                         bg-gradient-to-br from-brand-magenta/[0.03] via-transparent to-brand-purple/[0.03]
-                        dark:from-brand-magenta/[0.06] dark:via-transparent dark:to-brand-purple/[0.06]" />
+                        dark:from-brand-magenta/[0.06] dark:via-transparent dark:to-brand-purple/[0.06] hidden md:block" />
 
-        {/* Animated corner accent */}
-        <div className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-all duration-700">
+        {/* Corner accent — desktop only */}
+        <div className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-all duration-700 hidden md:block">
           <div className={`absolute top-0 right-0 w-full h-full bg-gradient-to-bl ${gradient} opacity-10 rounded-bl-[60px]`} />
         </div>
 
         <div className="relative z-10 flex flex-col h-full">
-          {/* Layered icon badge for premium visual presence */}
-          <div className="relative mb-6 md:mb-8">
+          {/* Icon badge */}
+          <div className="relative mb-4 md:mb-8">
             <div
               className={`absolute -inset-3 rounded-[22px] bg-gradient-to-br ${gradient} opacity-20 blur-xl
                           group-hover:opacity-35 transition-opacity duration-500`}
             />
             <div
-              className={`relative w-[58px] h-[58px] md:w-[66px] md:h-[66px] rounded-[20px] p-[1.5px]
+              className={`relative w-12 h-12 md:w-[66px] md:h-[66px] rounded-2xl md:rounded-[20px] p-[1.5px]
                           bg-gradient-to-br ${iconFrame} ${iconGlow}
                           group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-500`}
             >
-              <div className="relative h-full w-full rounded-[18px] bg-white dark:bg-[#140d1f] flex items-center justify-center border border-white/70 dark:border-white/10 overflow-hidden">
+              <div className="relative h-full w-full rounded-[14px] md:rounded-[18px] bg-white dark:bg-[#140d1f] flex items-center justify-center border border-white/70 dark:border-white/10 overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.55),transparent_45%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_45%)]" />
-                <Icon size={27} className="relative z-10 text-brand-lightText dark:text-white" strokeWidth={2.3} />
+                <Icon size={isMobileDevice ? 22 : 27} className="relative z-10 text-brand-lightText dark:text-white" strokeWidth={2.3} />
               </div>
             </div>
           </div>
 
           {/* Title */}
-          <h3 className="text-lg md:text-xl font-bold text-brand-lightText dark:text-white mb-3 md:mb-4 tracking-wide uppercase font-condensed">
+          <h3 className="text-base md:text-xl font-bold text-brand-lightText dark:text-white mb-2 md:mb-4 tracking-wide uppercase font-condensed">
             {title}
           </h3>
 
           {/* Lines */}
-          <div className="space-y-1.5 md:space-y-2 mb-6 md:mb-8 flex-grow relative z-20 pointer-events-none">
+          <div className="space-y-1 md:space-y-2 mb-4 md:mb-8 flex-grow relative z-20 pointer-events-none">
             {lines.map((line, idx) => (
               <div key={idx} className="pointer-events-auto w-fit">
                 {line.href ? (
@@ -156,45 +158,45 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
 };
 
 /* ═══════════════════════════════════════════
-   MAIN CONTACT PAGE — Optimized for mobile performance
+   MAIN CONTACT PAGE
+   Mobile: CSS-only animations, no useInView
+   Desktop: Full useInView (unchanged)
    ═══════════════════════════════════════════ */
 const ContactPage = () => {
   const heroRef = useRef(null);
-  const heroInView = useInView(heroRef, { once: true, margin: '0px' });
-  const channelsHeaderRef = useRef(null);
-  const channelsHeaderInView = useInView(channelsHeaderRef, { once: true, margin: '0px' });
+  const heroInViewDesktop = useInView(heroRef, { once: true, margin: '0px' });
+  const heroInView = isMobileDevice ? true : heroInViewDesktop;
 
-  // Memoize the title letters to avoid re-creating on every render
-  const contactLetters = useMemo(() => 'CONTACT'.split(''), []);
-  const usLetters = useMemo(() => 'US'.split(''), []);
+  const channelsHeaderRef = useRef(null);
+  const channelsHeaderInViewDesktop = useInView(channelsHeaderRef, { once: true, margin: '0px' });
+  const channelsHeaderInView = isMobileDevice ? true : channelsHeaderInViewDesktop;
 
   return (
     <>
       <Navbar />
 
       {/* ══════════════════════════════════════
-          HERO: Giant title + CEO image + Bio
-          — NO parallax transforms (they kill mobile perf)
+          HERO: Title + CEO image + Bio
           ══════════════════════════════════════ */}
       <section ref={heroRef} className="relative min-h-[auto] md:min-h-screen overflow-hidden bg-white dark:bg-brand-dark">
-        {/* ── Ambient background glows — reduced on mobile ── */}
+        {/* Ambient background glows */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[400px] md:w-[700px] h-[400px] md:h-[700px] rounded-full
-                          bg-brand-magenta/[0.07] dark:bg-brand-magenta/[0.04] blur-[100px] md:blur-[150px]" />
-          <div className="absolute top-1/3 -left-20 md:-left-40 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full
-                          bg-brand-purple/[0.06] dark:bg-brand-purple/[0.03] blur-[80px] md:blur-[120px]" />
+          <div className="absolute -top-40 -right-40 w-[300px] md:w-[700px] h-[300px] md:h-[700px] rounded-full
+                          bg-brand-magenta/[0.07] dark:bg-brand-magenta/[0.04] blur-[60px] md:blur-[150px]" />
+          <div className="absolute top-1/3 -left-20 md:-left-40 w-[250px] md:w-[500px] h-[250px] md:h-[500px] rounded-full
+                          bg-brand-purple/[0.06] dark:bg-brand-purple/[0.03] blur-[50px] md:blur-[120px]" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 md:px-12">
+        <div className="relative max-w-7xl mx-auto px-5 md:px-12">
 
-          {/* ── ROW: Title text + CEO image side by side ── */}
-          <div className="pt-20 md:pt-24 lg:pt-28 pb-16 md:pb-36 lg:pb-48 flex flex-col lg:flex-row items-center lg:items-center gap-8 md:gap-12 lg:gap-8">
+          {/* ROW: Title + CEO */}
+          <div className="pt-16 md:pt-24 lg:pt-28 pb-8 md:pb-36 lg:pb-48 flex flex-col lg:flex-row items-center lg:items-center gap-6 md:gap-12 lg:gap-8">
 
-            {/* LEFT: Giant title + tagline — lightweight CSS animation instead of per-letter Framer */}
+            {/* LEFT: Title + tagline */}
             <div className="flex-1 lg:pr-8 relative z-20 text-center lg:text-left">
-              {/* Small decorative label */}
+              {/* Decorative label */}
               <div
-                className="flex items-center justify-center lg:justify-start gap-2 mb-4 md:mb-6"
+                className="flex items-center justify-center lg:justify-start gap-2 mb-3 md:mb-6"
                 style={{ animation: heroInView ? 'card-fade-in 0.5s ease-out 0.1s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
                 <Sparkles size={14} className="text-brand-magenta" />
@@ -203,16 +205,16 @@ const ContactPage = () => {
                 </span>
               </div>
 
-              {/* GIANT title — simple fade-in instead of per-letter animation */}
+              {/* Title — tighter on mobile */}
               <h1 className="font-condensed font-extrabold uppercase leading-[0.9] tracking-wide
-                             text-[clamp(3.5rem,15vw,9rem)]
-                             relative py-2">
-                {/* Subtle background glow behind the text */}
+                             text-[clamp(2.8rem,12vw,9rem)]
+                             relative py-1 md:py-2">
+                {/* Background glow */}
                 <div className="absolute -inset-4 md:-inset-6 bg-gradient-to-r from-brand-purple/[0.08] via-brand-magenta/[0.12] to-brand-pink/[0.08] dark:from-brand-purple/[0.06] dark:via-brand-magenta/[0.1] dark:to-brand-pink/[0.06] blur-2xl -z-10 opacity-80" />
                 
                 <span className="block relative z-10 text-brand-lightText dark:text-white drop-shadow-[0_2px_8px_rgba(26,10,46,0.1)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                   <span
-                    className="block mb-1 md:mb-2"
+                    className="block mb-0 md:mb-2"
                     style={{ animation: heroInView ? 'title-slide-up 0.6s ease-out 0.15s both' : 'none', opacity: heroInView ? undefined : 0 }}
                   >
                     CONTACT
@@ -226,18 +228,18 @@ const ContactPage = () => {
                 </span>
               </h1>
 
-              {/* Tagline */}
+              {/* Tagline — tighter margins on mobile */}
               <p
-                className="mt-6 md:mt-8 mx-auto lg:mx-0 max-w-sm md:max-w-md text-brand-lightMuted dark:text-white/50 text-sm md:text-sm lg:text-base font-light leading-relaxed md:leading-[1.8] tracking-wide"
+                className="mt-4 md:mt-8 mx-auto lg:mx-0 max-w-[320px] md:max-w-md text-brand-lightMuted dark:text-white/50 text-[13px] md:text-sm lg:text-base font-light leading-relaxed md:leading-[1.8] tracking-wide"
                 style={{ animation: heroInView ? 'card-fade-in 0.6s ease-out 0.4s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
                 For inquiries, collaborations, or just to say hello — we'd love to hear from you.
                 Let's connect and create something extraordinary together.
               </p>
 
-              {/* Decorative animated line */}
+              {/* Decorative line */}
               <div
-                className="mt-8 md:mt-10 h-[2px] w-20 md:w-32 bg-gradient-to-r from-brand-blue to-transparent mx-auto lg:mx-0"
+                className="mt-5 md:mt-10 h-[2px] w-16 md:w-32 bg-gradient-to-r from-brand-blue to-transparent mx-auto lg:mx-0"
                 style={{
                   animation: heroInView ? 'line-scale-x 0.8s ease-out 0.6s both' : 'none',
                   transformOrigin: 'left',
@@ -246,18 +248,18 @@ const ContactPage = () => {
               />
             </div>
 
-            {/* RIGHT: CEO photo with bio underneath — lazy loaded, no parallax */}
-            <div className="relative w-full sm:w-[350px] md:w-[400px] lg:w-[420px] xl:w-[460px] shrink-0 z-10 max-h-[60vh] md:max-h-none overflow-hidden">
+            {/* RIGHT: CEO photo + bio */}
+            <div className="relative w-full max-w-[300px] md:max-w-none md:w-[400px] lg:w-[420px] xl:w-[460px] shrink-0 z-10 overflow-hidden mx-auto">
               {/* CEO Image */}
               <div
                 className="relative"
                 style={{ animation: heroInView ? 'card-fade-in 0.7s ease-out 0.25s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
-                {/* Magenta glow behind image */}
-                <div className="absolute -inset-6 bg-gradient-to-b from-brand-magenta/10 via-brand-purple/5 to-transparent rounded-[2rem] blur-3xl opacity-70" />
+                {/* Glow behind image */}
+                <div className="absolute -inset-4 md:-inset-6 bg-gradient-to-b from-brand-magenta/10 via-brand-purple/5 to-transparent rounded-[2rem] blur-lg md:blur-3xl opacity-70" />
 
                 {/* Image container */}
-                <div className="relative overflow-hidden rounded-t-[2rem] rounded-b-xl px-4 md:px-0">
+                <div className="relative overflow-hidden rounded-t-2xl md:rounded-t-[2rem] rounded-b-lg md:rounded-b-xl">
                   <img
                     src={siteImageAssets.ceoImage}
                     alt="VIKY & RESHMA — Founder & CEO"
@@ -271,24 +273,24 @@ const ContactPage = () => {
                     }}
                   />
 
-                  {/* Overlay gradient at bottom for blend */}
-                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white dark:from-brand-dark to-transparent" />
+                  {/* Overlay gradient */}
+                  <div className="absolute bottom-0 left-0 right-0 h-20 md:h-24 bg-gradient-to-t from-white dark:from-brand-dark to-transparent" />
                 </div>
               </div>
 
-              {/* CEO Bio — directly under the image */}
+              {/* CEO Bio — tighter spacing on mobile */}
               <div
-                className="relative -mt-8 md:-mt-16 px-4 md:px-2 text-center lg:text-left"
+                className="relative -mt-6 md:-mt-16 px-2 md:px-2 text-center lg:text-left"
                 style={{ animation: heroInView ? 'card-fade-in 0.6s ease-out 0.5s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide">
+                <h3 className="text-lg md:text-2xl lg:text-3xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide">
                   VIKY & RESHMA
                 </h3>
-                <p className="mt-0.5 md:mt-1 text-[11px] md:text-sm font-semibold text-magic-gradient tracking-wider uppercase">
+                <p className="mt-0.5 text-[10px] md:text-sm font-semibold text-magic-gradient tracking-wider uppercase">
                   Founder & CEO
                 </p>
-                <p className="mt-3 text-xs md:text-sm text-brand-lightMuted dark:text-white/45 font-light leading-relaxed md:leading-[1.8]">
-                  Viky and Reshma are visionary leaders behind GR Enspired , now expanded to London.
+                <p className="mt-2 md:mt-3 text-[11px] md:text-sm text-brand-lightMuted dark:text-white/45 font-light leading-relaxed md:leading-[1.8]">
+                  Viky and Reshma are visionary leaders behind GR Enspired, now expanded to London.
                   Empowering women, men, and youth across Africa and beyond.
                   Through magazine, they amplify voices, share inspiring stories, and support entrepreneurs building connection and financial stability.
                 </p>
@@ -297,43 +299,43 @@ const ContactPage = () => {
           </div>
         </div>
 
-        {/* ── Seamless section divider ── */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 md:h-40 bg-gradient-to-t from-brand-lightBg/80 dark:from-brand-dark to-transparent pointer-events-none" />
+        {/* Section divider */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 md:h-40 bg-gradient-to-t from-brand-lightBg/80 dark:from-brand-dark to-transparent pointer-events-none" />
       </section>
 
       {/* ══════════════════════════════════════
           CONTACT CHANNELS
           ══════════════════════════════════════ */}
-      <section className="relative pt-4 md:pt-8 pb-16 md:pb-32 bg-brand-lightBg/50 dark:bg-transparent">
-        {/* Continuing ambient glows for seamless feel */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden text-center sm:text-left">
-          <div className="absolute top-0 left-1/3 w-[500px] h-[400px] rounded-full
-                          bg-brand-purple/[0.04] dark:bg-brand-purple/[0.02] blur-[100px] md:blur-[120px]" />
+      <section className="relative pt-2 md:pt-8 pb-10 md:pb-32 bg-brand-lightBg/50 dark:bg-transparent">
+        {/* Ambient glow */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/3 w-[350px] md:w-[500px] h-[300px] md:h-[400px] rounded-full
+                          bg-brand-purple/[0.04] dark:bg-brand-purple/[0.02] blur-[60px] md:blur-[120px]" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-          {/* Section header */}
+        <div className="relative max-w-7xl mx-auto px-5 md:px-12">
+          {/* Section header — tighter mobile spacing */}
           <div
             ref={channelsHeaderRef}
-            className="mb-12 md:mb-20 text-center sm:text-left"
+            className="mb-6 md:mb-20 text-center sm:text-left"
             style={{ animation: channelsHeaderInView ? 'card-fade-in 0.5s ease-out both' : 'none', opacity: channelsHeaderInView ? undefined : 0 }}
           >
-            <div className="flex items-center justify-center sm:justify-start gap-3 mb-3 md:mb-4">
+            <div className="flex items-center justify-center sm:justify-start gap-3 mb-2 md:mb-4">
               <div className="h-[2px] w-8 bg-brand-blue rounded-full" />
               <span className="text-[10px] uppercase tracking-[0.35em] font-semibold text-magic-gradient inline-block">
                 Get In Touch
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide leading-[0.9]">
+            <h2 className="text-2xl md:text-5xl lg:text-6xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide leading-[0.9]">
               Reach Out
-              <span className="block text-brand-lightMuted/30 dark:text-white/15 text-2xl md:text-4xl lg:text-5xl mt-1.5 md:mt-1">
+              <span className="block text-brand-lightMuted/30 dark:text-white/15 text-xl md:text-4xl lg:text-5xl mt-1 md:mt-1">
                 Anywhere, Anytime
               </span>
             </h2>
           </div>
 
-          {/* Cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {/* Cards grid — 2 cols on mobile for compact layout */}
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
             {CONTACT_CHANNELS.map((channel, idx) => (
               <ContactCard key={channel.title} {...channel} index={idx} />
             ))}
@@ -341,38 +343,22 @@ const ContactPage = () => {
 
           {/* Location accent */}
           <div
-            className="mt-16 md:mt-20 flex flex-col sm:flex-row items-center justify-center gap-3
-                       text-brand-lightMuted/60 dark:text-white/25 text-[10px] md:text-xs tracking-widest uppercase text-center"
+            className="mt-8 md:mt-20 flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-3
+                       text-brand-lightMuted/60 dark:text-white/25 text-[9px] md:text-xs tracking-widest uppercase text-center"
             style={{ animation: 'card-fade-in 0.6s ease-out 0.8s both' }}
           >
-            <MapPin size={13} className="text-brand-magenta/60" />
+            <MapPin size={12} className="text-brand-magenta/60" />
             <span className="font-light">
               South Africa · United Kingdom — Serving readers across the globe
             </span>
           </div>
         </div>
 
-        {/* Seamless blend into footer */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-brand-dark to-transparent pointer-events-none" />
+        {/* Blend into footer */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 md:h-32 bg-gradient-to-t from-white dark:from-brand-dark to-transparent pointer-events-none" />
       </section>
 
       <Footer />
-
-      {/* CSS animations for this page only — no Framer Motion overhead */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes card-fade-in {
-          from { opacity: 0; transform: translateY(16px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes title-slide-up {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes line-scale-x {
-          from { opacity: 0; transform: scaleX(0); }
-          to { opacity: 1; transform: scaleX(1); }
-        }
-      `}} />
     </>
   );
 };

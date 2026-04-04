@@ -24,7 +24,7 @@ const Footer = () => {
       
       {/* Subtle top glow to transition nicely */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-full md:max-w-3xl h-[1px] bg-brand-pink/50 blur-[2px]"></div>
-      <div className="absolute top-0 right-0 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-brand-magenta/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-brand-magenta/10 rounded-full blur-[60px] md:blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <FadeInOnScroll direction="up">

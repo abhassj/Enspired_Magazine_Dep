@@ -39,25 +39,16 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open — use overflow hidden only (avoid position:fixed reflow)
+  // Lock body scroll when mobile menu is open
+  // FIXED: Removed touchAction: 'none' which was swallowing first-tap touch events
   useEffect(() => {
     if (mobileMenuOpen) {
-      const scrollY = window.scrollY;
       document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none';
-      document.body.dataset.scrollY = scrollY;
     } else {
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
-      const savedY = document.body.dataset.scrollY;
-      if (savedY) {
-        window.scrollTo(0, parseInt(savedY, 10));
-        delete document.body.dataset.scrollY;
-      }
     }
     return () => {
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
     };
   }, [mobileMenuOpen]);
 
@@ -114,11 +105,12 @@ const Navbar = () => {
               />
             </Link>
 
-            {/* Right: Hamburger / Close — pure CSS icon swap, no AnimatePresence */}
+            {/* Right: Hamburger / Close — large touch target for reliable taps */}
             <button 
-              className="w-11 h-11 flex items-center justify-center text-gray-800 dark:text-white drop-shadow-md justify-self-end" 
+              className="w-12 h-12 min-h-[48px] flex items-center justify-center text-gray-800 dark:text-white drop-shadow-md justify-self-end" 
               onClick={toggleMobileMenu}
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              style={{ WebkitTapHighlightColor: 'transparent' }}
             >
               {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
@@ -161,20 +153,17 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* ═══ MOBILE FULL-SCREEN OVERLAY MENU — Pure CSS transitions for 60fps ═══ */}
-      {typeof document !== 'undefined' && createPortal(
+      {/* ═══ MOBILE FULL-SCREEN OVERLAY MENU ═══
+           FIXED: Conditionally rendered instead of always-in-DOM with opacity toggle.
+           This prevents the hidden overlay from intercepting touch events. */}
+      {mobileMenuOpen && typeof document !== 'undefined' && createPortal(
         <div 
-          className="fixed inset-0 md:hidden flex flex-col mobile-menu-overlay"
+          className="fixed inset-0 md:hidden flex flex-col"
           style={{ 
             backgroundColor: isDark ? '#0a0510' : '#ffffff',
             zIndex: 9999,
-            opacity: mobileMenuOpen ? 1 : 0,
-            visibility: mobileMenuOpen ? 'visible' : 'hidden',
-            pointerEvents: mobileMenuOpen ? 'auto' : 'none',
-            transition: 'opacity 0.2s ease-out, visibility 0.2s ease-out',
-            willChange: 'opacity',
+            animation: 'mobile-fade-in 0.18s ease-out both',
           }}
-          inert={!mobileMenuOpen ? true : undefined}
         >
           {/* Top gradient accent */}
           <div className="h-[3px] w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink shrink-0" />
@@ -182,22 +171,23 @@ const Navbar = () => {
           {/* Ambient glow — static, no animation */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div 
-              className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-[100px]"
+              className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-[80px]"
               style={{ backgroundColor: isDark ? 'rgba(214,51,132,0.08)' : 'rgba(214,51,132,0.04)' }}
             />
             <div 
-              className="absolute bottom-1/4 right-0 w-[200px] h-[200px] rounded-full blur-[80px]"
+              className="absolute bottom-1/4 right-0 w-[200px] h-[200px] rounded-full blur-[60px]"
               style={{ backgroundColor: isDark ? 'rgba(92,45,145,0.08)' : 'rgba(92,45,145,0.04)' }}
             />
           </div>
 
           {/* Close button in top-right */}
           <button 
-            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center z-50 rounded-full border"
+            className="absolute top-4 right-4 w-12 h-12 min-h-[48px] flex items-center justify-center z-50 rounded-full border"
             style={{
               color: isDark ? '#ffffff' : '#1a0a2e',
               borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
               backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+              WebkitTapHighlightColor: 'transparent',
             }}
             onClick={closeMobileMenu}
             aria-label="Close menu"
@@ -213,7 +203,10 @@ const Navbar = () => {
                 to={link.href}
                 onClick={closeMobileMenu}
                 className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group"
-                style={{ color: isDark ? '#ffffff' : '#1a0a2e' }}
+                style={{ 
+                  color: isDark ? '#ffffff' : '#1a0a2e',
+                  WebkitTapHighlightColor: 'transparent',
+                }}
               >
                 {link.name}
                 {/* Underline on hover/active */}

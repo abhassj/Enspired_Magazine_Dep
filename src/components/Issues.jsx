@@ -150,7 +150,7 @@ const Issues = () => {
 
   return (
     <section id="issues" className="pb-10 pt-6 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-20 overflow-hidden">
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-purple/5 rounded-full blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
+      <div className="absolute top-0 right-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-brand-purple/5 rounded-full blur-[60px] md:blur-[150px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         

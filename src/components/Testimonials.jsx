@@ -190,8 +190,8 @@ const Testimonials = () => {
         </defs>
       </svg>
 
-      <div className="absolute top-[-20%] left-[-12%] w-[40vw] h-[40vw] bg-brand-purple/5 dark:bg-brand-purple/10 rounded-full blur-[140px] pointer-events-none"></div>
-      <div className="absolute bottom-[-20%] right-[-10%] w-[42vw] h-[42vw] bg-brand-magenta/5 dark:bg-brand-magenta/10 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-[-20%] left-[-12%] w-[40vw] h-[40vw] bg-brand-purple/5 dark:bg-brand-purple/10 rounded-full blur-[60px] md:blur-[140px] pointer-events-none"></div>
+      <div className="absolute bottom-[-20%] right-[-10%] w-[42vw] h-[42vw] bg-brand-magenta/5 dark:bg-brand-magenta/10 rounded-full blur-[60px] md:blur-[150px] pointer-events-none"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         

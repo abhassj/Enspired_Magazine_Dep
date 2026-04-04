@@ -7,8 +7,8 @@ const Partner = () => {
   return (
     <section className="relative py-16 md:py-24 bg-white dark:bg-brand-dark overflow-hidden">
       {/* Decorative gradient blobs */}
-      <div className="absolute top-1/2 left-0 w-72 h-72 bg-brand-pink/10 dark:bg-brand-pink/5 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-brand-blue/10 dark:bg-brand-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+      <div className="absolute top-1/2 left-0 w-72 h-72 bg-brand-pink/10 dark:bg-brand-pink/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-brand-blue/10 dark:bg-brand-blue/5 rounded-full blur-[60px] md:blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
         <FadeInOnScroll direction="up">
@@ -29,12 +29,12 @@ const Partner = () => {
                   </span>
                 </div>
                 
-                <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.5rem,6vw,4rem)] text-brand-lightText dark:text-white drop-shadow-sm">
-                  Partner <span className="text-brand-lightMuted/40 dark:text-white/30">with us</span>
+                <h2 className="font-condensed font-extrabold uppercase tracking-tight leading-[1.05] text-[clamp(2.2rem,5.5vw,3.5rem)] text-brand-lightText dark:text-white drop-shadow-sm">
+                  Join the <span className="text-brand-lightMuted/40 dark:text-white/30">Enspired</span> Community
                 </h2>
                 
                 <p className="max-w-2xl mx-auto lg:mx-0 text-brand-lightMuted dark:text-white/80 text-[15px] md:text-lg leading-relaxed font-light">
-                  Join our mission to empower and inspire individuals globally. Whether you want to feature your brand, share an incredible story, or explore sponsorship opportunities, we would love to collaborate with you. Let's create something extraordinary together.
+                  Join our mission to empower and inspire individuals globally. Whether you want to feature your brand, share an incredible story, explore sponsorship opportunities, or become a member of the Enspired community, we would love to collaborate with you. Let’s create something extraordinary together.
                 </p>
               </div>
 

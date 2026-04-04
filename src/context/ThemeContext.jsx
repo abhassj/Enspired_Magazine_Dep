@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 const ThemeContext = createContext(null);
-const STORAGE_KEY = 'enspired-theme';
+const STORAGE_KEY = 'enspired-theme-v2';
 
 const getInitialTheme = () => {
   if (typeof window === 'undefined') {
-    return true;
+    return false;
   }
 
   const savedTheme = window.localStorage.getItem(STORAGE_KEY);

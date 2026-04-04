@@ -1,8 +1,34 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
+/* ─── Detect mobile once at module load ─── */
+const getIsMobile = () =>
+  typeof window !== 'undefined' && window.innerWidth < 768;
+
 // Fade-in on scroll with configurable direction
+// Mobile: uses a lightweight CSS animation instead of Framer Motion JS
 export const FadeInOnScroll = ({ children, direction = 'up', delay = 0, className = '' }) => {
+  const [isMobile] = useState(getIsMobile);
+
+  // ─── MOBILE: Pure CSS animation, zero JS scroll overhead ───
+  if (isMobile) {
+    return (
+      <div
+        className={className}
+        style={{
+          animation: `mobile-fade-in-up 0.5s ease-out ${delay}s both`,
+        }}
+      >
+        {children}
+      </div>
+    );
+  }
+
+  // ─── DESKTOP: Full Framer Motion experience (unchanged) ───
+  return <FadeInDesktop direction={direction} delay={delay} className={className}>{children}</FadeInDesktop>;
+};
+
+const FadeInDesktop = ({ children, direction, delay, className }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-20px' });
 
@@ -29,7 +55,18 @@ export const FadeInOnScroll = ({ children, direction = 'up', delay = 0, classNam
 };
 
 // Parallax section — content moves at a different rate than scroll
+// Mobile: disabled (static rendering) for performance
 export const ParallaxSection = ({ children, speed = 0.3, className = '' }) => {
+  const [isMobile] = useState(getIsMobile);
+
+  if (isMobile) {
+    return <div className={`relative ${className}`}>{children}</div>;
+  }
+
+  return <ParallaxDesktop speed={speed} className={className}>{children}</ParallaxDesktop>;
+};
+
+const ParallaxDesktop = ({ children, speed, className }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -70,7 +107,22 @@ export const TextReveal = ({ text, className = '', as: Tag = 'h2' }) => {
 };
 
 // Stagger children — each child animates in with a delay
+// Mobile: renders children directly without stagger for performance
 export const StaggerChildren = ({ children, staggerDelay = 0.1, className = '' }) => {
+  const [isMobile] = useState(getIsMobile);
+
+  if (isMobile) {
+    return (
+      <div className={className} style={{ animation: 'mobile-fade-in-up 0.5s ease-out both' }}>
+        {children}
+      </div>
+    );
+  }
+
+  return <StaggerDesktop staggerDelay={staggerDelay} className={className}>{children}</StaggerDesktop>;
+};
+
+const StaggerDesktop = ({ children, staggerDelay, className }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
@@ -100,7 +152,16 @@ export const StaggerChildren = ({ children, staggerDelay = 0.1, className = '' }
 };
 
 // Horizontal scroll-triggered progress bar
+// Mobile: completely disabled (saves per-frame scaleX recalculations)
 export const ScrollProgress = ({ className = '' }) => {
+  const [isMobile] = useState(getIsMobile);
+
+  if (isMobile) return null;
+
+  return <ScrollProgressDesktop className={className} />;
+};
+
+const ScrollProgressDesktop = ({ className }) => {
   const { scrollYProgress } = useScroll();
   return (
     <motion.div

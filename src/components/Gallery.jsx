@@ -5,6 +5,8 @@ import { X } from 'lucide-react';
 import { FadeInOnScroll } from './ui/ScrollAnimations';
 import { eventGalleryAssets } from '../config/cloudinaryAssets';
 
+const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+
 const galleryData = [
   { id: 1, src: eventGalleryAssets.img1, alt: "Beach Fashion Show X KZN", title: "Beach Fashion Show X KZN", span: "sm:col-span-2" },
   { id: 2, src: eventGalleryAssets.img2, alt: "Business Showcasing Event", title: "Business Showcasing Event", span: "col-span-1" },
@@ -23,7 +25,40 @@ const galleryData = [
   { id: 15, src: eventGalleryAssets.img15, alt: "Panel Event", title: "Panel Event", span: "col-span-1" },
 ];
 
-const ImageModal = ({ src, onClose }) => {
+/* ─── Mobile modal: pure CSS transition, no AnimatePresence ─── */
+const MobileImageModal = ({ src, onClose }) => {
+  if (!src) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 bg-black/92 flex justify-center items-center z-[200] p-4"
+      onClick={onClose}
+      style={{ animation: 'mobile-fade-in 0.2s ease-out both' }}
+    >
+      <div
+        className="relative w-full max-w-6xl flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={src}
+          alt="Enlarged view"
+          className="max-w-[92vw] max-h-[88vh] rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] object-contain"
+          style={{ animation: 'mobile-fade-in-up 0.3s ease-out both' }}
+        />
+        <button
+          className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white"
+          onClick={onClose}
+        >
+          <X size={24} />
+        </button>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
+/* ─── Desktop modal: full AnimatePresence (unchanged) ─── */
+const DesktopImageModal = ({ src, onClose }) => {
   if (!src) return null;
 
   return createPortal(
@@ -120,16 +155,19 @@ export function Gallery() {
   const row1 = galleryData.slice(0, 8);
   const row2 = galleryData.slice(8, 15);
   
-  // Duplicate arrays to achieve seamless CSS marquee-left/right infinite loop
-  const row1Sliding = [...row1, ...row1];
-  const row2Sliding = [...row2, ...row2];
+  // Mobile: single duplication (fewer DOM nodes). Desktop: double for seamless.
+  const row1Sliding = isMobileDevice ? [...row1, ...row1] : [...row1, ...row1];
+  const row2Sliding = isMobileDevice ? [...row2, ...row2] : [...row2, ...row2];
+
+  // Choose the right modal for the platform
+  const ImageModal = isMobileDevice ? MobileImageModal : DesktopImageModal;
 
   return (
     <section id="gallery" className="pb-10 pt-6 md:pb-24 md:pt-12 bg-white dark:bg-brand-dark relative z-10">
       
-      {/* Background Decorators */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-purple/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-pink/5 blur-[120px] rounded-full pointer-events-none translate-y-1/3 -translate-x-1/3" />
+      {/* Background Decorators — reduced blur on mobile */}
+      <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-brand-purple/5 blur-[60px] md:blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-[350px] md:w-[500px] h-[350px] md:h-[500px] bg-brand-pink/5 blur-[60px] md:blur-[120px] rounded-full pointer-events-none translate-y-1/3 -translate-x-1/3" />
 
       <div className="max-w-[1600px] mx-auto relative z-20">
         
@@ -144,13 +182,12 @@ export function Gallery() {
         </FadeInOnScroll>
 
         {/* ═══ Premium Double Marquee Sliders ═══ */}
-        {/* We use group/sliders to pause both tracks when hovering inside the container */}
         <div className="w-full px-4 md:px-8 lg:px-12 group/sliders">
           
-          <div className="w-full overflow-hidden flex flex-col gap-6 md:gap-8 pointer-events-auto rounded-[32px] md:rounded-[48px] bg-brand-lightCard/30 dark:bg-white/5 backdrop-blur-sm border border-brand-purple/5 dark:border-white/10">
+          <div className="w-full overflow-hidden flex flex-col gap-6 md:gap-8 pointer-events-auto rounded-[32px] md:rounded-[48px] bg-brand-lightCard/30 dark:bg-white/5 border border-brand-purple/5 dark:border-white/10">
             
             {/* Top Track - Scrolls Left */}
-            <div className="relative w-[100vw] sm:w-[150vw] md:w-[200vw] lg:w-[250vw] overflow-visible flex pt-6 md:pt-10">
+            <div className="relative w-full overflow-hidden flex pt-6 md:pt-10">
               <div className="marquee-track marquee-left group-hover/sliders:[animation-play-state:paused] hover:[animation-play-state:paused] transition-all duration-300">
                 {row1Sliding.map((img, idx) => (
                   <GallerySliderCard
@@ -163,7 +200,7 @@ export function Gallery() {
             </div>
 
             {/* Bottom Track - Scrolls Right */}
-            <div className="relative w-[100vw] sm:w-[150vw] md:w-[200vw] lg:w-[250vw] overflow-visible flex pb-6 md:pb-10">
+            <div className="relative w-full overflow-hidden flex pb-6 md:pb-10">
               <div className="marquee-track marquee-right group-hover/sliders:[animation-play-state:paused] hover:[animation-play-state:paused] transition-all duration-300">
                 {row2Sliding.map((img, idx) => (
                   <GallerySliderCard
