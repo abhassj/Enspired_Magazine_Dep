@@ -51,7 +51,7 @@ export const eventGalleryAssets = Object.fromEntries(
 
 const siteImageAssetSources = {
   ceoImage: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775258120/Ceo-final_tsfjvm.png',
-  heroImageMobile: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775258184/Hero_img_mobile_urqxdi.png',
+  heroImageMobile: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775320317/Hero_Final_iqnnka.png',
 };
 
 export const siteImageAssets = {
@@ -61,5 +61,20 @@ export const siteImageAssets = {
     'q_auto:eco/f_auto/dpr_auto/c_limit,w_960',
   ),
 };
+
+const collaborationLogoSources = {
+  mercedes: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775317755/merc_logo_cmtyfo.png',
+  mangwanani: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775337289/MANGWANANI_AFRICNA_SPA_CROP_TILL_AFRICAN_SPA_lampz4.png',
+  kzn: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775337777/KZN_FASHION_COUNCIL_FASHION_COUNCIL_GOT_CUT_WHILE_EDITING_CROP_TILL_KZN_wdkral.png',
+  fnb: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775317753/FNB_LOGO_s0orp3.png',
+  nedbank: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775337670/nedbank_logo_chq5is.png',
+  capitec: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775317754/CAPITEC_hmoldc.png',
+  bmw: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775317754/BMW_LOGO_COULDNT_FIND_ORIGIGNAL_IT_IS_LICENSED_wetfwy.png',
+  vodacom: 'https://res.cloudinary.com/dyxnqe7sq/image/upload/q_auto/f_auto/v1775317753/vodacom_logo_lcpfuz.png',
+};
+
+export const collaborationLogoAssets = Object.fromEntries(
+  Object.entries(collaborationLogoSources).map(([key, value]) => [key, optimizeCloudinaryImage(value)]),
+);
 
 export const isCloudinaryConfigured = Boolean(CLOUDINARY_CLOUD_NAME);

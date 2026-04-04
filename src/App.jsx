@@ -4,26 +4,24 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import MissionVision from './components/MissionVision'
 import Issues from './components/Issues'
+import Partner from './components/Partner'
 import Gallery from './components/Gallery'
+import Awards from './components/Awards'
 import Footer from './components/Footer'
 import Testimonials from './components/Testimonials'
+import Collaborations from './components/Collaborations'
 import { ScrollProgress } from './components/ui/ScrollAnimations'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import Preloader from './components/Preloader'
 import { preloadSiteAssets } from './utils/preloadSiteAssets'
 import RouteTransitionSkeleton from './components/RouteTransitionSkeleton'
 
-const ContactPage = lazy(() => import('./pages/ContactPage'))
+const contactPageImport = () => import('./pages/ContactPage')
+const ContactPage = lazy(contactPageImport)
 
 function RouteFallback() {
   return (
-    <div className="min-h-screen bg-white dark:bg-brand-dark">
-      <div className="md:hidden px-5 pt-[5.35rem]">
-        <div className="h-9 w-[72%] rounded-md bg-brand-purple/10 dark:bg-white/10 animate-pulse" />
-        <div className="mt-3 h-9 w-[86%] rounded-md bg-brand-magenta/10 dark:bg-white/10 animate-pulse" />
-        <div className="mt-6 h-[220px] w-full rounded-2xl bg-brand-purple/8 dark:bg-white/8 animate-pulse" />
-      </div>
-    </div>
+    <div className="min-h-screen bg-white dark:bg-brand-dark" />
   )
 }
 
@@ -43,8 +41,11 @@ function HomePage() {
       <Hero />
       <MissionVision />
       <Issues />
+      <Partner />
       <Gallery />
+      <Awards />
       <Testimonials />
+      <Collaborations />
       <Footer />
     </>
   )
@@ -67,7 +68,7 @@ function AppContent() {
     setIsRouteTransitioning(true)
     const timerId = window.setTimeout(() => {
       setIsRouteTransitioning(false)
-    }, 120)
+    }, 60)
 
     return () => window.clearTimeout(timerId)
   }, [location.pathname])
@@ -114,6 +115,16 @@ function AppContent() {
       isMounted = false
     }
   }, [])
+
+  // Eagerly prefetch the Contact page chunk after initial load completes
+  useEffect(() => {
+    if (isLoading) return
+    // After main content is visible, pre-warm Contact page JS chunk
+    const timer = window.setTimeout(() => {
+      void contactPageImport()
+    }, 2000)
+    return () => window.clearTimeout(timer)
+  }, [isLoading])
 
   return (
     <>

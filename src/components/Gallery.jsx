@@ -9,7 +9,7 @@ const galleryData = [
   { id: 1, src: eventGalleryAssets.img1, alt: "Beach Fashion Show X KZN", title: "Beach Fashion Show X KZN", span: "sm:col-span-2" },
   { id: 2, src: eventGalleryAssets.img2, alt: "Business Showcasing Event", title: "Business Showcasing Event", span: "col-span-1" },
   { id: 3, src: eventGalleryAssets.img3, alt: "Cover Signings", title: "Cover Signings", span: "col-span-1" },
-  { id: 4, src: eventGalleryAssets.img4, alt: "Enspire X WILL", title: "Enspire X WILL", span: "col-span-1" },
+  { id: 4, src: eventGalleryAssets.img4, alt: "Enspire X WILL", title: "enspired & WILL business empowerment", span: "col-span-1" },
   { id: 5, src: eventGalleryAssets.img5, alt: "Enspired High Tea Soirée", title: "Enspired High Tea Soirée", span: "col-span-1" },
   { id: 6, src: eventGalleryAssets.img6, alt: "Gala Event", title: "Gala Event", span: "sm:col-span-2" },
   { id: 7, src: eventGalleryAssets.img7, alt: "Inspiring SMEs", title: "Inspiring SMEs", span: "col-span-1" },

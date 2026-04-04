@@ -210,7 +210,9 @@ section {
 #gallery,
 #issues,
 #contact,
-#mission {
+#mission,
+#awards,
+#collaborations {
   content-visibility: auto;
 }
 

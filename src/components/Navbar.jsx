@@ -174,7 +174,7 @@ const Navbar = () => {
             transition: 'opacity 0.2s ease-out, visibility 0.2s ease-out',
             willChange: 'opacity',
           }}
-          inert={!mobileMenuOpen ? '' : undefined}
+          inert={!mobileMenuOpen ? true : undefined}
         >
           {/* Top gradient accent */}
           <div className="h-[3px] w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink shrink-0" />

@@ -228,7 +228,7 @@ const ContactPage = () => {
 
               {/* Tagline */}
               <p
-                className="mt-6 md:mt-8 mx-auto lg:mx-0 max-w-sm md:max-w-md text-brand-lightMuted dark:text-white/50 text-xs md:text-sm lg:text-base font-light leading-relaxed md:leading-[1.8] tracking-wide"
+                className="mt-6 md:mt-8 mx-auto lg:mx-0 max-w-sm md:max-w-md text-brand-lightMuted dark:text-white/50 text-sm md:text-sm lg:text-base font-light leading-relaxed md:leading-[1.8] tracking-wide"
                 style={{ animation: heroInView ? 'card-fade-in 0.6s ease-out 0.4s both' : 'none', opacity: heroInView ? undefined : 0 }}
               >
                 For inquiries, collaborations, or just to say hello — we'd love to hear from you.
@@ -326,7 +326,7 @@ const ContactPage = () => {
             </div>
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide leading-[0.9]">
               Reach Out
-              <span className="block text-brand-lightMuted/30 dark:text-white/15 text-2xl md:text-3xl lg:text-4xl lg:text-5xl mt-1.5 md:mt-1">
+              <span className="block text-brand-lightMuted/30 dark:text-white/15 text-2xl md:text-4xl lg:text-5xl mt-1.5 md:mt-1">
                 Anywhere, Anytime
               </span>
             </h2>
