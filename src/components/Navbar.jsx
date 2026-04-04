@@ -154,31 +154,22 @@ const Navbar = () => {
       </nav>
 
       {/* ═══ MOBILE FULL-SCREEN OVERLAY MENU ═══
-           FIXED: Conditionally rendered instead of always-in-DOM with opacity toggle.
-           This prevents the hidden overlay from intercepting touch events. */}
-      {mobileMenuOpen && typeof document !== 'undefined' && createPortal(
+           FIXED: Always mounted on mobile to prevent DOM thrashing cost.
+           Toggles visibility via CSS composite layers for 60fps performance. */}
+      {typeof document !== 'undefined' && createPortal(
         <div 
-          className="fixed inset-0 md:hidden flex flex-col"
+          className={`fixed inset-0 md:hidden flex flex-col transition-opacity duration-300 ${
+            mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
           style={{ 
             backgroundColor: isDark ? '#0a0510' : '#ffffff',
             zIndex: 9999,
-            animation: 'mobile-fade-in 0.18s ease-out both',
           }}
         >
           {/* Top gradient accent */}
           <div className="h-[3px] w-full bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink shrink-0" />
 
-          {/* Ambient glow — static, no animation */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div 
-              className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-[80px]"
-              style={{ backgroundColor: isDark ? 'rgba(214,51,132,0.08)' : 'rgba(214,51,132,0.04)' }}
-            />
-            <div 
-              className="absolute bottom-1/4 right-0 w-[200px] h-[200px] rounded-full blur-[60px]"
-              style={{ backgroundColor: isDark ? 'rgba(92,45,145,0.08)' : 'rgba(92,45,145,0.04)' }}
-            />
-          </div>
+{/* Ambient glow removed for maximum mobile menu performance */}
 
           {/* Close button in top-right */}
           <button 
@@ -201,7 +192,10 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                onClick={closeMobileMenu}
+                onClick={() => {
+                  // Use setTimeout to ensure the background transitions start before heavy CPU routing
+                  window.setTimeout(() => closeMobileMenu(), 50);
+                }}
                 className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group"
                 style={{ 
                   color: isDark ? '#ffffff' : '#1a0a2e',
@@ -217,9 +211,11 @@ const Navbar = () => {
 
           {/* Brand logo at bottom */}
           <div className="pb-10 flex flex-col items-center gap-3 relative z-10">
-            <Link
-              to="/"
-              onClick={closeMobileMenu}
+            <button
+              onClick={() => {
+                closeMobileMenu();
+                window.location.href = '/';
+              }}
               className="brand-logo-wrap"
               aria-label="GR Enspired Magazine home"
             >
@@ -228,7 +224,7 @@ const Navbar = () => {
                 imageClassName="h-full w-auto"
                 loading="lazy"
               />
-            </Link>
+            </button>
             <span 
               className="text-[9px] uppercase tracking-[0.3em] font-medium"
               style={{ color: isDark ? 'rgba(255,255,255,0.25)' : 'rgba(107,88,128,0.5)' }}

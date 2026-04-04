@@ -126,15 +126,15 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
           </h3>
 
           {/* Lines */}
-          <div className="space-y-1 md:space-y-2 mb-4 md:mb-8 flex-grow relative z-20 pointer-events-none">
+          <div className="space-y-1 md:space-y-2 mb-4 md:mb-8 flex-grow relative z-20 pointer-events-none w-full">
             {lines.map((line, idx) => (
-              <div key={idx} className="pointer-events-auto w-fit">
+              <div key={idx} className="pointer-events-auto w-full">
                 {line.href ? (
-                  <a href={line.href} target="_blank" rel="noopener noreferrer" className="text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide hover:text-[#25D366] transition-colors block">
+                  <a href={line.href} target="_blank" rel="noopener noreferrer" className="text-[10px] sm:text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide hover:text-[#25D366] transition-colors block break-all">
                     {line.text}
                   </a>
                 ) : (
-                  <p className="text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide">
+                  <p className="text-[10px] sm:text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide break-all">
                     {line.text || line}
                   </p>
                 )}
