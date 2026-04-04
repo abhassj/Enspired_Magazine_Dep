@@ -95,7 +95,7 @@ const Awards = () => {
               <span className="block text-brand-lightMuted/30 dark:text-white/20">Awards</span>
             </h2>
             <p className="text-brand-lightMuted dark:text-gray-400 max-w-xl text-sm md:text-base pt-2">
-              A timeline of our achievements and milestones, celebrating a legacy of leadership, business growth, and women's empowerment.
+              A timeline of our achievements and milestones, celebrating a legacy of leadership, business growth, and empowering individuals.
             </p>
           </div>
         </FadeInOnScroll>
