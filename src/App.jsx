@@ -67,9 +67,35 @@ function AppContent() {
       return undefined
     }
 
-    // Mobile: no artificial transition delay — content appears instantly
+    // Mobile: Premium Route Transition UX
+    // Displays the global Preloader until the destination page completes downloading and layout.
     if (isMobileDevice) {
-      return undefined
+      setIsLoading(true);
+      setPreloadProgress(0.2);
+      
+      // Simulate fake network progress to keep the user engaged
+      const prog1 = window.setTimeout(() => setPreloadProgress(0.5), 150);
+      const prog2 = window.setTimeout(() => setPreloadProgress(0.85), 450);
+
+      const targetPath = location.pathname;
+      const isContact = targetPath === '/contact';
+      
+      // We block the preloader dismissal until BOTH a minimum visual duration (600ms) passes
+      // AND the heavy JS chunk finishes downloading (if applicable).
+      const componentPromise = isContact ? contactPageImport() : Promise.resolve();
+      
+      Promise.all([
+        componentPromise,
+        new Promise(resolve => window.setTimeout(resolve, 600))
+      ]).then(() => {
+        setPreloadProgress(1);
+        window.setTimeout(() => setIsLoading(false), 100);
+      });
+
+      return () => {
+        window.clearTimeout(prog1);
+        window.clearTimeout(prog2);
+      };
     }
 
     // Desktop: subtle 60ms skeleton transition (unchanged)
