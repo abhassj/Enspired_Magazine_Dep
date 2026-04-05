@@ -173,7 +173,7 @@ const Navbar = () => {
 
           {/* Close button in top-right */}
           <button 
-            className="absolute top-4 right-4 w-12 h-12 min-h-[48px] flex items-center justify-center z-50 rounded-full border"
+            className="absolute top-4 right-4 w-12 h-12 min-h-[48px] flex items-center justify-center z-50 rounded-full border active:scale-90 active:bg-gray-100/10 transition-transform duration-100"
             style={{
               color: isDark ? '#ffffff' : '#1a0a2e',
               borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
@@ -196,7 +196,7 @@ const Navbar = () => {
                   // Use setTimeout to ensure the background transitions start before heavy CPU routing
                   window.setTimeout(() => closeMobileMenu(), 50);
                 }}
-                className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group"
+                className="relative text-3xl font-condensed font-bold uppercase tracking-[0.2em] block group active:scale-95 active:opacity-75 transition-all duration-150"
                 style={{ 
                   color: isDark ? '#ffffff' : '#1a0a2e',
                   WebkitTapHighlightColor: 'transparent',
@@ -216,7 +216,7 @@ const Navbar = () => {
                 closeMobileMenu();
                 window.location.href = '/';
               }}
-              className="brand-logo-wrap"
+              className="brand-logo-wrap active:scale-95 active:opacity-75 transition-all duration-150"
               aria-label="GR Enspired Magazine home"
             >
               <BrandLogo

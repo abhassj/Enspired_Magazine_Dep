@@ -74,10 +74,7 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
   return (
     <div
       className="group relative block rounded-2xl md:rounded-3xl overflow-hidden h-full touch-feedback"
-      style={{
-        opacity: 1,
-        animation: `card-fade-in 0.4s ease-out ${0.05 + index * 0.08}s both`,
-      }}
+      style={getAnimStyle(true, `card-fade-in 0.4s ease-out ${0.05 + index * 0.08}s both`)}
     >
       {/* Primary Card Link */}
       {href && <a href={href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10 cursor-pointer" aria-label={title}></a>}
@@ -159,9 +156,16 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
 
 /* ═══════════════════════════════════════════
    MAIN CONTACT PAGE
-   Mobile: CSS-only animations, no useInView
-   Desktop: Full useInView (unchanged)
    ═══════════════════════════════════════════ */
+const getAnimStyle = (inView, animStr, extraStyles = {}) => {
+  if (isMobileDevice) return extraStyles; // Instant render on mobile!
+  return { 
+    ...extraStyles,
+    animation: inView ? animStr : 'none', 
+    opacity: inView ? undefined : 0 
+  };
+};
+
 const ContactPage = () => {
   const heroRef = useRef(null);
   const heroInViewDesktop = useInView(heroRef, { once: true, margin: '0px' });
@@ -197,7 +201,7 @@ const ContactPage = () => {
               {/* Decorative label */}
               <div
                 className="flex items-center justify-center lg:justify-start gap-2 mb-3 md:mb-6"
-                style={{ animation: heroInView ? 'card-fade-in 0.5s ease-out 0.1s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                style={getAnimStyle(heroInView, 'card-fade-in 0.5s ease-out 0.1s both')}
               >
                 <Sparkles size={14} className="text-brand-magenta" />
                 <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] font-semibold text-magic-gradient inline-block">
@@ -215,13 +219,13 @@ const ContactPage = () => {
                 <span className="block relative z-10 text-brand-lightText dark:text-white drop-shadow-[0_2px_8px_rgba(26,10,46,0.1)] dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                   <span
                     className="block mb-0 md:mb-2"
-                    style={{ animation: heroInView ? 'title-slide-up 0.6s ease-out 0.15s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                    style={getAnimStyle(heroInView, 'title-slide-up 0.6s ease-out 0.15s both')}
                   >
                     CONTACT
                   </span>
                   <span
                     className="block bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-pink bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(214,51,132,0.25)] pb-1 md:pb-4"
-                    style={{ animation: heroInView ? 'title-slide-up 0.6s ease-out 0.3s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                    style={getAnimStyle(heroInView, 'title-slide-up 0.6s ease-out 0.3s both')}
                   >
                     US
                   </span>
@@ -231,7 +235,7 @@ const ContactPage = () => {
               {/* Tagline — tighter margins on mobile */}
               <p
                 className="mt-4 md:mt-8 mx-auto lg:mx-0 max-w-[320px] md:max-w-md text-brand-lightMuted dark:text-white/50 text-[13px] md:text-sm lg:text-base font-light leading-relaxed md:leading-[1.8] tracking-wide"
-                style={{ animation: heroInView ? 'card-fade-in 0.6s ease-out 0.4s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                style={getAnimStyle(heroInView, 'card-fade-in 0.6s ease-out 0.4s both')}
               >
                 For inquiries, collaborations, or just to say hello — we'd love to hear from you.
                 Let's connect and create something extraordinary together.
@@ -240,11 +244,7 @@ const ContactPage = () => {
               {/* Decorative line */}
               <div
                 className="mt-5 md:mt-10 h-[2px] w-16 md:w-32 bg-gradient-to-r from-brand-blue to-transparent mx-auto lg:mx-0"
-                style={{
-                  animation: heroInView ? 'line-scale-x 0.8s ease-out 0.6s both' : 'none',
-                  transformOrigin: 'left',
-                  opacity: heroInView ? undefined : 0,
-                }}
+                style={getAnimStyle(heroInView, 'line-scale-x 0.8s ease-out 0.6s both', { transformOrigin: 'left' })}
               />
             </div>
 
@@ -253,7 +253,7 @@ const ContactPage = () => {
               {/* CEO Image */}
               <div
                 className="relative"
-                style={{ animation: heroInView ? 'card-fade-in 0.7s ease-out 0.25s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                style={getAnimStyle(heroInView, 'card-fade-in 0.7s ease-out 0.25s both')}
               >
                 {/* Glow behind image */}
                 <div className="absolute -inset-4 md:-inset-6 bg-gradient-to-b from-brand-magenta/10 via-brand-purple/5 to-transparent rounded-[2rem] blur-lg md:blur-3xl opacity-70" />
@@ -281,7 +281,7 @@ const ContactPage = () => {
               {/* CEO Bio — tighter spacing on mobile */}
               <div
                 className="relative -mt-6 md:-mt-16 px-2 md:px-2 text-center lg:text-left"
-                style={{ animation: heroInView ? 'card-fade-in 0.6s ease-out 0.5s both' : 'none', opacity: heroInView ? undefined : 0 }}
+                style={getAnimStyle(heroInView, 'card-fade-in 0.6s ease-out 0.5s both')}
               >
                 <h3 className="text-lg md:text-2xl lg:text-3xl font-condensed font-bold uppercase text-brand-lightText dark:text-white tracking-wide">
                   VIKY & RESHMA
@@ -318,7 +318,7 @@ const ContactPage = () => {
           <div
             ref={channelsHeaderRef}
             className="mb-6 md:mb-20 text-center sm:text-left"
-            style={{ animation: channelsHeaderInView ? 'card-fade-in 0.5s ease-out both' : 'none', opacity: channelsHeaderInView ? undefined : 0 }}
+            style={getAnimStyle(channelsHeaderInView, 'card-fade-in 0.5s ease-out both')}
           >
             <div className="flex items-center justify-center sm:justify-start gap-3 mb-2 md:mb-4">
               <div className="h-[2px] w-8 bg-brand-blue rounded-full" />
@@ -345,7 +345,7 @@ const ContactPage = () => {
           <div
             className="mt-8 md:mt-20 flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-3
                        text-brand-lightMuted/60 dark:text-white/25 text-[9px] md:text-xs tracking-widest uppercase text-center"
-            style={{ animation: 'card-fade-in 0.6s ease-out 0.8s both' }}
+            style={getAnimStyle(true, 'card-fade-in 0.6s ease-out 0.8s both')}
           >
             <MapPin size={12} className="text-brand-magenta/60" />
             <span className="font-light">
