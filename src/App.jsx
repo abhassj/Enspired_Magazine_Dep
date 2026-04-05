@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { siteImageAssets } from './config/cloudinaryAssets'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import MissionVision from './components/MissionVision'
@@ -80,16 +81,24 @@ function AppContent() {
       const targetPath = location.pathname;
       const isContact = targetPath === '/contact';
       
-      // We block the preloader dismissal until BOTH a minimum visual duration (600ms) passes
-      // AND the heavy JS chunk finishes downloading (if applicable).
+      // We block the preloader dismissal until a minimum visual duration (600ms) passes,
+      // the JS chunk resolves, AND critically heavy UI assets (like CEO image) resolve.
       const componentPromise = isContact ? contactPageImport() : Promise.resolve();
+      
+      const ceoImagePromise = isContact ? new Promise((resolve) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve; // Safely resolve on error so we don't permablock
+        img.src = siteImageAssets.ceoImage;
+      }) : Promise.resolve();
       
       Promise.all([
         componentPromise,
-        new Promise(resolve => window.setTimeout(resolve, 600))
+        ceoImagePromise,
+        new Promise(resolve => window.setTimeout(resolve, 800)) // Base buffer
       ]).then(() => {
         setPreloadProgress(1);
-        window.setTimeout(() => setIsLoading(false), 100);
+        window.setTimeout(() => setIsLoading(false), 150);
       });
 
       return () => {

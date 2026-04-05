@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useInView } from 'framer-motion';
 import { Mail, Instagram, Facebook, ArrowUpRight, MapPin, Sparkles } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { siteImageAssets } from '../config/cloudinaryAssets';
 
-const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+// We dynamically determine mobile state inside components to avoid SSR/parse-time inaccuracies
 
 /* ─── Custom Icons ─── */
 const WhatsAppIcon = ({ size = 24, className }) => (
@@ -71,6 +71,16 @@ const CONTACT_CHANNELS = [
 
 /* ─── contact card — lightweight, no backdrop-blur on mobile ─── */
 const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame, iconGlow, index }) => {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const getAnimStyle = (inView, animStr, extraStyles = {}) => {
+    if (isMobile) return extraStyles; // Instant render on mobile!
+    return { 
+      ...extraStyles,
+      animation: inView ? animStr : 'none', 
+      opacity: inView ? undefined : 0 
+    };
+  };
+
   return (
     <div
       className="group relative block rounded-2xl md:rounded-3xl overflow-hidden h-full touch-feedback"
@@ -82,7 +92,7 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
       {/* Card background */}
       <div className={`relative p-5 md:p-8 lg:p-10 h-full
                       bg-white/70 dark:bg-white/[0.03]
-                      ${isMobileDevice ? '' : 'backdrop-blur-xl'}
+                      ${isMobile ? '' : 'backdrop-blur-xl'}
                       border border-gray-200/60 dark:border-white/[0.06]
                       rounded-2xl md:rounded-3xl
                       hover:border-brand-magenta/30 dark:hover:border-brand-magenta/30
@@ -112,7 +122,7 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
             >
               <div className="relative h-full w-full rounded-[14px] md:rounded-[18px] bg-white dark:bg-[#140d1f] flex items-center justify-center border border-white/70 dark:border-white/10 overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.55),transparent_45%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_45%)]" />
-                <Icon size={isMobileDevice ? 22 : 27} className="relative z-10 text-brand-lightText dark:text-white" strokeWidth={2.3} />
+                <Icon size={isMobile ? 22 : 27} className="relative z-10 text-brand-lightText dark:text-white" strokeWidth={2.3} />
               </div>
             </div>
           </div>
@@ -157,23 +167,33 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
 /* ═══════════════════════════════════════════
    MAIN CONTACT PAGE
    ═══════════════════════════════════════════ */
-const getAnimStyle = (inView, animStr, extraStyles = {}) => {
-  if (isMobileDevice) return extraStyles; // Instant render on mobile!
-  return { 
-    ...extraStyles,
-    animation: inView ? animStr : 'none', 
-    opacity: inView ? undefined : 0 
-  };
-};
-
 const ContactPage = () => {
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
+
+  // Guarantee accurate viewport evaluation upon actual device paint
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); 
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const getAnimStyle = (inView, animStr, extraStyles = {}) => {
+    if (isMobile) return extraStyles; // Instant render on mobile!
+    return { 
+      ...extraStyles,
+      animation: inView ? animStr : 'none', 
+      opacity: inView ? undefined : 0 
+    };
+  };
+
   const heroRef = useRef(null);
-  const heroInViewDesktop = useInView(heroRef, { once: true, margin: '0px' });
-  const heroInView = isMobileDevice ? true : heroInViewDesktop;
+  const heroInViewDesktop = useInView(heroRef, { once: true, margin: '-20px' });
+  const heroInView = isMobile ? true : heroInViewDesktop;
 
   const channelsHeaderRef = useRef(null);
-  const channelsHeaderInViewDesktop = useInView(channelsHeaderRef, { once: true, margin: '0px' });
-  const channelsHeaderInView = isMobileDevice ? true : channelsHeaderInViewDesktop;
+  const channelsHeaderInViewDesktop = useInView(channelsHeaderRef, { once: true, margin: '-20px' });
+  const channelsHeaderInView = isMobile ? true : channelsHeaderInViewDesktop;
 
   return (
     <>
