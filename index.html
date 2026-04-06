@@ -2,23 +2,94 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/gr-favicon.svg" />
+
+    <!-- ============================================================
+         BASIC SEO
+    ============================================================ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="GR Enspired Magazine — Empowering individuals to dream, lead, and inspire. A global magazine celebrating voices, journeys, and achievements in business and everyday life." />
+    <title>GR Enspired Magazine | Dream. Lead. Inspire.</title>
+    <meta name="description" content="GR Enspired Magazine — A global platform empowering individuals to dream, lead, and inspire. Celebrating voices, journeys, and achievements in business and everyday life." />
+    <meta name="keywords" content="GR Enspired Magazine, grenspired, global magazine, business inspiration, leadership, entrepreneurship, lifestyle magazine" />
+    <meta name="author" content="GR Enspired Magazine" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.grenspired.com/" />
+
+    <!-- ============================================================
+         OPEN GRAPH (Facebook, LinkedIn, WhatsApp sharing)
+    ============================================================ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.grenspired.com/" />
+    <meta property="og:title" content="GR Enspired Magazine | Dream. Lead. Inspire." />
+    <meta property="og:description" content="A global platform empowering individuals to dream, lead, and inspire. Celebrating voices, journeys, and achievements in business and everyday life." />
+    <meta property="og:image" content="https://www.grenspired.com/gr-favicon.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GR Enspired Magazine Logo — Dream. Lead. Inspire." />
+    <meta property="og:site_name" content="GR Enspired Magazine" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- ============================================================
+         TWITTER / X CARD
+    ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.grenspired.com/" />
+    <meta name="twitter:title" content="GR Enspired Magazine | Dream. Lead. Inspire." />
+    <meta name="twitter:description" content="A global platform empowering individuals to dream, lead, and inspire." />
+    <meta name="twitter:image" content="https://www.grenspired.com/gr-favicon.svg" />
+
+    <!-- ============================================================
+         FAVICON & PWA
+    ============================================================ -->
+    <link rel="icon" type="image/svg+xml" href="/gr-favicon.svg" />
+    <link rel="apple-touch-icon" href="/gr-favicon.svg" />
     <meta name="theme-color" content="#0a0510" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
-    <!-- DNS prefetch and preconnect for faster resource loading -->
+    <!-- ============================================================
+         SCHEMA.ORG STRUCTURED DATA (JSON-LD)
+    ============================================================ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "GR Enspired Magazine",
+      "url": "https://www.grenspired.com",
+      "logo": "https://www.grenspired.com/GR_branding_final.svg",
+      "description": "A global magazine celebrating voices, journeys, and achievements in business and everyday life.",
+      "sameAs": [],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "arzaangrenspired@outlook.com",
+        "contactType": "customer service"
+      }
+    }
+    </script>
+
+    <!-- ============================================================
+         GOOGLE ANALYTICS 4 (GA4)
+         REPLACE G-XXXXXXXXXX with your actual Measurement ID
+    ============================================================ -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- ============================================================
+         PERFORMANCE — DNS PREFETCH & PRECONNECT
+    ============================================================ -->
     <link rel="dns-prefetch" href="https://res.cloudinary.com" />
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
-    <!-- Preload the brand logo SVG for instant rendering -->
+    <!-- Preload critical assets -->
     <link rel="preload" href="/GR_branding_final.svg" as="image" type="image/svg+xml" />
 
-    <title>GR Enspired Magazine</title>
   </head>
   <body>
     <div id="root"></div>
