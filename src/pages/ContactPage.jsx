@@ -73,7 +73,7 @@ const CONTACT_CHANNELS = [
 const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame, iconGlow, index }) => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const getAnimStyle = (inView, animStr, extraStyles = {}) => {
-    if (isMobile) return extraStyles; // Instant render on mobile!
+    if (isMobile) return { ...extraStyles, opacity: 1, animation: 'none', transform: 'none' }; // Instant render on mobile!
     return { 
       ...extraStyles,
       animation: inView ? animStr : 'none', 
@@ -87,7 +87,7 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
       style={getAnimStyle(true, `card-fade-in 0.4s ease-out ${0.05 + index * 0.08}s both`)}
     >
       {/* Primary Card Link */}
-      {href && <a href={href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-10 cursor-pointer" aria-label={title}></a>}
+      {href && <a href={href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-30 cursor-pointer" aria-label={title}></a>}
 
       {/* Card background */}
       <div className={`relative p-5 md:p-8 lg:p-10 h-full
@@ -179,7 +179,7 @@ const ContactPage = () => {
   }, []);
 
   const getAnimStyle = (inView, animStr, extraStyles = {}) => {
-    if (isMobile) return extraStyles; // Instant render on mobile!
+    if (isMobile) return { ...extraStyles, opacity: 1, animation: 'none', transform: 'none' }; // Instant render on mobile!
     return { 
       ...extraStyles,
       animation: inView ? animStr : 'none', 

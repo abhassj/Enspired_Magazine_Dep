@@ -95,6 +95,11 @@ const Navbar = () => {
             {/* Center: Brand Logo */}
             <Link
               to="/"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className="brand-logo-wrap justify-self-center"
               aria-label="GR Enspired Magazine home"
             >
@@ -119,6 +124,11 @@ const Navbar = () => {
           {/* ═══ DESKTOP LAYOUT: Logo left, links right (unchanged) ═══ */}
           <Link
             to="/"
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
             className="brand-logo-wrap mt-1 -ml-2 md:-ml-4 hidden md:inline-flex"
             aria-label="GR Enspired Magazine home"
           >

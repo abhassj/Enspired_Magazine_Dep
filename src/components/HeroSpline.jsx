@@ -24,23 +24,18 @@ export default function HeroSpline() {
     return () => resizeObserver.disconnect();
   }, []);
 
-  // Preserve page scrolling when the cursor is over the 3D canvas.
+  // Preserve page scrolling by stopping Spline from capturing the wheel event.
+  // This allows the browser to perform hardware-accelerated scroll natively.
   useEffect(() => {
     const node = containerRef.current;
     if (!node) return;
 
     const onWheel = (event) => {
-      event.preventDefault();
-      let deltaY = event.deltaY;
-      if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
-        deltaY *= 16;
-      } else if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
-        deltaY *= window.innerHeight;
-      }
-      window.scrollBy({ top: deltaY, left: 0, behavior: 'auto' });
+      // Prevent Spline's canvas from hijacking the wheel event
+      event.stopPropagation();
     };
 
-    node.addEventListener('wheel', onWheel, { passive: false, capture: true });
+    node.addEventListener('wheel', onWheel, { passive: true, capture: true });
     return () => node.removeEventListener('wheel', onWheel, true);
   }, []);
 

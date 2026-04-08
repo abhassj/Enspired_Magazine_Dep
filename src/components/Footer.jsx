@@ -95,8 +95,12 @@ const Footer = () => {
         </FadeInOnScroll>
         
         <div className="border-t border-brand-lightText/10 dark:border-white/10 mt-10 md:mt-20 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs text-brand-lightMuted dark:text-white/40 font-medium tracking-widest uppercase text-center gap-3 md:gap-0">
-          <p>&copy; {new Date().getFullYear()} GR Enspired Magazine. All rights reserved.</p>
-          <div className="flex space-x-6 md:space-x-8">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+            <p>&copy; {new Date().getFullYear()} GR Enspired Magazine. All rights reserved.</p>
+            <span className="hidden md:inline text-brand-lightText/20 dark:text-white/20">|</span>
+            <a href="/privacy-policy" className="hover:text-brand-magenta transition-colors break-all">Privacy Policy</a>
+          </div>
+          <div className="flex space-x-6 md:space-x-8 mt-2 md:mt-0">
             <span className="transition-colors">MADE WITH OBSESSION</span>
           </div>
         </div>

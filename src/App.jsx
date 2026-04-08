@@ -19,8 +19,11 @@ import RouteTransitionSkeleton from './components/RouteTransitionSkeleton'
 
 const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768
 
-const contactPageImport = () => import('./pages/ContactPage')
+const contactPageImport = () => import('./pages/ContactPage.jsx')
 const ContactPage = lazy(contactPageImport)
+
+const legalInfoImport = () => import('./pages/LegalInfo.jsx')
+const LegalInfo = lazy(legalInfoImport)
 
 function RouteFallback() {
   return (
@@ -80,10 +83,13 @@ function AppContent() {
 
       const targetPath = location.pathname;
       const isContact = targetPath === '/contact';
+      const isPrivacy = targetPath === '/privacy-policy';
       
       // We block the preloader dismissal until a minimum visual duration (600ms) passes,
       // the JS chunk resolves, AND critically heavy UI assets (like CEO image) resolve.
-      const componentPromise = isContact ? contactPageImport() : Promise.resolve();
+      let componentPromise = Promise.resolve();
+      if (isContact) componentPromise = contactPageImport();
+      else if (isPrivacy) componentPromise = legalInfoImport();
       
       const ceoImagePromise = isContact ? new Promise((resolve) => {
         const img = new Image();
@@ -160,13 +166,14 @@ function AppContent() {
     }
   }, [])
 
-  // Eagerly prefetch the Contact page chunk after initial load completes
+  // Eagerly prefetch the chunks after initial load completes
   // Mobile: prefetch sooner (500ms) for instant navigation
   useEffect(() => {
     if (isLoading) return
     const delay = isMobileDevice ? 500 : 2000
     const timer = window.setTimeout(() => {
       void contactPageImport()
+      void legalInfoImport()
     }, delay)
     return () => window.clearTimeout(timer)
   }, [isLoading])
@@ -186,6 +193,14 @@ function AppContent() {
             element={(
               <Suspense fallback={<RouteFallback />}>
                 <ContactPage />
+              </Suspense>
+            )}
+          />
+          <Route
+            path="/privacy-policy"
+            element={(
+              <Suspense fallback={<RouteFallback />}>
+                <LegalInfo />
               </Suspense>
             )}
           />
