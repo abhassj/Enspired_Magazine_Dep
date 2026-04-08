@@ -90,7 +90,7 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
       {href && <a href={href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-30 cursor-pointer" aria-label={title}></a>}
 
       {/* Card background */}
-      <div className={`relative p-5 md:p-8 lg:p-10 h-full
+      <div className={`relative p-3.5 min-[400px]:p-5 md:p-6 lg:p-8 xl:p-10 h-full
                       bg-white/70 dark:bg-white/[0.03]
                       ${isMobile ? '' : 'backdrop-blur-xl'}
                       border border-gray-200/60 dark:border-white/[0.06]
@@ -137,11 +137,11 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
             {lines.map((line, idx) => (
               <div key={idx} className="pointer-events-auto w-full">
                 {line.href ? (
-                  <a href={line.href} target="_blank" rel="noopener noreferrer" className="text-[10px] sm:text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide hover:text-[#25D366] transition-colors block break-all">
+                  <a href={line.href} target="_blank" rel="noopener noreferrer" className="text-[8.5px] min-[360px]:text-[9px] min-[390px]:text-[10px] sm:text-[11px] md:text-xs lg:text-[13px] xl:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-normal hover:text-[#25D366] transition-colors block break-words">
                     {line.text}
                   </a>
                 ) : (
-                  <p className="text-[10px] sm:text-xs md:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-wide break-all">
+                  <p className="text-[8.5px] min-[360px]:text-[9px] min-[390px]:text-[10px] sm:text-[11px] md:text-xs lg:text-[13px] xl:text-sm text-brand-lightMuted dark:text-white/50 font-light tracking-normal break-words">
                     {line.text || line}
                   </p>
                 )}
