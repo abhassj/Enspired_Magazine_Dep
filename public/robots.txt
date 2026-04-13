@@ -1,4 +1,31 @@
+# robots.txt — GR Enspired Magazine
+# https://www.grenspired.com
+
 User-agent: *
+Allow: /
+
+# Block non-content directories from wasting crawl budget
+Disallow: /assets/
+Disallow: /*.chunk.js$
+Disallow: /*.chunk.css$
+
+# Allow major search and social crawlers explicitly
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
 Allow: /
 
 Sitemap: https://www.grenspired.com/sitemap.xml

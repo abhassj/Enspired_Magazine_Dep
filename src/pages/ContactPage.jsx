@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { siteImageAssets } from '../config/cloudinaryAssets';
+import { usePageMeta } from '../utils/usePageMeta';
 
 // We dynamically determine mobile state inside components to avoid SSR/parse-time inaccuracies
 
@@ -168,6 +169,17 @@ const ContactCard = ({ icon: Icon, title, lines, href, cta, gradient, iconFrame,
    MAIN CONTACT PAGE
    ═══════════════════════════════════════════ */
 const ContactPage = () => {
+  usePageMeta({
+    title: 'Contact Us | GR Enspired Magazine',
+    description:
+      'Get in touch with GR Enspired Magazine. Reach our team for features, collaborations, press, and partnership opportunities via WhatsApp, email, Instagram, or Facebook.',
+    canonical: 'https://www.grenspired.com/contact',
+    ogTitle: 'Contact GR Enspired Magazine',
+    ogDescription:
+      'Reach the GR Enspired Magazine team for features, collaborations, press, and partnership opportunities.',
+    ogUrl: 'https://www.grenspired.com/contact',
+  });
+
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
 
   // Guarantee accurate viewport evaluation upon actual device paint

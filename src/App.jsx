@@ -44,14 +44,29 @@ function HomePage() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <MissionVision />
-      <Issues />
-      <Partner />
-      <Gallery />
-      <Awards />
-      <Testimonials />
-      <Collaborations />
+      {/* Visually-hidden semantic header — provides crawlable text so Google
+          surfaces the magazine's tagline, audience, and keywords even though
+          the visible hero is image-heavy. Not a keyword stuff; matches the
+          public Facebook/AI-overview description of the brand. */}
+      <header className="sr-only" aria-hidden="false">
+        <h1>GR Enspired Magazine — Dream. Lead. Inspire.</h1>
+        <p>
+          GR Enspired Magazine is a global media platform empowering women, men,
+          and youth in business, startups, and SMEs. We highlight stories,
+          bold ideas, and entrepreneurial journeys that inspire leadership and
+          economic development worldwide, in both print and digital formats.
+        </p>
+      </header>
+      <main>
+        <Hero />
+        <MissionVision />
+        <Issues />
+        <Partner />
+        <Gallery />
+        <Awards />
+        <Testimonials />
+        <Collaborations />
+      </main>
       <Footer />
     </>
   )
@@ -124,8 +139,9 @@ function AppContent() {
 
   useEffect(() => {
     let isMounted = true
-    // Mobile: shorter minimum preloader to get content visible faster
-    const minimumPreloaderMs = isMobileDevice ? 300 : 500
+    // Mobile keeps a brief minimum for a polished feel; desktop has no artificial floor
+    // so content paints as soon as assets + fonts are ready.
+    const minimumPreloaderMs = isMobileDevice ? 300 : 0
     const startedAt = Date.now()
 
     const waitForWindowLoad = document.readyState === 'complete'

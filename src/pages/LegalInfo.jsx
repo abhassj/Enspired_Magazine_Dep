@@ -2,8 +2,21 @@ import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Shield } from 'lucide-react';
+import { usePageMeta } from '../utils/usePageMeta';
 
 const LegalInfo = () => {
+  usePageMeta({
+    title: 'Privacy Policy | GR Enspired Magazine',
+    description:
+      'GR Enspired Magazine privacy policy — how we collect, use, and protect your data, including our use of Google Analytics and GDPR compliance.',
+    canonical: 'https://www.grenspired.com/privacy-policy',
+    ogTitle: 'Privacy Policy | GR Enspired Magazine',
+    ogDescription:
+      'Our privacy policy covering data collection, cookies, Google Analytics, and your rights under GDPR.',
+    ogUrl: 'https://www.grenspired.com/privacy-policy',
+    robots: 'noindex, follow',
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

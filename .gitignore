@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Raw asset backups kept for safety (regenerated via scripts/optimize-*.mjs)
+_originals/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

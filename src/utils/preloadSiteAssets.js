@@ -78,7 +78,7 @@ export const preloadSiteAssets = async ({ onProgress } = {}) => {
     ? []
     : [
         siteImageAssets.heroImageMobile,
-        '/GR_branding_final.svg',
+        '/GR_branding_final.webp',
       ];
 
   const taskFns = [

@@ -16,7 +16,7 @@
       ]
     },
     {
-      "source": "/GR_branding_final.svg",
+      "source": "/GR_branding_final(@2x)?\\.(webp|png)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -25,7 +25,16 @@
       ]
     },
     {
-      "source": "/gr-favicon.svg",
+      "source": "/gr-favicon\\.webp",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon(-16|-32|-48|-64|_png)|apple-touch-icon|og_image)\\.png",
       "headers": [
         {
           "key": "Cache-Control",

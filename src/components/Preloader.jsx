@@ -52,9 +52,12 @@ const Preloader = ({ isLoading, progress = 0 }) => {
               />
               
               {/* Local Logo */}
-              <img 
-                src="/gr-favicon.svg" 
-                alt="Enspired Logo" 
+              <img
+                src="/gr-favicon.webp"
+                alt="Enspired Logo"
+                width="160"
+                height="160"
+                decoding="async"
                 className="w-full h-full object-contain relative z-10 p-4"
               />
             </motion.div>

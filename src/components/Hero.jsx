@@ -34,14 +34,60 @@ const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
 
 const Hero = () => {
   const { isDark } = useTheme();
-  const [showSpline, setShowSpline] = useState(getShouldRenderSpline);
+  // Start with Spline OFF so the initial render stays cheap.
+  // It only turns on after the page is interactive AND idle, which defers the
+  // ~1.5MB Spline runtime chunk download past LCP on desktop.
+  const [showSpline, setShowSpline] = useState(false);
+
+  // Defer Spline mount until after first paint + idle time.
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    if (!getShouldRenderSpline()) return undefined;
+
+    let cancelled = false;
+    let idleHandle;
+    let timeoutHandle;
+
+    const mountWhenIdle = () => {
+      if (cancelled) return;
+      if (typeof window.requestIdleCallback === 'function') {
+        idleHandle = window.requestIdleCallback(
+          () => {
+            if (!cancelled && getShouldRenderSpline()) setShowSpline(true);
+          },
+          { timeout: 1200 }
+        );
+      } else {
+        timeoutHandle = window.setTimeout(() => {
+          if (!cancelled && getShouldRenderSpline()) setShowSpline(true);
+        }, 600);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      mountWhenIdle();
+    } else {
+      window.addEventListener('load', mountWhenIdle, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleHandle && typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle) window.clearTimeout(timeoutHandle);
+      window.removeEventListener('load', mountWhenIdle);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
 
     const mediaQuery = window.matchMedia('(min-width: 768px)');
     const syncSplineVisibility = () => {
-      setShowSpline(getShouldRenderSpline());
+      // Only update when already-enabled — never downgrade from true to false mid-session
+      // unless the device actively becomes ineligible.
+      setShowSpline((prev) => (prev && !getShouldRenderSpline() ? false : prev));
     };
 
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;

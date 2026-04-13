@@ -8,10 +8,12 @@
     ============================================================ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GR Enspired Magazine | Dream. Lead. Inspire.</title>
-    <meta name="description" content="GR Enspired Magazine — A global platform empowering individuals to dream, lead, and inspire. Celebrating voices, journeys, and achievements in business and everyday life." />
-    <meta name="keywords" content="GR Enspired Magazine, grenspired, global magazine, business inspiration, leadership, entrepreneurship, lifestyle magazine" />
+    <meta name="description" content="GR Enspired Magazine is a global media platform empowering women, men, and youth in business, startups, and SMEs. Discover bold stories of entrepreneurship, leadership, and economic development shaping the future." />
+    <meta name="keywords" content="GR Enspired Magazine, grenspired, global magazine, business inspiration, women entrepreneurs, leadership, entrepreneurship, startups, SMEs, lifestyle magazine, Arzaan GR Enspired" />
     <meta name="author" content="GR Enspired Magazine" />
-    <meta name="robots" content="index, follow" />
+    <meta name="publisher" content="GR Enspired Magazine" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://www.grenspired.com/" />
 
     <!-- ============================================================
@@ -20,11 +22,13 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.grenspired.com/" />
     <meta property="og:title" content="GR Enspired Magazine | Dream. Lead. Inspire." />
-    <meta property="og:description" content="A global platform empowering individuals to dream, lead, and inspire. Celebrating voices, journeys, and achievements in business and everyday life." />
-    <meta property="og:image" content="https://www.grenspired.com/GR_branding_final.svg" />
+    <meta property="og:description" content="A global media platform empowering women, men, and youth in business, startups, and SMEs — celebrating bold stories of entrepreneurship, leadership, and inspiration." />
+    <meta property="og:image" content="https://www.grenspired.com/og_image.png" />
+    <meta property="og:image:secure_url" content="https://www.grenspired.com/og_image.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="GR Enspired Magazine Logo — Dream. Lead. Inspire." />
+    <meta property="og:image:alt" content="GR Enspired Magazine — Dream. Lead. Inspire." />
     <meta property="og:site_name" content="GR Enspired Magazine" />
     <meta property="og:locale" content="en_GB" />
 
@@ -34,42 +38,120 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.grenspired.com/" />
     <meta name="twitter:title" content="GR Enspired Magazine | Dream. Lead. Inspire." />
-    <meta name="twitter:description" content="A global platform empowering individuals to dream, lead, and inspire." />
-    <meta name="twitter:image" content="https://www.grenspired.com/GR_branding_final.svg" />
+    <meta name="twitter:description" content="A global media platform empowering women, men, and youth in business, startups, and SMEs — celebrating bold stories of entrepreneurship and leadership." />
+    <meta name="twitter:image" content="https://www.grenspired.com/og_image.png" />
+    <meta name="twitter:image:alt" content="GR Enspired Magazine — Dream. Lead. Inspire." />
 
     <!-- ============================================================
-         FAVICON (UPDATED — GOOGLE + BROWSER COMPATIBLE)
+         FAVICON (GOOGLE + BROWSER COMPATIBLE)
     ============================================================ -->
-    <!-- PNG (important for Google Search) -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_png.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_png.png" />
-
-    <!-- SVG (modern browsers) -->
-    <link rel="icon" type="image/svg+xml" href="/gr-favicon.svg" />
-
-    <!-- Apple devices -->
-    <link rel="apple-touch-icon" href="/favicon_png.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+    <link rel="shortcut icon" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/meta.json" />
 
     <meta name="theme-color" content="#0a0510" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
     <!-- ============================================================
-         SCHEMA.ORG STRUCTURED DATA (JSON-LD)
+         PERFORMANCE — DNS PREFETCH & PRECONNECT (moved up for early hint)
+    ============================================================ -->
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+    <!-- Preload critical brand asset (2x variant picked automatically on high-DPI) -->
+    <link
+      rel="preload"
+      href="/GR_branding_final.webp"
+      as="image"
+      type="image/webp"
+      imagesrcset="/GR_branding_final.webp 1x, /GR_branding_final@2x.webp 2x"
+      fetchpriority="high"
+    />
+
+    <!-- ============================================================
+         FONTS — NON-BLOCKING LOAD WITH font-display: swap
+    ============================================================ -->
+    <link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Oswald:wght@400;500;600&display=swap" />
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Oswald:wght@400;500;600&display=swap"
+      media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Oswald:wght@400;500;600&display=swap" />
+    </noscript>
+
+    <!-- ============================================================
+         SCHEMA.ORG STRUCTURED DATA (JSON-LD) — MULTI-TYPE
     ============================================================ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "GR Enspired Magazine",
-      "url": "https://www.grenspired.com",
-      "logo": "https://www.grenspired.com/GR_branding_final.svg",
-      "description": "A global magazine celebrating voices, journeys, and achievements in business and everyday life.",
-      "sameAs": [],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "arzaangrenspired@outlook.com",
-        "contactType": "customer service"
-      }
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.grenspired.com/#organization",
+          "name": "GR Enspired Magazine",
+          "alternateName": ["Enspired Magazine", "GR Enspired", "grenspired"],
+          "url": "https://www.grenspired.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.grenspired.com/og_image.png",
+            "width": 1200,
+            "height": 630
+          },
+          "image": "https://www.grenspired.com/og_image.png",
+          "description": "A global media platform focused on empowering women, men, and youth in business, startups, and SMEs. GR Enspired Magazine highlights stories, bold ideas, and entrepreneurial journeys that inspire leadership and economic development worldwide.",
+          "foundingDate": "2020",
+          "sameAs": [
+            "https://www.facebook.com/enspiredwomen/",
+            "https://www.instagram.com/enspiredmagazine1"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "arzaangrenspired@outlook.com",
+            "contactType": "customer service",
+            "availableLanguage": ["English"]
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.grenspired.com/#website",
+          "url": "https://www.grenspired.com",
+          "name": "GR Enspired Magazine",
+          "description": "Dream. Lead. Inspire. — A global magazine for entrepreneurs, leaders, and changemakers.",
+          "publisher": { "@id": "https://www.grenspired.com/#organization" },
+          "inLanguage": "en-GB"
+        },
+        {
+          "@type": ["Periodical", "CreativeWork"],
+          "@id": "https://www.grenspired.com/#magazine",
+          "name": "GR Enspired Magazine",
+          "url": "https://www.grenspired.com",
+          "publisher": { "@id": "https://www.grenspired.com/#organization" },
+          "description": "A print and digital magazine celebrating stories of entrepreneurship, leadership, and economic development. Each issue features bold voices from women, men, and youth building the future of business.",
+          "genre": ["Business", "Entrepreneurship", "Leadership", "Lifestyle"],
+          "inLanguage": "en-GB"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.grenspired.com/#webpage",
+          "url": "https://www.grenspired.com/",
+          "name": "GR Enspired Magazine | Dream. Lead. Inspire.",
+          "isPartOf": { "@id": "https://www.grenspired.com/#website" },
+          "about": { "@id": "https://www.grenspired.com/#organization" },
+          "primaryImageOfPage": "https://www.grenspired.com/og_image.png",
+          "description": "Official home of GR Enspired Magazine — a global media platform empowering entrepreneurs, leaders, and SMEs through bold stories of inspiration."
+        }
+      ]
     }
     </script>
 
@@ -83,19 +165,6 @@
       gtag('js', new Date());
       gtag('config', 'G-YXJ0ZSK7LX');
     </script>
-
-    <!-- ============================================================
-         PERFORMANCE — DNS PREFETCH & PRECONNECT
-    ============================================================ -->
-    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-
-    <!-- Preload critical assets -->
-    <link rel="preload" href="/GR_branding_final.svg" as="image" type="image/svg+xml" />
 
   </head>
   <body>
